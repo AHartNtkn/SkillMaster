@@ -1,0 +1,9 @@
+{
+  "id": "SAMP1:T001",
+  "name": "Sample Topic",
+  "desc": "Demo topic",
+  "prereqs": [],
+  "weights": {},
+  "ass": ["SAMP1:AS001_1", "SAMP1:AS001_2"]
+}
+

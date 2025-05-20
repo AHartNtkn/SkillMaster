@@ -1,0 +1,7 @@
+{
+  "format": "Catalog-v1",
+  "course_id": "SAMP1",
+  "entry_topics": ["SAMP1:T001"],
+  "description": "Sample course with a single topic"
+}
+

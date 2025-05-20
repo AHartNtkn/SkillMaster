@@ -1,0 +1,12 @@
+format: ASQ-v1
+id: SAMP1_AS001_2
+pool:
+  - id: q1
+    stem: "What is 5-2?"
+    choices: ["1", "2", "3", "4"]
+    correct: 2
+  - id: q2
+    stem: "What is 10/2?"
+    choices: ["2", "3", "5", "10"]
+    correct: 2
+

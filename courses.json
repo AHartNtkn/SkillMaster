@@ -1,0 +1,6 @@
+{
+  "format": "Courses-v1",
+  "courses": [
+    {"id": "SAMP1", "name": "Sample Course", "path": "sample_course/"}
+  ]
+}

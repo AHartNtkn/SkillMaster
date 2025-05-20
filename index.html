@@ -4,6 +4,107 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SkillMaster</title>
+    <!-- Tailwind and fonts for quick prototyping -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <script src="https://unpkg.com/lucide@0.378.0/dist/umd/lucide.min.js"></script>
+    <style>
+      body {
+        font-family: 'Inter', sans-serif;
+        overscroll-behavior: none;
+      }
+      .tab-active {
+        color: #3b82f6;
+        border-top-color: #3b82f6;
+      }
+      .tab-inactive {
+        color: #6b7280;
+      }
+      ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+      }
+      ::-webkit-scrollbar-thumb {
+        background: #9ca3af;
+        border-radius: 3px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: #6b7280;
+      }
+      ::-webkit-scrollbar-track {
+        background: #f3f4f6;
+        border-radius: 3px;
+      }
+      [x-cloak] {
+        display: none !important;
+      }
+      /* Dark mode demo styles */
+      .dark-mode {
+        background-color: #1f2937;
+        color: #f3f4f6;
+      }
+      .dark-mode #main-app-container,
+      .dark-mode .bg-white,
+      .dark-mode .bg-gray-50,
+      .dark-mode .bg-blue-50 {
+        background-color: #374151;
+        border-color: #4b5563;
+      }
+      .dark-mode #tab-bar {
+        background-color: #374151;
+        border-top-color: #4b5563;
+      }
+      .dark-mode .text-gray-800,
+      .dark-mode .text-gray-700,
+      .dark-mode .text-gray-600,
+      .dark-mode .text-gray-500 {
+        color: #d1d5db;
+      }
+      .dark-mode .text-blue-700 {
+        color: #60a5fa;
+      }
+      .dark-mode .text-blue-600 {
+        color: #93c5fd;
+      }
+      .dark-mode .tab-active {
+        color: #60a5fa;
+        border-top-color: #60a5fa;
+      }
+      .dark-mode .tab-inactive {
+        color: #9ca3af;
+      }
+      .dark-mode .prose {
+        color: #d1d5db;
+      }
+      .dark-mode .prose code {
+        color: #e5e7eb;
+      }
+      .dark-mode .prose strong {
+        color: #f3f4f6;
+      }
+      .dark-mode input[type='checkbox'] {
+        background-color: #4b5563;
+        border-color: #6b7280;
+      }
+      .dark-mode .border-gray-300 {
+        border-color: #4b5563;
+      }
+      .dark-mode .bg-gray-100 {
+        background-color: #4b5563;
+      }
+      .dark-mode .bg-gray-100:hover {
+        background-color: #525c6b;
+      }
+      .dark-mode .bg-blue-200 {
+        background-color: #2563eb;
+      }
+      .dark-mode #explanation-modal .bg-white {
+        background-color: #1f2937;
+      }
+    </style>
   </head>
   <body>
     <div id="root"></div>
