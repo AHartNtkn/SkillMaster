@@ -1,0 +1,11 @@
+format: ASQ-v1
+id: EA_AS001
+pool:
+  - id: q1
+    stem: "Which symbol represents the number seven?"
+    choices: ["0", "7", "9", "4"]
+    correct: 1
+  - id: q2
+    stem: "Which numeral is zero?"
+    choices: ["0", "1", "2", "3"]
+    correct: 0

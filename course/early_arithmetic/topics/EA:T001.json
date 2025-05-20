@@ -1,0 +1,8 @@
+{
+  "id": "EA:T001",
+  "name": "Number Sense & Counting",
+  "desc": "Counting and numerals",
+  "prereqs": [],
+  "weights": {},
+  "ass": ["EA:AS001", "EA:AS003", "EA:AS004"]
+}

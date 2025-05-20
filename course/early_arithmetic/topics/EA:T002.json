@@ -1,0 +1,8 @@
+{
+  "id": "EA:T002",
+  "name": "Basic Addition",
+  "desc": "Using plus and equals",
+  "prereqs": ["EA:T001"],
+  "weights": {"EA:T001": 1.0},
+  "ass": ["EA:AS013"]
+}

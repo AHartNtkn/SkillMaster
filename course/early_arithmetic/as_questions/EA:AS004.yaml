@@ -1,0 +1,11 @@
+format: ASQ-v1
+id: EA_AS004
+pool:
+  - id: q1
+    stem: "Count the number of stars: ★★★★"
+    choices: ["3", "4", "5", "6"]
+    correct: 1
+  - id: q2
+    stem: "How many objects are there in a set of ten blocks?"
+    choices: ["8", "9", "10", "11"]
+    correct: 2

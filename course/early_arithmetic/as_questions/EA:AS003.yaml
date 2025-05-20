@@ -1,0 +1,11 @@
+format: ASQ-v1
+id: EA_AS003
+pool:
+  - id: q1
+    stem: "How many objects are there if you count one apple, one banana, and one orange?"
+    choices: ["1", "2", "3", "4"]
+    correct: 2
+  - id: q2
+    stem: "Counting each item once demonstrates what principle?"
+    choices: ["Addition", "One-to-one correspondence", "Subtraction", "Multiplication"]
+    correct: 1
