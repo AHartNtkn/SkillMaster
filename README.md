@@ -12,5 +12,5 @@ npm install
 npm run dev
 ```
 
-A small sample course is included under `course/early_arithmetic/` and referenced by `courses.json`.
+A small sample course is included under `course/elementary_arithmetic/` and referenced by `courses.json`.
 
