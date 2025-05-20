@@ -1,0 +1,11 @@
+format: ASQ-v1
+id: EA_AS013
+pool:
+  - id: q1
+    stem: "Which symbol shows addition?"
+    choices: ["−", "+", "×", "="]
+    correct: 1
+  - id: q2
+    stem: "2 + 1 = ___"
+    choices: ["2", "3", "4", "1"]
+    correct: 1
