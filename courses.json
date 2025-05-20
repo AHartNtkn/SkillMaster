@@ -1,0 +1,6 @@
+{
+  "format": "Courses-v1",
+  "courses": [
+    {"id": "EA", "name": "Early Arithmetic", "path": "course/early_arithmetic/"}
+  ]
+}
