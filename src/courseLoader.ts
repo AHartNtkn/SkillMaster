@@ -102,45 +102,49 @@ export async function loadMarkdown(
   }
 }
 
-function parseQuestionsYaml(text: string): ASQuestion[] {
+function parseQuestionsYaml(text: string): {
+  id: string;
+  questions: ASQuestion[];
+} {
   const lines = text.split(/\r?\n/);
+  let yamlId = '';
   const qs: ASQuestion[] = [];
-  let i = 0;
-  while (i < lines.length) {
-    const line = lines[i].trim();
+  let current: ASQuestion | null = null;
+  for (const raw of lines) {
+    const line = raw.trim();
+    if (line.startsWith('id:')) {
+      yamlId = line.slice(3).trim();
+      continue;
+    }
     if (line.startsWith('- id:')) {
-      const q: ASQuestion = {
+      if (current) qs.push(current);
+      current = {
         id: line.slice(5).trim(),
         stem: '',
         choices: [],
         correct: 0
       };
-      i++;
-      while (i < lines.length && /^\s+/.test(lines[i])) {
-        const l = lines[i].trim();
-        if (l.startsWith('stem:')) {
-          q.stem = l.slice(5).trim().replace(/^"|"$/g, '');
-        } else if (l.startsWith('choices:')) {
-          const arr = l
-            .slice(8)
-            .trim()
-            .replace(/^\[|\]$/g, '')
-            .split(',')
-            .map(s => s.trim().replace(/^"|"$/g, ''));
-          q.choices = arr;
-        } else if (l.startsWith('correct:')) {
-          q.correct = parseInt(l.slice(8).trim(), 10);
-        } else if (l.startsWith('solution:')) {
-          q.solution = l.slice(9).trim().replace(/^"|"$/g, '');
-        }
-        i++;
-      }
-      qs.push(q);
-    } else {
-      i++;
+      continue;
+    }
+    if (!current) continue;
+    if (line.startsWith('stem:')) {
+      current.stem = line.slice(5).trim().replace(/^"|"$/g, '');
+    } else if (line.startsWith('choices:')) {
+      const arr = line
+        .slice(8)
+        .trim()
+        .replace(/^\[|\]$/g, '')
+        .split(',')
+        .map(s => s.trim().replace(/^"|"$/g, ''));
+      current.choices = arr.filter(s => s.length > 0);
+    } else if (line.startsWith('correct:')) {
+      current.correct = parseInt(line.slice(8).trim(), 10);
+    } else if (line.startsWith('solution:')) {
+      current.solution = line.slice(9).trim().replace(/^"|"$/g, '');
     }
   }
-  return qs;
+  if (current) qs.push(current);
+  return { id: yamlId, questions: qs };
 }
 
 export async function loadQuestions(
@@ -151,7 +155,12 @@ export async function loadQuestions(
     const res = await fetch(`/${coursePath}as_questions/${asId}.yaml`);
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const txt = await res.text();
-    return parseQuestionsYaml(txt);
+    const parsed = parseQuestionsYaml(txt);
+    const expected = asId.replace(':', '_');
+    if (parsed.id && parsed.id !== expected) {
+      console.warn(`YAML id ${parsed.id} does not match ${expected}`);
+    }
+    return parsed.questions;
   } catch (e) {
     console.error('Failed to load questions', e);
     return [];

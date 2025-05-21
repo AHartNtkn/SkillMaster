@@ -70,6 +70,13 @@ async function checkCourse(coursePath, courseId) {
 
     const qText = await fs.readFile(qPath, 'utf8');
     assert.ok(qText.startsWith('format:'), 'questions missing format');
+    const idLine = qText
+      .split(/\r?\n/)
+      .find(l => l.startsWith('id:'));
+    assert.ok(idLine, 'questions missing id');
+    const yamlId = idLine.split(':')[1].trim();
+    const expectedId = s.id.replace(':', '_');
+    assert.equal(yamlId, expectedId, 'yaml id mismatch');
     const count = countQuestionItems(qText);
     assert.ok(count >= 20, `less than 20 questions in ${qPath}`);
   }
