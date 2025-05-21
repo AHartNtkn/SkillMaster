@@ -6,6 +6,7 @@ import {
   applyGrade as engineApplyGrade,
   applyImplicitPrereqs,
   XP_PER_AS_QUESTION,
+  MIXED_QUIZ_TRIGGER_XP,
 } from './engine.js';
 import CourseLibrary from './CourseLibrary';
 import {
@@ -78,6 +79,10 @@ export default function App() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [consecutiveEasyCount, setConsecutiveEasyCount] = useState(0);
 
+  const [dueSkillCount, setDueSkillCount] = useState(0);
+  const [newSkillsCount, setNewSkillsCount] = useState(0);
+  const [mixedQuizReady, setMixedQuizReady] = useState(false);
+
   const dark = prefs.ui_theme === 'dark';
 
   useEffect(() => {
@@ -87,6 +92,53 @@ export default function App() {
   useEffect(() => {
     savePrefs(prefs);
   }, [prefs]);
+
+  useEffect(() => {
+    if (screen === 'home') {
+      let currentDueSkillCount = 0;
+      let currentNewSkillsCount = 0;
+      const now = new Date();
+
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key && key.startsWith('mastery_')) {
+          const raw = localStorage.getItem(key);
+          if (raw) {
+            try {
+              const parsedData = JSON.parse(raw);
+              // Reconstruct Mastery object with proper Date types for card
+              const masteryItem: Mastery = {
+                ...parsedData,
+                card: {
+                  ...parsedData.card,
+                  due: parsedData.card && parsedData.card.due ? new Date(parsedData.card.due) : new Date(0), // Default to epoch if undefined after parse
+                  last_review: parsedData.card && parsedData.card.last_review ? new Date(parsedData.card.last_review) : undefined,
+                }
+              };
+
+              if (masteryItem.card && masteryItem.card.due <= now) {
+                currentDueSkillCount++;
+              }
+
+              if (masteryItem.status === 'unseen') {
+                currentNewSkillsCount++;
+              }
+            } catch (e) {
+              console.error(`Failed to parse or process mastery data for key: ${key}`, e);
+            }
+          }
+        }
+      }
+      setDueSkillCount(currentDueSkillCount);
+      setNewSkillsCount(currentNewSkillsCount);
+
+      if (prefs.xp_since_mixed_quiz >= MIXED_QUIZ_TRIGGER_XP) {
+        setMixedQuizReady(true);
+      } else {
+        setMixedQuizReady(false);
+      }
+    }
+  }, [screen, prefs]);
 
   async function startLearning() {
     setScreen('learning');
@@ -296,7 +348,19 @@ export default function App() {
         {screen === 'home' && (
           <div>
             <h2>Dashboard</h2>
-            <p>5 Skills Due for Review</p>
+            {dueSkillCount > 0 && <p>{dueSkillCount} Skills Due for Review</p>}
+            {newSkillsCount > 0 && (
+              <p>
+                {newSkillsCount} New Skills Available{' '}
+                <small style={{ fontStyle: 'italic' }}>
+                  (Note: Prerequisite check for availability not yet fully implemented for this count)
+                </small>
+              </p>
+            )}
+            {mixedQuizReady && <p>Mixed Quiz Ready!</p>}
+            {dueSkillCount === 0 && newSkillsCount === 0 && !mixedQuizReady && (
+              <p>All caught up! Nothing due right now.</p>
+            )}
             <button onClick={startLearning}>Start Next Skill</button>
           </div>
         )}
@@ -305,7 +369,9 @@ export default function App() {
             <div style={{ marginBottom: '0.5rem' }}>
               <button onClick={confirmExit}>Exit</button>
               <span style={{ marginLeft: '1rem' }}>
-                Question {questionsPresentedInSession}
+                {phase === 'exposition'
+                  ? 'Skill Explanation'
+                  : `Question ${questionsPresentedInSession}`}
               </span>
             </div>
             {phase === 'exposition' && (
