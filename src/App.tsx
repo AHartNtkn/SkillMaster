@@ -361,13 +361,15 @@ export default function App() {
             {dueSkillCount === 0 && newSkillsCount === 0 && !mixedQuizReady && (
               <p>All caught up! Nothing due right now.</p>
             )}
-            <button onClick={startLearning}>Start Next Skill</button>
+            <button className="btn btn-primary" onClick={startLearning}>
+              Start Next Skill
+            </button>
           </div>
         )}
         {screen === 'learning' && (
           <div>
             <div style={{ marginBottom: '0.5rem' }}>
-              <button onClick={confirmExit}>Exit</button>
+              <button className="btn" onClick={confirmExit}>Exit</button>
               <span style={{ marginLeft: '1rem' }}>
                 {phase === 'exposition'
                   ? 'Skill Explanation'
@@ -383,7 +385,9 @@ export default function App() {
                 ) : (
                   <>
                     <pre style={{ whiteSpace: 'pre-wrap' }}>{markdown}</pre>
-                    <button onClick={startQuestions}>Start Questions</button>
+                    <button className="btn btn-primary" onClick={startQuestions}>
+                      Start Questions
+                    </button>
                   </>
                 )}
               </div>
@@ -391,25 +395,23 @@ export default function App() {
             {phase === 'question' && (
               <div>
                 <p>{questions[currentQ].stem}</p>
-                <ul style={{ listStyle: 'none', padding: 0 }}>
+                <ul className="choice-list">
                   {questions[currentQ].choices.map((c, i) => (
-                    <li key={i} style={{ marginBottom: '0.5rem' }}>
+                    <li key={i} className="choice-item">
                       <button
+                        className={`choice ${selected === i ? 'selected' : ''}`}
                         onClick={() => selectAnswer(i)}
-                        style={{
-                          width: '100%',
-                          background: selected === i ? '#bfdbfe' : '#f3f4f6',
-                          border: '1px solid #ccc',
-                          padding: '0.5rem',
-                          cursor: 'pointer'
-                        }}
                       >
                         {c}
                       </button>
                     </li>
                   ))}
                 </ul>
-                <button onClick={submitAnswer} disabled={selected === null}>
+                <button
+                  className="btn btn-primary"
+                  onClick={submitAnswer}
+                  disabled={selected === null}
+                >
                   Submit Answer
                 </button>
               </div>
@@ -420,19 +422,29 @@ export default function App() {
                   <>
                     <p style={{ color: 'green' }}>Correct!</p>
                     <p>{questions[currentQ].explanation}</p>
-                    <div style={{ margin: '0.5rem 0' }}>
-                      <button onClick={() => applyGrade(5)}>Easy</button>
-                      <button onClick={() => applyGrade(4)}>Okay</button>
-                      <button onClick={() => applyGrade(3)}>Hard</button>
-                      <button onClick={() => applyGrade(2)}>Again</button>
+                    <div className="btn-row">
+                      <button className="btn" onClick={() => applyGrade(5)}>
+                        Easy
+                      </button>
+                      <button className="btn" onClick={() => applyGrade(4)}>
+                        Okay
+                      </button>
+                      <button className="btn" onClick={() => applyGrade(3)}>
+                        Hard
+                      </button>
+                      <button className="btn" onClick={() => applyGrade(2)}>
+                        Again
+                      </button>
                     </div>
                   </>
                 ) : (
                   <>
                     <p style={{ color: 'red' }}>Incorrect.</p>
                     <p>{questions[currentQ].explanation}</p>
-                    <div style={{ margin: '0.5rem 0' }}>
-                      <button onClick={() => applyGrade(1)}>Continue</button>
+                    <div className="btn-row">
+                      <button className="btn" onClick={() => applyGrade(1)}>
+                        Continue
+                      </button>
                     </div>
                   </>
                 )}
@@ -455,7 +467,7 @@ export default function App() {
               Dark Mode
             </label>
             <div style={{ marginTop: '1rem' }}>
-              <button onClick={() => fileInputRef.current?.click()}>Import Data</button>
+              <button className="btn" onClick={() => fileInputRef.current?.click()}>Import Data</button>
               <input
                 type="file"
                 accept="application/json"
@@ -465,10 +477,10 @@ export default function App() {
               />
             </div>
             <div style={{ marginTop: '0.5rem' }}>
-              <button onClick={exportData}>Export Data</button>
+              <button className="btn" onClick={exportData}>Export Data</button>
             </div>
             <div style={{ marginTop: '0.5rem' }}>
-              <button onClick={confirmReset}>Reset Data</button>
+              <button className="btn" onClick={confirmReset}>Reset Data</button>
             </div>
           </div>
         )}
@@ -488,21 +500,27 @@ export default function App() {
         </div>
       </footer>
       {alertMsg && (
-        <div className="alert-modal" style={modalStyles}>
-          <div style={modalInnerStyles}>
+        <div className="modal">
+          <div className="modal-inner">
             <p>{alertMsg}</p>
-            <button onClick={() => setAlertMsg(null)}>OK</button>
+            <button className="btn btn-primary" onClick={() => setAlertMsg(null)}>
+              OK
+            </button>
           </div>
         </div>
       )}
       {confirm && (
-        <div className="confirm-modal" style={modalStyles}>
-          <div style={modalInnerStyles}>
+        <div className="modal">
+          <div className="modal-inner">
             <p>{confirm.msg}</p>
-            <button onClick={confirm.onConfirm} style={{ marginRight: '0.5rem' }}>
+            <button
+              className="btn btn-primary"
+              onClick={confirm.onConfirm}
+              style={{ marginRight: '0.5rem' }}
+            >
               Yes
             </button>
-            <button onClick={() => setConfirm(null)}>No</button>
+            <button className="btn" onClick={() => setConfirm(null)}>No</button>
           </div>
         </div>
       )}
@@ -510,19 +528,3 @@ export default function App() {
   );
 }
 
-const modalStyles: React.CSSProperties = {
-  position: 'fixed',
-  inset: 0,
-  background: 'rgba(0,0,0,0.5)',
-  display: 'flex',
-  alignItems: 'center',
-  justifyContent: 'center'
-};
-
-const modalInnerStyles: React.CSSProperties = {
-  background: 'white',
-  padding: '1rem',
-  borderRadius: '4px',
-  maxWidth: '300px',
-  textAlign: 'center'
-};
