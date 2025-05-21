@@ -1,0 +1,83 @@
+format: ASQ-v1
+id: EA_AS013
+pool:
+  - id: q1
+    stem: "What symbol is used for addition?"
+    choices: ["+", "=", "-", "x"]
+    correct: 0
+  - id: q2
+    stem: "What symbol shows that two amounts are the same?"
+    choices: ["=", "+", "-", "/"]
+    correct: 0
+  - id: q3
+    stem: "Which sign do you place between 2 and 3 to add them?"
+    choices: ["+", "=", "-", "x"]
+    correct: 0
+  - id: q4
+    stem: "Finish the statement: 2 + 3 __ 5"
+    choices: ["=", "+", "-", "x"]
+    correct: 0
+  - id: q5
+    stem: "The plus sign means to __ numbers."
+    choices: ["combine", "compare", "subtract", "divide"]
+    correct: 0
+  - id: q6
+    stem: "Which symbol would you use to show equality?"
+    choices: ["=", "+", "-", "x"]
+    correct: 0
+  - id: q7
+    stem: "2 + 2 __ 4"
+    choices: ["=", "-", "+", "x"]
+    correct: 0
+  - id: q8
+    stem: "What does the equals sign tell you about 3 + 1 and 4?"
+    choices: ["They have the same value", "They are different", "Add again", "Subtract"]
+    correct: 0
+  - id: q9
+    stem: "Which pair correctly uses the plus sign?"
+    choices: ["2 + 1", "2 - 1", "2 = 1", "2 x 1"]
+    correct: 0
+  - id: q10
+    stem: "Which pair correctly uses the equals sign?"
+    choices: ["3 + 2 = 5", "3 + 2 - 5", "3 + 2 x 5", "3 + 2 / 5"]
+    correct: 0
+  - id: q11
+    stem: "What sign would you use in 1 __ 1 = 2?"
+    choices: ["+", "-", "x", "="]
+    correct: 0
+  - id: q12
+    stem: "Select the addition statement."
+    choices: ["4 + 1", "4 = 1", "4 - 1", "4 < 1"]
+    correct: 0
+  - id: q13
+    stem: "Select the equality statement." 
+    choices: ["1 + 1 = 2", "1 + 1 + 2", "1 + 1 - 2", "1 + 1 x 2"]
+    correct: 0
+  - id: q14
+    stem: "Fill in the blank: 0 + 1 __ 1"
+    choices: ["=", "+", "-", "x"]
+    correct: 0
+  - id: q15
+    stem: "Fill in the blank: 1 + 1 __ 2"
+    choices: ["=", "+", "-", "x"]
+    correct: 0
+  - id: q16
+    stem: "The symbol '=' is read as:"
+    choices: ["equals", "plus", "minus", "times"]
+    correct: 0
+  - id: q17
+    stem: "The symbol '+' is read as:"
+    choices: ["plus", "equals", "minus", "times"]
+    correct: 0
+  - id: q18
+    stem: "Which shows addition of zero?"
+    choices: ["3 + 0 = 3", "3 + 0 = 0", "3 = 0", "3 - 0 = 0"]
+    correct: 0
+  - id: q19
+    stem: "Which shows equality correctly?"
+    choices: ["2 + 1 = 3", "2 + 1 + 3", "2 - 1 = 3", "2 x 1 = 3"]
+    correct: 0
+  - id: q20
+    stem: "Which number sentence uses both '+' and '=' correctly?"
+    choices: ["1 + 2 = 3", "1 = 2 + 3", "1 + 2 > 3", "1 + 2 - 3"]
+    correct: 0

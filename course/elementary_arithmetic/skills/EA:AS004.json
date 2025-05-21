@@ -1,0 +1,5 @@
+{
+  "id": "EA:AS004",
+  "name": "Count objects up to 10",
+  "prereqs": ["EA:AS001", "EA:AS003"]
+}

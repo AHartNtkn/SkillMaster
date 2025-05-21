@@ -1,0 +1,83 @@
+format: ASQ-v1
+id: EA_AS003
+pool:
+  - id: q1
+    stem: "Point to each item as you count 1 apple. How many apples are there?"
+    choices: ["1", "2", "3", "4"]
+    correct: 0
+  - id: q2
+    stem: "Count the cars: 🚗 🚗. How many cars?"
+    choices: ["2", "3", "1", "4"]
+    correct: 0
+  - id: q3
+    stem: "Count the balls: ⚽ ⚽ ⚽. How many balls?"
+    choices: ["3", "2", "4", "1"]
+    correct: 0
+  - id: q4
+    stem: "Count the ducks: 🦆 🦆 🦆 🦆. How many ducks?"
+    choices: ["4", "3", "2", "5"]
+    correct: 0
+  - id: q5
+    stem: "How many stars? ⭐ ⭐ ⭐ ⭐ ⭐"
+    choices: ["5", "4", "6", "3"]
+    correct: 0
+  - id: q6
+    stem: "Count the hearts: ❤️ ❤️ ❤️ ❤️ ❤️ ❤️"
+    choices: ["6", "5", "7", "4"]
+    correct: 0
+  - id: q7
+    stem: "Count the squares: ■ ■ ■ ■ ■ ■ ■"
+    choices: ["7", "6", "8", "5"]
+    correct: 0
+  - id: q8
+    stem: "Count the circles: ● ● ● ● ● ● ● ●"
+    choices: ["8", "7", "6", "9"]
+    correct: 0
+  - id: q9
+    stem: "Count the triangles: ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲ ▲"
+    choices: ["9", "8", "7", "10"]
+    correct: 0
+  - id: q10
+    stem: "Count the squares: ■ ■ ■ ■ ■ ■ ■ ■ ■ ■"
+    choices: ["10", "9", "8", "11"]
+    correct: 0
+  - id: q11
+    stem: "Touch each object as you say the numbers 1 to 3. How many objects?"
+    choices: ["3", "2", "4", "1"]
+    correct: 0
+  - id: q12
+    stem: "Touch each object as you say the numbers 1 to 4. How many objects?"
+    choices: ["4", "5", "3", "2"]
+    correct: 0
+  - id: q13
+    stem: "Touch each object as you say the numbers 1 to 5. How many objects?"
+    choices: ["5", "4", "6", "3"]
+    correct: 0
+  - id: q14
+    stem: "Touch each object as you say the numbers 1 to 6. How many objects?"
+    choices: ["6", "5", "7", "4"]
+    correct: 0
+  - id: q15
+    stem: "Touch each object as you say the numbers 1 to 7. How many objects?"
+    choices: ["7", "6", "8", "5"]
+    correct: 0
+  - id: q16
+    stem: "Touch each object as you say the numbers 1 to 8. How many objects?"
+    choices: ["8", "7", "9", "6"]
+    correct: 0
+  - id: q17
+    stem: "Touch each object as you say the numbers 1 to 9. How many objects?"
+    choices: ["9", "10", "8", "7"]
+    correct: 0
+  - id: q18
+    stem: "Touch each object as you say the numbers 1 to 10. How many objects?"
+    choices: ["10", "9", "8", "11"]
+    correct: 0
+  - id: q19
+    stem: "Is each number word used once when counting five items?"
+    choices: ["Yes", "No", "Sometimes", "Not sure"]
+    correct: 0
+  - id: q20
+    stem: "Is each object matched with a single number when counting seven objects?"
+    choices: ["Yes", "No", "Sometimes", "Not sure"]
+    correct: 0
