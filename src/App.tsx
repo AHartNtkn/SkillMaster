@@ -371,7 +371,7 @@ export default function App() {
         {screen === 'learning' && (
           <div>
             <div style={{ marginBottom: '0.5rem' }}>
-              <button className="btn" onClick={confirmExit}>Exit</button>
+              <button className="btn btn-inline" onClick={confirmExit}>Exit</button>
               <span style={{ marginLeft: '1rem' }}>
                 {phase === 'exposition'
                   ? 'Skill Explanation'
@@ -516,13 +516,15 @@ export default function App() {
           <div className="modal-inner">
             <p>{confirm.msg}</p>
             <button
-              className="btn btn-primary"
+              className="btn btn-primary btn-inline"
               onClick={confirm.onConfirm}
               style={{ marginRight: '0.5rem' }}
             >
               Yes
             </button>
-            <button className="btn" onClick={() => setConfirm(null)}>No</button>
+            <button className="btn btn-inline" onClick={() => setConfirm(null)}>
+              No
+            </button>
           </div>
         </div>
       )}
