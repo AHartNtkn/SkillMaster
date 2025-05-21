@@ -12,7 +12,6 @@ file before committing.
 - [ ] Provide logging to `logs/error.log` and `logs/debug.log` with rotation.
 
 ## Course Content
-- [ ] Ensure Markdown explanations and YAML question pools follow conventions.
 
 ## Scheduling Engine
 - [ ] Integrate `ts-fsrs` and implement grade mapping (incorrect=1, default 4, etc.).

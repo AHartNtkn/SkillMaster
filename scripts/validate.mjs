@@ -68,7 +68,39 @@ for (const f of fs.readdirSync(path.join(courseDir, 'skills'))) {
   ok &= validate(path.join(courseDir, 'skills', f), schemas.skill);
 }
 for (const f of fs.readdirSync(path.join(courseDir, 'as_questions'))) {
-  ok &= validate(path.join(courseDir, 'as_questions', f), schemas.asq);
+  const file = path.join(courseDir, 'as_questions', f);
+  ok &= validate(file, schemas.asq);
+  const data = readYAML(file);
+  if (data.pool.length < 20) {
+    console.error(`Question pool must have at least 20 items: ${f}`);
+    ok = false;
+  }
+}
+
+// ensure every skill has Markdown and question pool following conventions
+for (const f of fs.readdirSync(path.join(courseDir, 'skills'))) {
+  const skill = readJSON(path.join(courseDir, 'skills', f));
+  const shortId = skill.id.split(':')[1];
+  const mdPath = path.join(courseDir, 'as_md', `${shortId}.md`);
+  if (!fs.existsSync(mdPath)) {
+    console.error(`Missing Markdown for ${skill.id}`);
+    ok = false;
+  } else if (fs.readFileSync(mdPath, 'utf8').trim().length === 0) {
+    console.error(`Empty Markdown for ${skill.id}`);
+    ok = false;
+  }
+  const yamlPath = path.join(courseDir, 'as_questions', `${shortId}.yaml`);
+  if (!fs.existsSync(yamlPath)) {
+    console.error(`Missing questions for ${skill.id}`);
+    ok = false;
+  } else {
+    const asq = readYAML(yamlPath);
+    const expectedId = skill.id.replace(':', '_');
+    if (asq.id !== expectedId) {
+      console.error(`Question file id mismatch for ${skill.id}`);
+      ok = false;
+    }
+  }
 }
 const saveMapping = {
   'mastery.json': schemas.mastery,
