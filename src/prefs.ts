@@ -10,12 +10,11 @@ const DEFAULT_PREFS: Prefs = {
   ui_theme: 'default'
 };
 
+import { loadJsonSync, saveJsonSync } from './storage';
+
 export function loadPrefs(): Prefs {
   try {
-    const raw = localStorage.getItem('prefs');
-    if (!raw) return { ...DEFAULT_PREFS };
-    const obj = JSON.parse(raw);
-    return { ...DEFAULT_PREFS, ...obj } as Prefs;
+    return loadJsonSync('prefs.json', { ...DEFAULT_PREFS });
   } catch (e) {
     console.error('Failed to load prefs', e);
     return { ...DEFAULT_PREFS };
@@ -24,7 +23,7 @@ export function loadPrefs(): Prefs {
 
 export function savePrefs(p: Prefs) {
   try {
-    localStorage.setItem('prefs', JSON.stringify(p));
+    saveJsonSync('prefs.json', p);
   } catch (e) {
     console.error('Failed to save prefs', e);
   }

@@ -10,6 +10,7 @@ import {
   Skill,
 } from './courseLoader';
 import { initMastery } from './engine.js';
+import { loadMastery } from './masteryStore';
 import { Card } from 'ts-fsrs';
 
 interface Mastery {
@@ -20,14 +21,12 @@ interface Mastery {
   next_q_index: number;
 }
 
-function loadMastery(asId: string): Mastery {
+function loadMasteryLocal(asId: string): Mastery {
   try {
-    const raw = localStorage.getItem(`mastery_${asId}`);
-    if (!raw) return initMastery();
-    const obj = JSON.parse(raw);
-    obj.card.due = new Date(obj.card.due);
-    if (obj.card.last_review) obj.card.last_review = new Date(obj.card.last_review);
-    return obj as Mastery;
+    const m = loadMastery(asId) as unknown as Mastery;
+    m.card.due = new Date(m.card.due);
+    if (m.card.last_review) m.card.last_review = new Date(m.card.last_review as any);
+    return m;
   } catch (e) {
     console.error('Failed to load mastery', e);
     return initMastery();
@@ -76,7 +75,7 @@ export default function CourseLibrary() {
   }
 
   function chooseSkill(skill: Skill) {
-    const mastery = loadMastery(skill.id);
+    const mastery = loadMasteryLocal(skill.id);
     setSelectedSkill({ skill, mastery });
   }
 

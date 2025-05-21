@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { loadLog, appendEntry } from './xpStore';
 
 export interface XpEntry {
   id: number;
@@ -7,37 +8,15 @@ export interface XpEntry {
   source: string;
 }
 
-function loadXpLog(): XpEntry[] {
-  try {
-    const raw = localStorage.getItem('xp_log');
-    if (!raw) return [];
-    const obj = JSON.parse(raw);
-    if (Array.isArray(obj.log)) return obj.log as XpEntry[];
-    if (Array.isArray(obj)) return obj as XpEntry[];
-    return [];
-  } catch {
-    return [];
-  }
-}
-
-function saveXpLog(log: XpEntry[]) {
-  try {
-    localStorage.setItem('xp_log', JSON.stringify({ format: 'XP-v1', log }));
-  } catch {}
-}
-
 export function logXp(delta: number, source: string) {
-  const log = loadXpLog();
-  const nextId = log.length > 0 ? log[log.length - 1].id + 1 : 1;
-  log.push({ id: nextId, ts: new Date().toISOString(), delta, source });
-  saveXpLog(log);
+  appendEntry(delta, source);
 }
 
 export default function ProgressChart() {
   const [dailyXp, setDailyXp] = useState<{ date: string; xp: number }[]>([]);
 
   useEffect(() => {
-    const log = loadXpLog();
+    const log = loadLog();
     const today = new Date();
     const days: { date: string; xp: number }[] = [];
     for (let i = 6; i >= 0; i--) {

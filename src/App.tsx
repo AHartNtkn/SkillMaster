@@ -9,7 +9,8 @@ import {
   MIXED_QUIZ_TRIGGER_XP,
 } from './engine.js';
 import CourseLibrary from './CourseLibrary';
-import ProgressChart, { logXp } from './ProgressChart';
+import ProgressChart from './ProgressChart';
+import { appendEntry, getAllXp, overwriteXp } from './xpStore';
 import {
   loadCourses,
   loadCatalog,
@@ -20,6 +21,7 @@ import {
   Skill
 } from './courseLoader';
 import { Prefs, loadPrefs, savePrefs } from './prefs';
+import { loadMastery, saveMastery, getAllMastery, overwriteMastery } from './masteryStore';
 
 interface Question {
   stem: string;
@@ -36,25 +38,15 @@ interface Mastery {
   next_q_index: number;
 }
 
-function loadMastery(asId: string): Mastery {
-  const raw = localStorage.getItem(`mastery_${asId}`);
-  if (!raw) {
-    return {
-      status: 'unseen',
-      card: createEmptyCard(new Date()),
-      n: 0,
-      lastGrades: [],
-      next_q_index: 0
-    };
-  }
-  const obj = JSON.parse(raw);
-  obj.card.due = new Date(obj.card.due);
-  if (obj.card.last_review) obj.card.last_review = new Date(obj.card.last_review);
-  return obj as Mastery;
+function loadMasteryLocal(asId: string): Mastery {
+  const m = loadMastery(asId) as unknown as Mastery;
+  m.card.due = new Date(m.card.due);
+  if (m.card.last_review) m.card.last_review = new Date(m.card.last_review as any);
+  return m;
 }
 
-function saveMastery(asId: string, m: Mastery) {
-  localStorage.setItem(`mastery_${asId}`, JSON.stringify(m));
+function saveMasteryLocal(asId: string, m: Mastery) {
+  saveMastery(asId, m);
 }
 
 type Screen = 'home' | 'learning' | 'progress' | 'library' | 'settings';
@@ -105,35 +97,11 @@ export default function App() {
       let currentNewSkillsCount = 0;
       const now = new Date();
 
-      for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i);
-        if (key && key.startsWith('mastery_')) {
-          const raw = localStorage.getItem(key);
-          if (raw) {
-            try {
-              const parsedData = JSON.parse(raw);
-              // Reconstruct Mastery object with proper Date types for card
-              const masteryItem: Mastery = {
-                ...parsedData,
-                card: {
-                  ...parsedData.card,
-                  due: parsedData.card && parsedData.card.due ? new Date(parsedData.card.due) : new Date(0), // Default to epoch if undefined after parse
-                  last_review: parsedData.card && parsedData.card.last_review ? new Date(parsedData.card.last_review) : undefined,
-                }
-              };
-
-              if (masteryItem.card && masteryItem.card.due <= now) {
-                currentDueSkillCount++;
-              }
-
-              if (masteryItem.status === 'unseen') {
-                currentNewSkillsCount++;
-              }
-            } catch (e) {
-              console.error(`Failed to parse or process mastery data for key: ${key}`, e);
-            }
-          }
-        }
+      const all = getAllMastery();
+      for (const m of Object.values(all.ass)) {
+        const dueDate = new Date(m.card.due);
+        if (dueDate <= now) currentDueSkillCount++;
+        if (m.status === 'unseen') currentNewSkillsCount++;
       }
       setDueSkillCount(currentDueSkillCount);
       setNewSkillsCount(currentNewSkillsCount);
@@ -165,7 +133,7 @@ export default function App() {
       const topic = await loadTopic(course.path, topicId);
       if (!topic) continue;
       for (const as of topic.ass) {
-        const m = loadMastery(as);
+        const m = loadMasteryLocal(as);
         if (m.status !== 'unseen' && m.card.due <= now) {
           reviewCandidate = as;
           break;
@@ -209,7 +177,7 @@ export default function App() {
     setCoursePath(coursePath);
     setAsId(id);
 
-    const m = loadMastery(id);
+    const m = loadMasteryLocal(id);
     setMastery(m);
     setInitialSkillStatus(m.status);
 
@@ -251,7 +219,7 @@ export default function App() {
     store[asId] = mastery;
     if (skill.prereqs) {
       for (const pid of skill.prereqs) {
-        store[pid] = loadMastery(pid);
+        store[pid] = loadMasteryLocal(pid);
       }
     }
 
@@ -271,14 +239,14 @@ export default function App() {
 
     if (!skillWasUnseenAtStart || lessonComplete) {
       for (const id of Object.keys(store)) {
-        saveMastery(id, store[id]);
+        saveMasteryLocal(id, store[id]);
       }
       const newPrefs = {
         ...prefs,
         xp_since_mixed_quiz: prefs.xp_since_mixed_quiz + XP_PER_AS_QUESTION,
       };
       setPrefs(newPrefs);
-      logXp(XP_PER_AS_QUESTION, asId);
+      appendEntry(XP_PER_AS_QUESTION, asId);
     }
 
     if (lessonComplete) {
@@ -326,15 +294,11 @@ export default function App() {
   }
 
   function exportData() {
-    const out: Record<string, unknown> = {};
-    for (let i = 0; i < localStorage.length; i++) {
-      const k = localStorage.key(i);
-      if (!k) continue;
-      if (k.startsWith('mastery_') || k === 'prefs') {
-        const val = localStorage.getItem(k);
-        if (val) out[k] = JSON.parse(val);
-      }
-    }
+    const out = {
+      prefs,
+      mastery: getAllMastery(),
+      xp: getAllXp(),
+    };
     const blob = new Blob([JSON.stringify(out, null, 2)], {
       type: 'application/json'
     });
@@ -353,12 +317,10 @@ export default function App() {
     reader.onload = ev => {
       try {
         const data = JSON.parse(ev.target?.result as string);
-        if (typeof data !== 'object' || data === null) throw new Error();
-        for (const [k, v] of Object.entries(data)) {
-          if (k.startsWith('mastery_') || k === 'prefs') {
-            localStorage.setItem(k, JSON.stringify(v));
-          }
-        }
+        if (!data || typeof data !== 'object') throw new Error();
+        if (data.prefs) savePrefs(data.prefs as Prefs);
+        if (data.mastery) overwriteMastery(data.mastery);
+        if (data.xp) overwriteXp(data.xp);
         setPrefs(loadPrefs());
         setAlertMsg('Import complete');
       } catch {
@@ -370,13 +332,9 @@ export default function App() {
   }
 
   function resetData() {
-    for (let i = localStorage.length - 1; i >= 0; i--) {
-      const k = localStorage.key(i);
-      if (!k) continue;
-      if (k.startsWith('mastery_') || k === 'prefs') {
-        localStorage.removeItem(k);
-      }
-    }
+    overwriteMastery({ format: 'Mastery-v2', ass: {}, topics: {} });
+    overwriteXp({ format: 'XP-v1', log: [] });
+    savePrefs({ xp_since_mixed_quiz: 0, last_as: '', ui_theme: 'default' });
     setPrefs(loadPrefs());
     setAlertMsg('All data reset');
   }
