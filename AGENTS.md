@@ -11,3 +11,6 @@ This document covers:
 - Technology stack and build pipeline
 
 Adherence to these specifications is crucial for maintaining the integrity, consistency, and quality of the project.
+
+After changes are made, tests can be run with `npm test`. Currently, tests are run for
+- Course, topic, and skill existance and formatting
