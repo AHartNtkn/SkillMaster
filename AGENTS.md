@@ -14,3 +14,5 @@ Adherence to these specifications is crucial for maintaining the integrity, cons
 
 After changes are made, tests can be run with `npm test`. Currently, tests are run for
 - Course, topic, and skill existance and formatting
+
+Before finalizing any changes, make sure to rune `npm run dev`, and open the localhost web page and check the console for any errors.
