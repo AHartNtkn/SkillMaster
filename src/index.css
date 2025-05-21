@@ -93,6 +93,14 @@ footer {
   background: var(--button-bg);
   color: var(--text);
   cursor: pointer;
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.btn-inline {
+  display: inline-block;
+  width: auto;
 }
 
 .btn:hover:not(:disabled) {
@@ -146,6 +154,10 @@ footer {
   margin: 0.5rem 0;
   display: flex;
   gap: 0.5rem;
+}
+
+.btn-row .btn {
+  flex: 1;
 }
 
 .modal {
