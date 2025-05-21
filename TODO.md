@@ -12,7 +12,6 @@ file before committing.
 - [ ] Provide logging to `logs/error.log` and `logs/debug.log` with rotation.
 
 ## Course Content
-- [ ] Create a sample course with the four provided skills and prerequisite edges.
 - [ ] Ensure Markdown explanations and YAML question pools follow conventions.
 
 ## Scheduling Engine
