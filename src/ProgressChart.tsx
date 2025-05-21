@@ -1,75 +1,33 @@
 import React, { useEffect, useState } from 'react';
-
-export interface XpEntry {
-  id: number;
-  ts: string;
-  delta: number;
-  source: string;
-}
-
-export interface SkillEntry {
-  id: number;
-  ts: string;
-  asId: string;
-  type: 'review' | 'mastered';
-}
-
-function loadXpLog(): XpEntry[] {
-  try {
-    const raw = localStorage.getItem('xp_log');
-    if (!raw) return [];
-    const obj = JSON.parse(raw);
-    if (Array.isArray(obj.log)) return obj.log as XpEntry[];
-    if (Array.isArray(obj)) return obj as XpEntry[];
-    return [];
-  } catch {
-    return [];
-  }
-}
-
-function loadSkillLog(): SkillEntry[] {
-  try {
-    const raw = localStorage.getItem('skill_log');
-    if (!raw) return [];
-    const obj = JSON.parse(raw);
-    if (Array.isArray(obj.log)) return obj.log as SkillEntry[];
-    if (Array.isArray(obj)) return obj as SkillEntry[];
-    return [];
-  } catch {
-    return [];
-  }
-}
-
-function saveXpLog(log: XpEntry[]) {
-  try {
-    localStorage.setItem('xp_log', JSON.stringify({ format: 'XP-v1', log }));
-  } catch {}
-}
-
-function saveSkillLog(log: SkillEntry[]) {
-  try {
-    localStorage.setItem('skill_log', JSON.stringify({ format: 'SkillLog-v1', log }));
-  } catch {}
-}
+import {
+  loadXpLog,
+  loadSkillLog,
+  saveXpLog,
+  saveSkillLog,
+  XpEntry,
+  SkillEntry,
+} from './xpStore';
 
 function dispatchUpdate() {
-  window.dispatchEvent(new Event('progressDataUpdated'));
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new Event('progressDataUpdated'));
+  }
 }
 
 export function logXp(delta: number, source: string) {
-  const log = loadXpLog();
-  const nextId = log.length > 0 ? log[log.length - 1].id + 1 : 1;
-  log.push({ id: nextId, ts: new Date().toISOString(), delta, source });
-  saveXpLog(log);
-  dispatchUpdate();
+  loadXpLog().then(log => {
+    const nextId = log.length > 0 ? log[log.length - 1].id + 1 : 1;
+    log.push({ id: nextId, ts: new Date().toISOString(), delta, source });
+    saveXpLog(log).then(dispatchUpdate);
+  });
 }
 
 export function logSkillEvent(asId: string, type: 'review' | 'mastered') {
-  const log = loadSkillLog();
-  const nextId = log.length > 0 ? log[log.length - 1].id + 1 : 1;
-  log.push({ id: nextId, ts: new Date().toISOString(), asId, type });
-  saveSkillLog(log);
-  dispatchUpdate();
+  loadSkillLog().then(log => {
+    const nextId = log.length > 0 ? log[log.length - 1].id + 1 : 1;
+    log.push({ id: nextId, ts: new Date().toISOString(), asId, type });
+    saveSkillLog(log).then(dispatchUpdate);
+  });
 }
 
 export default function ProgressChart() {
@@ -77,9 +35,9 @@ export default function ProgressChart() {
     { date: string; xp: number; reviewed: number; mastered: number }[]
   >([]);
 
-  const refreshStats = () => {
-    const xpLog = loadXpLog();
-    const skillLog = loadSkillLog();
+  const refreshStats = async () => {
+    const xpLog = await loadXpLog();
+    const skillLog = await loadSkillLog();
     const today = new Date();
     const days: { date: string; xp: number; reviewed: number; mastered: number }[] = [];
     for (let i = 6; i >= 0; i--) {
@@ -102,8 +60,10 @@ export default function ProgressChart() {
 
   useEffect(() => {
     refreshStats();
-    window.addEventListener('progressDataUpdated', refreshStats);
-    return () => window.removeEventListener('progressDataUpdated', refreshStats);
+    if (typeof window !== 'undefined') {
+      window.addEventListener('progressDataUpdated', refreshStats);
+      return () => window.removeEventListener('progressDataUpdated', refreshStats);
+    }
   }, []);
 
   const maxVal = Math.max(

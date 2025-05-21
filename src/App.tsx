@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { fsrs, Rating, createEmptyCard, Card } from 'ts-fsrs';
+import { fsrs, Rating } from 'ts-fsrs';
 const scheduler = fsrs();
 const ALPHA_IMPLICIT = 0.3;
 import {
@@ -20,6 +20,13 @@ import {
   Skill
 } from './courseLoader';
 import { Prefs, loadPrefs, savePrefs } from './prefs';
+import {
+  loadMastery,
+  saveMastery,
+  loadAllMastery,
+  Mastery,
+  clearAllMastery,
+} from './masteryStore';
 
 interface Question {
   stem: string;
@@ -28,40 +35,13 @@ interface Question {
   explanation: string;
 }
 
-interface Mastery {
-  status: 'unseen' | 'in_progress' | 'mastered';
-  card: Card;
-  n: number;
-  lastGrades: number[];
-  next_q_index: number;
-}
-
-function loadMastery(asId: string): Mastery {
-  const raw = localStorage.getItem(`mastery_${asId}`);
-  if (!raw) {
-    return {
-      status: 'unseen',
-      card: createEmptyCard(new Date()),
-      n: 0,
-      lastGrades: [],
-      next_q_index: 0
-    };
-  }
-  const obj = JSON.parse(raw);
-  obj.card.due = new Date(obj.card.due);
-  if (obj.card.last_review) obj.card.last_review = new Date(obj.card.last_review);
-  return obj as Mastery;
-}
-
-function saveMastery(asId: string, m: Mastery) {
-  localStorage.setItem(`mastery_${asId}`, JSON.stringify(m));
-}
+// mastery persistence provided by masteryStore.ts
 
 type Screen = 'home' | 'learning' | 'progress' | 'library' | 'settings';
 type Phase = 'exposition' | 'question' | 'feedback';
 
 export default function App() {
-  const [prefs, setPrefs] = useState<Prefs>(() => loadPrefs());
+  const [prefs, setPrefs] = useState<Prefs | null>(null);
   const [screen, setScreen] = useState<Screen>('home');
   const [phase, setPhase] = useState<Phase>('exposition');
   const [currentQ, setCurrentQ] = useState(0);
@@ -88,14 +68,18 @@ export default function App() {
     | null
   >(null);
 
-  const dark = prefs.ui_theme === 'dark';
+  const dark = prefs?.ui_theme === 'dark';
+
+  useEffect(() => {
+    loadPrefs().then(setPrefs);
+  }, []);
 
   useEffect(() => {
     document.body.classList.toggle('dark', dark);
   }, [dark]);
 
   useEffect(() => {
-    savePrefs(prefs);
+    if (prefs) savePrefs(prefs);
   }, [prefs]);
 
   useEffect(() => {
@@ -105,40 +89,19 @@ export default function App() {
       let currentNewSkillsCount = 0;
       const now = new Date();
 
-      for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i);
-        if (key && key.startsWith('mastery_')) {
-          const raw = localStorage.getItem(key);
-          if (raw) {
-            try {
-              const parsedData = JSON.parse(raw);
-              // Reconstruct Mastery object with proper Date types for card
-              const masteryItem: Mastery = {
-                ...parsedData,
-                card: {
-                  ...parsedData.card,
-                  due: parsedData.card && parsedData.card.due ? new Date(parsedData.card.due) : new Date(0), // Default to epoch if undefined after parse
-                  last_review: parsedData.card && parsedData.card.last_review ? new Date(parsedData.card.last_review) : undefined,
-                }
-              };
-
-              if (masteryItem.card && masteryItem.card.due <= now) {
-                currentDueSkillCount++;
-              }
-
-              if (masteryItem.status === 'unseen') {
-                currentNewSkillsCount++;
-              }
-            } catch (e) {
-              console.error(`Failed to parse or process mastery data for key: ${key}`, e);
-            }
-          }
+      const all = await loadAllMastery();
+      for (const masteryItem of Object.values(all)) {
+        if (masteryItem.card && masteryItem.card.due <= now) {
+          currentDueSkillCount++;
+        }
+        if (masteryItem.status === 'unseen') {
+          currentNewSkillsCount++;
         }
       }
       setDueSkillCount(currentDueSkillCount);
       setNewSkillsCount(currentNewSkillsCount);
 
-      if (prefs.xp_since_mixed_quiz >= MIXED_QUIZ_TRIGGER_XP) {
+      if ((prefs?.xp_since_mixed_quiz ?? 0) >= MIXED_QUIZ_TRIGGER_XP) {
         setMixedQuizReady(true);
       } else {
         setMixedQuizReady(false);
@@ -165,7 +128,7 @@ export default function App() {
       const topic = await loadTopic(course.path, topicId);
       if (!topic) continue;
       for (const as of topic.ass) {
-        const m = loadMastery(as);
+        const m = await loadMastery(as);
         if (m.status !== 'unseen' && m.card.due <= now) {
           reviewCandidate = as;
           break;
@@ -209,7 +172,7 @@ export default function App() {
     setCoursePath(coursePath);
     setAsId(id);
 
-    const m = loadMastery(id);
+    const m = await loadMastery(id);
     setMastery(m);
     setInitialSkillStatus(m.status);
 
@@ -244,14 +207,14 @@ export default function App() {
     setPhase('feedback');
   }
 
-  function applyGrade(grade: number) {
-    if (!mastery || !skill || !asId) return;
+  async function applyGrade(grade: number) {
+    if (!mastery || !skill || !asId || !prefs) return;
 
     const store: Record<string, Mastery> = {};
     store[asId] = mastery;
     if (skill.prereqs) {
       for (const pid of skill.prereqs) {
-        store[pid] = loadMastery(pid);
+        store[pid] = await loadMastery(pid);
       }
     }
 
@@ -276,7 +239,7 @@ export default function App() {
 
     if (!skillWasUnseenAtStart || lessonComplete) {
       for (const id of Object.keys(store)) {
-        saveMastery(id, store[id]);
+        await saveMastery(id, store[id]);
       }
       const newPrefs = {
         ...prefs,
@@ -308,7 +271,7 @@ export default function App() {
       const skillWasUnseenAtStart = initialSkillStatus === 'unseen';
 
       if (!skillWasUnseenAtStart || lessonSuccessfullyCompleted) {
-        setPrefs(p => ({ ...p, last_as: asId }));
+        setPrefs(p => (p ? { ...p, last_as: asId } : null));
       }
     }
 
@@ -330,16 +293,10 @@ export default function App() {
     });
   }
 
-  function exportData() {
-    const out: Record<string, unknown> = {};
-    for (let i = 0; i < localStorage.length; i++) {
-      const k = localStorage.key(i);
-      if (!k) continue;
-      if (k.startsWith('mastery_') || k === 'prefs') {
-        const val = localStorage.getItem(k);
-        if (val) out[k] = JSON.parse(val);
-      }
-    }
+  async function exportData() {
+    const mastery = await loadAllMastery();
+    const preferences = prefs || (await loadPrefs());
+    const out = { mastery, prefs: preferences };
     const blob = new Blob([JSON.stringify(out, null, 2)], {
       type: 'application/json'
     });
@@ -358,13 +315,14 @@ export default function App() {
     reader.onload = ev => {
       try {
         const data = JSON.parse(ev.target?.result as string);
-        if (typeof data !== 'object' || data === null) throw new Error();
-        for (const [k, v] of Object.entries(data)) {
-          if (k.startsWith('mastery_') || k === 'prefs') {
-            localStorage.setItem(k, JSON.stringify(v));
+        if (data.mastery) {
+          for (const [id, m] of Object.entries(data.mastery)) {
+            saveMastery(id, m as Mastery);
           }
         }
-        setPrefs(loadPrefs());
+        if (data.prefs) {
+          setPrefs(data.prefs as Prefs);
+        }
         setAlertMsg('Import complete');
       } catch {
         setAlertMsg('Failed to import data');
@@ -374,15 +332,10 @@ export default function App() {
     e.target.value = '';
   }
 
-  function resetData() {
-    for (let i = localStorage.length - 1; i >= 0; i--) {
-      const k = localStorage.key(i);
-      if (!k) continue;
-      if (k.startsWith('mastery_') || k === 'prefs') {
-        localStorage.removeItem(k);
-      }
-    }
-    setPrefs(loadPrefs());
+  async function resetData() {
+    await clearAllMastery();
+    const defaults = await loadPrefs();
+    setPrefs(defaults);
     setAlertMsg('All data reset');
   }
 
@@ -518,7 +471,7 @@ export default function App() {
                 type="checkbox"
                 checked={dark}
                 onChange={() =>
-                  setPrefs(p => ({ ...p, ui_theme: dark ? 'default' : 'dark' }))
+                  setPrefs(p => (p ? { ...p, ui_theme: dark ? 'default' : 'dark' } : p))
                 }
               />
               Dark Mode
