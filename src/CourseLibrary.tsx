@@ -10,6 +10,7 @@ import {
   Skill,
 } from './courseLoader';
 import { initMastery } from './engine.js';
+import { readJSON } from './fileStore';
 import { Card } from 'ts-fsrs';
 
 interface Mastery {
@@ -20,11 +21,11 @@ interface Mastery {
   next_q_index: number;
 }
 
-function loadMastery(asId: string): Mastery {
+async function loadMastery(asId: string): Promise<Mastery> {
   try {
-    const raw = localStorage.getItem(`mastery_${asId}`);
-    if (!raw) return initMastery();
-    const obj = JSON.parse(raw);
+    const data = await readJSON('mastery.json', { format: 'Mastery-v2', ass: {}, topics: {} });
+    const obj: any = (data as any).ass[asId];
+    if (!obj) return initMastery();
     obj.card.due = new Date(obj.card.due);
     if (obj.card.last_review) obj.card.last_review = new Date(obj.card.last_review);
     return obj as Mastery;
@@ -75,8 +76,8 @@ export default function CourseLibrary() {
     setSkills(loaded);
   }
 
-  function chooseSkill(skill: Skill) {
-    const mastery = loadMastery(skill.id);
+  async function chooseSkill(skill: Skill) {
+    const mastery = await loadMastery(skill.id);
     setSelectedSkill({ skill, mastery });
   }
 

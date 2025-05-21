@@ -1,20 +1,20 @@
+import { readJSON, writeJSON } from './fileStore';
+
 export interface Prefs {
   xp_since_mixed_quiz: number;
   last_as: string;
   ui_theme: 'default' | 'dark';
 }
 
-const DEFAULT_PREFS: Prefs = {
+export const DEFAULT_PREFS: Prefs = {
   xp_since_mixed_quiz: 0,
   last_as: '',
   ui_theme: 'default'
 };
 
-export function loadPrefs(): Prefs {
+export async function loadPrefs(): Promise<Prefs> {
   try {
-    const raw = localStorage.getItem('prefs');
-    if (!raw) return { ...DEFAULT_PREFS };
-    const obj = JSON.parse(raw);
+    const obj = await readJSON<Prefs>('prefs.json', DEFAULT_PREFS);
     return { ...DEFAULT_PREFS, ...obj } as Prefs;
   } catch (e) {
     console.error('Failed to load prefs', e);
@@ -22,9 +22,9 @@ export function loadPrefs(): Prefs {
   }
 }
 
-export function savePrefs(p: Prefs) {
+export async function savePrefs(p: Prefs): Promise<void> {
   try {
-    localStorage.setItem('prefs', JSON.stringify(p));
+    await writeJSON('prefs.json', p);
   } catch (e) {
     console.error('Failed to save prefs', e);
   }
