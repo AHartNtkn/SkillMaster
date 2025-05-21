@@ -1,6 +1,6 @@
 {
   "format": "Catalog-v1",
   "course_id": "EA",
-  "entry_topics": ["EA:T001"],
+  "entry_topics": ["EA:T001", "EA:T002"],
   "description": "Elementary Arithmetic scope and sequence"
 }

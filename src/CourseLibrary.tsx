@@ -111,10 +111,12 @@ export default function CourseLibrary() {
       )}
       {selectedCourse && !selectedTopic && (
         <div>
-          <button className="btn" onClick={backToCourses} style={{ marginBottom: '0.5rem' }}>
-            Back to Courses
-          </button>
-          <h3>{selectedCourse.name}</h3>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+            <h3>{selectedCourse.name}</h3>
+            <button className="btn" onClick={backToCourses}>
+              Back to Courses
+            </button>
+          </div>
           {topics.length === 0 && <p>No topics found.</p>}
           <ul>
             {topics.map(t => (
@@ -129,10 +131,12 @@ export default function CourseLibrary() {
       )}
       {selectedCourse && selectedTopic && !selectedSkill && (
         <div>
-          <button className="btn" onClick={backToTopics} style={{ marginBottom: '0.5rem' }}>
-            Back to Topics
-          </button>
-          <h3>{selectedTopic.name}</h3>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+            <h3>{selectedTopic.name}</h3>
+            <button className="btn" onClick={backToTopics}>
+              Back to Topics
+            </button>
+          </div>
           {skills.length === 0 && <p>No skills found.</p>}
           <ul>
             {skills.map(s => (
@@ -147,10 +151,12 @@ export default function CourseLibrary() {
       )}
       {selectedCourse && selectedTopic && selectedSkill && (
         <div>
-          <button className="btn" onClick={backToSkills} style={{ marginBottom: '0.5rem' }}>
-            Back to Skills
-          </button>
-          <h3>{selectedSkill.skill.name}</h3>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.5rem' }}>
+            <h3>{selectedSkill.skill.name}</h3>
+            <button className="btn" onClick={backToSkills}>
+              Back to Skills
+            </button>
+          </div>
           <p>Status: {selectedSkill.mastery.status}</p>
           <p>Attempts: {selectedSkill.mastery.n}</p>
           {selectedSkill.mastery.lastGrades.length > 0 ? (
