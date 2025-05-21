@@ -1,5 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { Card, createEmptyCard } from 'ts-fsrs';
+import React, { useEffect, useState, useRef } from 'react';
+import { fsrs, Rating, createEmptyCard, Card } from 'ts-fsrs';
+const scheduler = fsrs();
+const ALPHA_IMPLICIT = 0.3;
 import {
   applyGrade as engineApplyGrade,
   applyImplicitPrereqs,
@@ -71,6 +73,7 @@ export default function App() {
   const [mastery, setMastery] = useState<Mastery | null>(null);
   const [skill, setSkill] = useState<Skill | null>(null);
   const [coursePath, setCoursePath] = useState('');
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [consecutiveEasyCount, setConsecutiveEasyCount] = useState(0);
 
   const dark = prefs.ui_theme === 'dark';
@@ -205,6 +208,72 @@ export default function App() {
     });
   }
 
+  function exportData() {
+    const out: Record<string, unknown> = {};
+    for (let i = 0; i < localStorage.length; i++) {
+      const k = localStorage.key(i);
+      if (!k) continue;
+      if (k.startsWith('mastery_') || k === 'prefs') {
+        const val = localStorage.getItem(k);
+        if (val) out[k] = JSON.parse(val);
+      }
+    }
+    const blob = new Blob([JSON.stringify(out, null, 2)], {
+      type: 'application/json'
+    });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'skillmaster_save.json';
+    a.click();
+    URL.revokeObjectURL(url);
+  }
+
+  function importDataFile(e: React.ChangeEvent<HTMLInputElement>) {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => {
+      try {
+        const data = JSON.parse(ev.target?.result as string);
+        if (typeof data !== 'object' || data === null) throw new Error();
+        for (const [k, v] of Object.entries(data)) {
+          if (k.startsWith('mastery_') || k === 'prefs') {
+            localStorage.setItem(k, JSON.stringify(v));
+          }
+        }
+        setPrefs(loadPrefs());
+        setAlertMsg('Import complete');
+      } catch {
+        setAlertMsg('Failed to import data');
+      }
+    };
+    reader.readAsText(file);
+    e.target.value = '';
+  }
+
+  function resetData() {
+    for (let i = localStorage.length - 1; i >= 0; i--) {
+      const k = localStorage.key(i);
+      if (!k) continue;
+      if (k.startsWith('mastery_') || k === 'prefs') {
+        localStorage.removeItem(k);
+      }
+    }
+    setPrefs(loadPrefs());
+    setAlertMsg('All data reset');
+  }
+
+  function confirmReset() {
+    setConfirm({
+      msg: 'Delete all progress and preferences?',
+      onConfirm: () => {
+        resetData();
+        setConfirm(null);
+      }
+    });
+  }
+
   return (
     <div className="app">
       <header>Skill Mastery</header>
@@ -304,6 +373,22 @@ export default function App() {
               />
               Dark Mode
             </label>
+            <div style={{ marginTop: '1rem' }}>
+              <button onClick={() => fileInputRef.current?.click()}>Import Data</button>
+              <input
+                type="file"
+                accept="application/json"
+                ref={fileInputRef}
+                style={{ display: 'none' }}
+                onChange={importDataFile}
+              />
+            </div>
+            <div style={{ marginTop: '0.5rem' }}>
+              <button onClick={exportData}>Export Data</button>
+            </div>
+            <div style={{ marginTop: '0.5rem' }}>
+              <button onClick={confirmReset}>Reset Data</button>
+            </div>
           </div>
         )}
       </div>
