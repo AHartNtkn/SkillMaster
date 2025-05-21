@@ -359,7 +359,7 @@ export default function App() {
             )}
             {mixedQuizReady && <p>Mixed Quiz Ready!</p>}
             {dueSkillCount === 0 && newSkillsCount === 0 && !mixedQuizReady && (
-              <p>All caught up! Nothing due right now.</p>
+              <p>No skills due for review right now.</p>
             )}
             <button className="btn btn-primary" onClick={startLearning}>
               Start Next Skill
