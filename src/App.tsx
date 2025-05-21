@@ -9,7 +9,7 @@ import {
   MIXED_QUIZ_TRIGGER_XP,
 } from './engine.js';
 import CourseLibrary from './CourseLibrary';
-import ProgressChart, { logXp } from './ProgressChart';
+import ProgressChart, { logXp, logSkillEvent } from './ProgressChart';
 import {
   loadCourses,
   loadCatalog,
@@ -211,6 +211,11 @@ export default function App() {
     store[asId] = updatedMainSkillMastery;
 
     applyImplicitPrereqs(skill, store, grade);
+
+    logSkillEvent(asId, 'review');
+    if (mastery.status !== 'mastered' && updatedMainSkillMastery.status === 'mastered') {
+      logSkillEvent(asId, 'mastered');
+    }
 
     setMastery(updatedMainSkillMastery);
 
