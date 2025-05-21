@@ -1,0 +1,11 @@
+format: ASQ-v1
+id: EA_AS004
+pool:
+  - id: q1
+    stem: "Count the apples: 🍎🍎🍎. How many are there?"
+    choices: ["2", "3", "4", "5"]
+    correct: 1
+  - id: q2
+    stem: "If you see seven ducks in a pond, which number shows how many ducks there are?"
+    choices: ["6", "7", "8", "9"]
+    correct: 1
