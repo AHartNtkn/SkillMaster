@@ -9,30 +9,9 @@ import {
   loadSkill,
   Skill,
 } from './courseLoader';
-import { initMastery } from './engine.js';
 import { Card } from 'ts-fsrs';
+import { loadMastery, Mastery } from './storage';
 
-interface Mastery {
-  status: 'unseen' | 'in_progress' | 'mastered';
-  card: Card;
-  n: number;
-  lastGrades: number[];
-  next_q_index: number;
-}
-
-function loadMastery(asId: string): Mastery {
-  try {
-    const raw = localStorage.getItem(`mastery_${asId}`);
-    if (!raw) return initMastery();
-    const obj = JSON.parse(raw);
-    obj.card.due = new Date(obj.card.due);
-    if (obj.card.last_review) obj.card.last_review = new Date(obj.card.last_review);
-    return obj as Mastery;
-  } catch (e) {
-    console.error('Failed to load mastery', e);
-    return initMastery();
-  }
-}
 
 export default function CourseLibrary() {
   const [courses, setCourses] = useState<CourseMeta[]>([]);
@@ -75,8 +54,8 @@ export default function CourseLibrary() {
     setSkills(loaded);
   }
 
-  function chooseSkill(skill: Skill) {
-    const mastery = loadMastery(skill.id);
+  async function chooseSkill(skill: Skill) {
+    const mastery = await loadMastery(skill.id);
     setSelectedSkill({ skill, mastery });
   }
 
