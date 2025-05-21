@@ -2,13 +2,16 @@ import React, { useEffect, useState } from 'react';
 import { fsrs, Rating, createEmptyCard, Card } from 'ts-fsrs';
 
 const scheduler = fsrs();
+const ALPHA_IMPLICIT = 0.3;
 import CourseLibrary from './CourseLibrary';
 import {
   loadCourses,
   loadCatalog,
   loadTopic,
   loadMarkdown,
-  loadQuestions
+  loadQuestions,
+  loadSkill,
+  Skill
 } from './courseLoader';
 import { Prefs, loadPrefs, savePrefs } from './prefs';
 
@@ -64,6 +67,8 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const [asId, setAsId] = useState('');
   const [mastery, setMastery] = useState<Mastery | null>(null);
+  const [skill, setSkill] = useState<Skill | null>(null);
+  const [coursePath, setCoursePath] = useState('');
 
   const dark = prefs.ui_theme === 'dark';
 
@@ -84,6 +89,7 @@ export default function App() {
     const courses = await loadCourses();
     if (courses.length > 0) {
       const course = courses[0];
+      setCoursePath(course.path);
       const catalog = await loadCatalog(course.path);
       if (catalog && catalog.entry_topics.length > 0) {
         const topic = await loadTopic(course.path, catalog.entry_topics[0]);
@@ -92,9 +98,11 @@ export default function App() {
           setAsId(as);
           const m = loadMastery(as);
           setMastery(m);
+          const skillData = await loadSkill(course.path, as);
+          setSkill(skillData);
           const md = await loadMarkdown(course.path, as);
           const qsRaw = await loadQuestions(course.path, as);
-          setMarkdown(md);
+          setMarkdown(md || 'Content unavailable');
           setQuestions(
             qsRaw.map(q => ({
               stem: q.stem,
@@ -133,7 +141,8 @@ export default function App() {
       : grade === 3
       ? Rating.Hard
       : Rating.Again;
-    const { card } = scheduler.next(mastery.card, new Date(), rating);
+    const now = new Date();
+    const { card } = scheduler.next(mastery.card, now, rating);
     let last = [...mastery.lastGrades, grade];
     if (last.length > 3) last = last.slice(-3);
     const updated: Mastery = {
@@ -149,6 +158,26 @@ export default function App() {
     };
     setMastery(updated);
     saveMastery(asId, updated);
+
+    if (grade >= 4 && skill && skill.prereqs) {
+      for (const pId of skill.prereqs) {
+        const weight = skill.weights?.[pId] ?? 1;
+        const pm = loadMastery(pId);
+        const res = scheduler.next(pm.card, now, Rating.Good);
+        const damp = Math.max(
+          1,
+          Math.round(ALPHA_IMPLICIT * weight * res.card.scheduled_days)
+        );
+        res.card.due = new Date(now.getTime() + damp * 86400000);
+        res.card.scheduled_days = damp;
+        const upd: Mastery = {
+          ...pm,
+          card: res.card,
+          status: 'in_progress'
+        };
+        saveMastery(pId, upd);
+      }
+    }
     nextQuestion();
   }
 
@@ -205,6 +234,8 @@ export default function App() {
               <div>
                 {loading ? (
                   <p>Loading...</p>
+                ) : markdown === 'Content unavailable' || questions.length === 0 ? (
+                  <p>Content unavailable</p>
                 ) : (
                   <>
                     <pre style={{ whiteSpace: 'pre-wrap' }}>{markdown}</pre>
