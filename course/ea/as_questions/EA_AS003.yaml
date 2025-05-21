@@ -1,0 +1,83 @@
+format: ASQ-v1
+id: EA_AS003
+pool:
+  - id: q01
+    stem: "You have 1 blocks. As you count each block, what number do you say last?"
+    choices: ['1','2','3','4']
+    correct: 0
+  - id: q02
+    stem: "You have 2 blocks. As you count each block, what number do you say last?"
+    choices: ['2','3','4','5']
+    correct: 0
+  - id: q03
+    stem: "You have 3 blocks. As you count each block, what number do you say last?"
+    choices: ['3','4','5','6']
+    correct: 0
+  - id: q04
+    stem: "You have 4 blocks. As you count each block, what number do you say last?"
+    choices: ['4','5','6','7']
+    correct: 0
+  - id: q05
+    stem: "You have 5 blocks. As you count each block, what number do you say last?"
+    choices: ['5','6','7','8']
+    correct: 0
+  - id: q06
+    stem: "You have 6 blocks. As you count each block, what number do you say last?"
+    choices: ['6','7','8','9']
+    correct: 0
+  - id: q07
+    stem: "You have 7 blocks. As you count each block, what number do you say last?"
+    choices: ['7','8','9','10']
+    correct: 0
+  - id: q08
+    stem: "You have 8 blocks. As you count each block, what number do you say last?"
+    choices: ['8','9','10','11']
+    correct: 0
+  - id: q09
+    stem: "You have 9 blocks. As you count each block, what number do you say last?"
+    choices: ['9','10','11','12']
+    correct: 0
+  - id: q10
+    stem: "You have 10 blocks. As you count each block, what number do you say last?"
+    choices: ['10','11','12','13']
+    correct: 0
+  - id: q11
+    stem: "Match each item with one number: You point to 1 stars and count '1,2,...'. What is the last number?"
+    choices: ['1','2','3','4']
+    correct: 0
+  - id: q12
+    stem: "Match each item with one number: You point to 2 stars and count '1,2,...'. What is the last number?"
+    choices: ['2','3','4','5']
+    correct: 0
+  - id: q13
+    stem: "Match each item with one number: You point to 3 stars and count '1,2,...'. What is the last number?"
+    choices: ['3','4','5','6']
+    correct: 0
+  - id: q14
+    stem: "Match each item with one number: You point to 4 stars and count '1,2,...'. What is the last number?"
+    choices: ['4','5','6','7']
+    correct: 0
+  - id: q15
+    stem: "Match each item with one number: You point to 5 stars and count '1,2,...'. What is the last number?"
+    choices: ['5','6','7','8']
+    correct: 0
+  - id: q16
+    stem: "Match each item with one number: You point to 6 stars and count '1,2,...'. What is the last number?"
+    choices: ['6','7','8','9']
+    correct: 0
+  - id: q17
+    stem: "Match each item with one number: You point to 7 stars and count '1,2,...'. What is the last number?"
+    choices: ['7','8','9','10']
+    correct: 0
+  - id: q18
+    stem: "Match each item with one number: You point to 8 stars and count '1,2,...'. What is the last number?"
+    choices: ['8','9','10','11']
+    correct: 0
+  - id: q19
+    stem: "Match each item with one number: You point to 9 stars and count '1,2,...'. What is the last number?"
+    choices: ['9','10','11','12']
+    correct: 0
+  - id: q20
+    stem: "Match each item with one number: You point to 10 stars and count '1,2,...'. What is the last number?"
+    choices: ['10','11','12','13']
+    correct: 0

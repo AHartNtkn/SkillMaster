@@ -1,0 +1,83 @@
+format: ASQ-v1
+id: EA_AS004
+pool:
+  - id: q01
+    stem: "Count the objects: [picture of 1 apples]. How many are there?"
+    choices: ['1','2','3','4']
+    correct: 0
+  - id: q02
+    stem: "Count the objects: [picture of 2 apples]. How many are there?"
+    choices: ['2','3','4','5']
+    correct: 0
+  - id: q03
+    stem: "Count the objects: [picture of 3 apples]. How many are there?"
+    choices: ['3','4','5','6']
+    correct: 0
+  - id: q04
+    stem: "Count the objects: [picture of 4 apples]. How many are there?"
+    choices: ['4','5','6','7']
+    correct: 0
+  - id: q05
+    stem: "Count the objects: [picture of 5 apples]. How many are there?"
+    choices: ['5','6','7','8']
+    correct: 0
+  - id: q06
+    stem: "Count the objects: [picture of 6 apples]. How many are there?"
+    choices: ['6','7','8','9']
+    correct: 0
+  - id: q07
+    stem: "Count the objects: [picture of 7 apples]. How many are there?"
+    choices: ['7','8','9','10']
+    correct: 0
+  - id: q08
+    stem: "Count the objects: [picture of 8 apples]. How many are there?"
+    choices: ['8','9','10','11']
+    correct: 0
+  - id: q09
+    stem: "Count the objects: [picture of 9 apples]. How many are there?"
+    choices: ['9','10','11','12']
+    correct: 0
+  - id: q10
+    stem: "Count the objects: [picture of 10 apples]. How many are there?"
+    choices: ['10','11','12','13']
+    correct: 0
+  - id: q11
+    stem: "How many objects are shown when you count to 1?"
+    choices: ['1','2','3','4']
+    correct: 0
+  - id: q12
+    stem: "How many objects are shown when you count to 2?"
+    choices: ['2','3','4','5']
+    correct: 0
+  - id: q13
+    stem: "How many objects are shown when you count to 3?"
+    choices: ['3','4','5','6']
+    correct: 0
+  - id: q14
+    stem: "How many objects are shown when you count to 4?"
+    choices: ['4','5','6','7']
+    correct: 0
+  - id: q15
+    stem: "How many objects are shown when you count to 5?"
+    choices: ['5','6','7','8']
+    correct: 0
+  - id: q16
+    stem: "How many objects are shown when you count to 6?"
+    choices: ['6','7','8','9']
+    correct: 0
+  - id: q17
+    stem: "How many objects are shown when you count to 7?"
+    choices: ['7','8','9','10']
+    correct: 0
+  - id: q18
+    stem: "How many objects are shown when you count to 8?"
+    choices: ['8','9','10','11']
+    correct: 0
+  - id: q19
+    stem: "How many objects are shown when you count to 9?"
+    choices: ['9','10','11','12']
+    correct: 0
+  - id: q20
+    stem: "How many objects are shown when you count to 10?"
+    choices: ['10','11','12','13']
+    correct: 0

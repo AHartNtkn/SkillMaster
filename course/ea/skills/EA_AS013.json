@@ -1,0 +1,7 @@
+{
+  "format": "Skill-v1",
+  "id": "EA:AS013",
+  "name": "Understand and use the plus (+) and equals (=) signs",
+  "prereqs": ["EA:AS001"],
+  "weights": {"EA:AS001": 1.0}
+}

@@ -1,0 +1,5 @@
+- [ ] Implement Redux-based state management for course progress
+- [ ] Load course data from filesystem via Tauri commands
+- [ ] Implement FSRS-5 scheduling logic and save data handling
+- [ ] Build React components following mockup.html for learning flow
+- [ ] Handle mixed quizzes and XP tracking per design_doc.md

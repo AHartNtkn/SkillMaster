@@ -1,0 +1,83 @@
+format: ASQ-v1
+id: EA_AS013
+pool:
+  - id: q01
+    stem: "What symbol is used for addition?"
+    choices: ['+','=','-','x']
+    correct: 0
+  - id: q02
+    stem: "What symbol is used for addition?"
+    choices: ['+','=','-','x']
+    correct: 0
+  - id: q03
+    stem: "What symbol is used for addition?"
+    choices: ['+','=','-','x']
+    correct: 0
+  - id: q04
+    stem: "What symbol is used for addition?"
+    choices: ['+','=','-','x']
+    correct: 0
+  - id: q05
+    stem: "What symbol is used for addition?"
+    choices: ['+','=','-','x']
+    correct: 0
+  - id: q06
+    stem: "What symbol is used for addition?"
+    choices: ['+','=','-','x']
+    correct: 0
+  - id: q07
+    stem: "What symbol is used for addition?"
+    choices: ['+','=','-','x']
+    correct: 0
+  - id: q08
+    stem: "What symbol is used for addition?"
+    choices: ['+','=','-','x']
+    correct: 0
+  - id: q09
+    stem: "What symbol is used for addition?"
+    choices: ['+','=','-','x']
+    correct: 0
+  - id: q10
+    stem: "What symbol is used for addition?"
+    choices: ['+','=','-','x']
+    correct: 0
+  - id: q11
+    stem: "Complete the sentence: 1 + 1 ____ 2"
+    choices: ['=','+','-','x']
+    correct: 0
+  - id: q12
+    stem: "Complete the sentence: 1 + 1 ____ 2"
+    choices: ['=','+','-','x']
+    correct: 0
+  - id: q13
+    stem: "Complete the sentence: 1 + 1 ____ 2"
+    choices: ['=','+','-','x']
+    correct: 0
+  - id: q14
+    stem: "Complete the sentence: 1 + 1 ____ 2"
+    choices: ['=','+','-','x']
+    correct: 0
+  - id: q15
+    stem: "Complete the sentence: 1 + 1 ____ 2"
+    choices: ['=','+','-','x']
+    correct: 0
+  - id: q16
+    stem: "Complete the sentence: 1 + 1 ____ 2"
+    choices: ['=','+','-','x']
+    correct: 0
+  - id: q17
+    stem: "Complete the sentence: 1 + 1 ____ 2"
+    choices: ['=','+','-','x']
+    correct: 0
+  - id: q18
+    stem: "Complete the sentence: 1 + 1 ____ 2"
+    choices: ['=','+','-','x']
+    correct: 0
+  - id: q19
+    stem: "Complete the sentence: 1 + 1 ____ 2"
+    choices: ['=','+','-','x']
+    correct: 0
+  - id: q20
+    stem: "Complete the sentence: 1 + 1 ____ 2"
+    choices: ['=','+','-','x']
+    correct: 0
