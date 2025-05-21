@@ -1,0 +1,31 @@
+# Node / Vite
+node_modules/
+dist/
+.env
+.env.*
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Tauri / Rust
+src-tauri/target/
+src-tauri/Cargo.lock
+# Different operating systems will generate different files
+# based on the chosen target, for example:
+# src-tauri/target/release/bundle/msi/
+# src-tauri/target/release/bundle/appimage/
+# src-tauri/target/release/bundle/dmg/
+# src-tauri/target/release/bundle/deb/
+
+# Application specific
+.cache/
+logs/
+save/ # If user save data is not to be versioned
+*.sqlite
+*.db
+
+# IDE / OS specific
+.DS_Store
+.vscode/
+*.swp
+*~ 
