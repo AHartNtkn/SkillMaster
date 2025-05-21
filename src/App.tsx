@@ -71,6 +71,7 @@ export default function App() {
   const [mastery, setMastery] = useState<Mastery | null>(null);
   const [skill, setSkill] = useState<Skill | null>(null);
   const [coursePath, setCoursePath] = useState('');
+  const [consecutiveEasyCount, setConsecutiveEasyCount] = useState(0);
 
   const dark = prefs.ui_theme === 'dark';
 
@@ -88,6 +89,7 @@ export default function App() {
     setCurrentQ(0);
     setSelected(null);
     setLoading(true);
+    setConsecutiveEasyCount(0);
     const courses = await loadCourses();
     if (courses.length > 0) {
       const course = courses[0];
@@ -135,7 +137,8 @@ export default function App() {
   }
 
   function applyGrade(grade: number) {
-    if (!mastery || !skill) return;
+    if (!mastery || !skill || !asId) return;
+
     const store: Record<string, Mastery> = {};
     store[asId] = mastery;
     if (skill.prereqs) {
@@ -143,31 +146,41 @@ export default function App() {
         store[pid] = loadMastery(pid);
       }
     }
-    const updated = engineApplyGrade(store[asId], grade) as Mastery;
-    store[asId] = updated;
+
+    const updatedMastery = engineApplyGrade(store[asId], grade) as Mastery;
+    store[asId] = updatedMastery;
+
     const newPrefs = {
       ...prefs,
       xp_since_mixed_quiz: prefs.xp_since_mixed_quiz + XP_PER_AS_QUESTION,
     };
+
     applyImplicitPrereqs(skill, store, grade);
+
     for (const id of Object.keys(store)) {
       saveMastery(id, store[id]);
     }
-    setMastery(store[asId]);
+
+    const newConsecutiveEasyCount = grade === 5 ? consecutiveEasyCount + 1 : 0;
+
+    setMastery(updatedMastery);
     setPrefs(newPrefs);
-    nextQuestion();
+    setConsecutiveEasyCount(newConsecutiveEasyCount);
+
+    const lessonComplete = newConsecutiveEasyCount >= 2 || updatedMastery.next_q_index >= questions.length;
+
+    if (lessonComplete) {
+      setAlertMsg('Lesson complete!');
+      exitLearning();
+    } else {
+      goToNextQuestion(updatedMastery.next_q_index);
+    }
   }
 
-  function nextQuestion() {
-    const idx = mastery ? mastery.next_q_index : currentQ + 1;
-    if (idx < questions.length) {
-      setCurrentQ(idx);
-      setPhase('question');
-      setSelected(null);
-    } else {
-      setAlertMsg('Skill complete!');
-      exitLearning();
-    }
+  function goToNextQuestion(nextQIndex: number) {
+    setCurrentQ(nextQIndex);
+    setPhase('question');
+    setSelected(null);
   }
 
   function exitLearning() {
@@ -179,6 +192,7 @@ export default function App() {
     setPhase('exposition');
     setCurrentQ(0);
     setSelected(null);
+    setConsecutiveEasyCount(0);
   }
 
   function confirmExit() {
@@ -207,7 +221,7 @@ export default function App() {
             <div style={{ marginBottom: '0.5rem' }}>
               <button onClick={confirmExit}>Exit</button>
               <span style={{ marginLeft: '1rem' }}>
-                Question {currentQ + 1} of {questions.length}
+                Question {currentQ + 1} 
               </span>
             </div>
             {phase === 'exposition' && (
