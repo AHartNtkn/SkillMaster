@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { fsrs, Rating, createEmptyCard, Card } from 'ts-fsrs';
+
+const scheduler = fsrs();
 import CourseLibrary from './CourseLibrary';
 import {
   loadCourses,
@@ -15,6 +18,35 @@ interface Question {
   explanation: string;
 }
 
+interface Mastery {
+  status: 'unseen' | 'in_progress' | 'mastered';
+  card: Card;
+  n: number;
+  lastGrades: number[];
+  next_q_index: number;
+}
+
+function loadMastery(asId: string): Mastery {
+  const raw = localStorage.getItem(`mastery_${asId}`);
+  if (!raw) {
+    return {
+      status: 'unseen',
+      card: createEmptyCard(new Date()),
+      n: 0,
+      lastGrades: [],
+      next_q_index: 0
+    };
+  }
+  const obj = JSON.parse(raw);
+  obj.card.due = new Date(obj.card.due);
+  if (obj.card.last_review) obj.card.last_review = new Date(obj.card.last_review);
+  return obj as Mastery;
+}
+
+function saveMastery(asId: string, m: Mastery) {
+  localStorage.setItem(`mastery_${asId}`, JSON.stringify(m));
+}
+
 type Screen = 'home' | 'learning' | 'progress' | 'library' | 'settings';
 type Phase = 'exposition' | 'question' | 'feedback';
 
@@ -29,6 +61,8 @@ export default function App() {
   const [markdown, setMarkdown] = useState('');
   const [questions, setQuestions] = useState<Question[]>([]);
   const [loading, setLoading] = useState(false);
+  const [asId, setAsId] = useState('');
+  const [mastery, setMastery] = useState<Mastery | null>(null);
 
   useEffect(() => {
     document.body.classList.toggle('dark', dark);
@@ -47,9 +81,12 @@ export default function App() {
       if (catalog && catalog.entry_topics.length > 0) {
         const topic = await loadTopic(course.path, catalog.entry_topics[0]);
         if (topic && topic.ass.length > 0) {
-          const asId = topic.ass[0];
-          const md = await loadMarkdown(course.path, asId);
-          const qsRaw = await loadQuestions(course.path, asId);
+          const as = topic.ass[0];
+          setAsId(as);
+          const m = loadMastery(as);
+          setMastery(m);
+          const md = await loadMarkdown(course.path, as);
+          const qsRaw = await loadQuestions(course.path, as);
           setMarkdown(md);
           setQuestions(
             qsRaw.map(q => ({
@@ -59,6 +96,7 @@ export default function App() {
               explanation: q.solution || ''
             }))
           );
+          setCurrentQ(m.next_q_index);
         }
       }
     }
@@ -79,14 +117,38 @@ export default function App() {
     setPhase('feedback');
   }
 
-  function rateAnswer() {
+  function applyGrade(grade: number) {
+    if (!mastery) return;
+    const rating = grade === 5
+      ? Rating.Easy
+      : grade === 4
+      ? Rating.Good
+      : grade === 3
+      ? Rating.Hard
+      : Rating.Again;
+    const { card } = scheduler.next(mastery.card, new Date(), rating);
+    let last = [...mastery.lastGrades, grade];
+    if (last.length > 3) last = last.slice(-3);
+    const updated: Mastery = {
+      ...mastery,
+      card,
+      n: mastery.n + 1,
+      lastGrades: last,
+      next_q_index: mastery.next_q_index + 1,
+      status:
+        mastery.n + 1 >= 3 && last.length >= 3 && last.every(g => g === 5)
+          ? 'mastered'
+          : 'in_progress'
+    };
+    setMastery(updated);
+    saveMastery(asId, updated);
     nextQuestion();
   }
 
   function nextQuestion() {
-    const next = currentQ + 1;
-    if (next < questions.length) {
-      setCurrentQ(next);
+    const idx = mastery ? mastery.next_q_index : currentQ + 1;
+    if (idx < questions.length) {
+      setCurrentQ(idx);
       setPhase('question');
       setSelected(null);
     } else {
@@ -96,6 +158,7 @@ export default function App() {
   }
 
   function exitLearning() {
+    if (mastery && asId) saveMastery(asId, mastery);
     setScreen('home');
     setPhase('exposition');
     setCurrentQ(0);
@@ -172,14 +235,25 @@ export default function App() {
             {phase === 'feedback' && (
               <div>
                 {selected === questions[currentQ].correct ? (
-                  <p style={{ color: 'green' }}>Correct!</p>
+                  <>
+                    <p style={{ color: 'green' }}>Correct!</p>
+                    <p>{questions[currentQ].explanation}</p>
+                    <div style={{ margin: '0.5rem 0' }}>
+                      <button onClick={() => applyGrade(5)}>Easy</button>
+                      <button onClick={() => applyGrade(4)}>Okay</button>
+                      <button onClick={() => applyGrade(3)}>Hard</button>
+                      <button onClick={() => applyGrade(2)}>Again</button>
+                    </div>
+                  </>
                 ) : (
-                  <p style={{ color: 'red' }}>Incorrect.</p>
+                  <>
+                    <p style={{ color: 'red' }}>Incorrect.</p>
+                    <p>{questions[currentQ].explanation}</p>
+                    <div style={{ margin: '0.5rem 0' }}>
+                      <button onClick={() => applyGrade(1)}>Continue</button>
+                    </div>
+                  </>
                 )}
-                <p>{questions[currentQ].explanation}</p>
-                <div style={{ margin: '0.5rem 0' }}>
-                  <button onClick={rateAnswer}>Next Question</button>
-                </div>
               </div>
             )}
           </div>
