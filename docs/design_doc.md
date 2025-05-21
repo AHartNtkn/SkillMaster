@@ -13,7 +13,7 @@ The **Atomic Skill (AS)** is the smallest learning unit.
 * **Scope** – one bite‑sized skill or concept (e.g., “Solve a quadratic by factoring”).  Each topic lists one or more ASs.
 * **Content** – Markdown exposition (`as_md/<as>.md`) plus ≥ 20 MCQ items (`as_questions/<as>.yaml`).
 * **ID format** – `<COURSE>:AS<topic>_<index>` (e.g., `ALG1:AS045_2`).
-* **Lifecycle** – *unseen* → first attempt; *in\_progress* until SM‑2 mastery; *mastered* when `n ≥ 3` and last three grades = 5.
+* **Lifecycle** – *unseen* → first attempt; *in\_progress* until FSRS-5 mastery; *mastered* when `n ≥ 3` and last three grades = 5.
 * **Practice contexts** – lesson, scheduled reviews, and mixed‑quiz checks all operate at the AS level.
 
 ---
@@ -32,10 +32,10 @@ app_root/
     geometry/                  # course id = GEOM1
       …
   save/
-    mastery.json               # SM-2 state per AS
+    mastery.json               # FSRS-5 state per AS
     attempt_window.json        # recent grades per AS & topic quiz
     xp.json                    # XP transactions
-    prefs.json                 # ui prefs, last_topic, xp_since_mixed_quiz
+    prefs.json                 # ui prefs, last_as, xp_since_mixed_quiz
   .cache/index.db              # optional SQLite mirror
 ```
 
@@ -171,7 +171,7 @@ YAML list of ≥ 20 MCQ items in fixed order. Question IDs are unique **within
 ```jsonc
 {
   "xp_since_mixed_quiz":40,
-  "last_topic":"ALG1:T045",
+  "last_as":"ALG1:AS045_2",
   "ui_theme":"default"
 }
 ```
@@ -193,9 +193,19 @@ const fsrs = new Scheduler();
 
 ### 5.1 Grade Mapping
 
-Incorrect = 1. UI contains options for (easy, okay, hard, and again), shown after correct answer, for ratings of 5-2.
+* **Incorrect answer** → grade **1**.
+* **Correct answer** → UI prompts learner to self‑rate:
 
-### 5.2 Saved AS state (`mastery.json`)
+  | Button    | FSRS grade |
+  | --------- | ---------- |
+  | **Easy**  | 5          |
+  | **Okay**  | 4          |
+  | **Hard**  | 3          |
+  | **Again** | 2          |
+
+UI passes the chosen grade (5‑2) to `fsrs.nextReview()`. If the learner skips rating (timeout), default to **grade 4**.
+
+### 5.2 Saved AS state (`mastery.json`) Saved AS state (`mastery.json`)
 
 Each AS stores exactly the fields required by FSRS‑5:
 
@@ -226,11 +236,16 @@ mastery[asId] = {...newState, status:'in_progress', next_q_index:advanceIdx()};
 Performed only when **grade ≥ 4** on the advanced AS.
 
 ```ts
-for (const P of prereqTopics(topic)) {
-  const virtGrade = Rating.Good; // 4 corresponds to A‑ level credit
+for (const P of prereqASs(mainAS)) {
+  const virtGrade = Rating.Good; // virtual grade 4
   const [stateP] = fsrs.nextReview(mastery[P], virtGrade);
-  const dampInterval = Math.max(1, Math.round(alpha_implicit * weight(topic,P) * stateP.interval));
-  mastery[P] = {...stateP, interval: dampInterval, next_due: addDays(now, dampInterval)};
+  const dampInterval = Math.max(1, Math.round(alpha_implicit * weight(mainAS, P) * stateP.interval));
+  mastery[P] = {
+    ...stateP,
+    interval: dampInterval,
+    next_due: addDays(now, dampInterval)
+  };
+};
 }
 ```
 
@@ -254,10 +269,10 @@ Status transitions: **unseen → in\_progress → mastered**.
 
 1. Markdown exposition.
 2. Serve questions sequentially until **two consecutive grades = 5** or pool exhausted.
-3. Update SM‑2 each attempt; advance `next_q_index`.
+3. Update FSRS-5 each attempt; advance `next_q_index`.
 4. If mastery achieved during session, mark AS `mastered`.
 
-If pool exhausts without two 5s, AS stays `in_progress` and will resurface via SM‑2 (interval = 1 day after mistakes).
+If pool exhausts without two 5s, AS stays `in_progress` and will resurface via FSRS-5 (interval = 1 day after mistakes).
 
 ---
 
@@ -278,7 +293,7 @@ base: review 5 | new_as 3 | mixed_quiz 2
 
 overdue_bonus          = clamp(floor(days_overdue),0,5)
 foundational_gap_bonus = 3 * overdue_prereqs_covered(candidate_as)
-distance_bonus         = min(5, graph_distance(prefs.last_topic, candidate_as.topic))
+distance_bonus         = min(5, graph_distance(prefs.last_as, candidate_as))))
 ```
 
 `overdue_prereqs_covered` counts prerequisite topics whose **any** AS is overdue.
@@ -286,10 +301,10 @@ distance_bonus         = min(5, graph_distance(prefs.last_topic, candidate_as.to
 
 ### 8.3 Execution Rules
 
-* Reject candidate if same topic as `prefs.last_topic` and elapsed < review\_gap\_min\_m.
+* Reject candidate if same topic as `prefs.last_as` and elapsed < review\_gap\_min\_m.
 * Awards: +10 XP per AS question, +20 per mixed‑quiz question.
 * Increment `xp_since_mixed_quiz` after each award; reset to 0 after full mixed quiz submission.
-* Update `prefs.last_topic` on task completion.
+* Update `prefs.last_as` on task completion.
 
 ---
 
@@ -306,7 +321,7 @@ trigger: xp_since_mixed_quiz ≥ 150
 eligible = {AS | AS.mastered AND last_attempt ≤ 30 days}
 weight  ∝ days_overdue (0 if not overdue)
 select 15 questions cycling deterministically through each AS’s next_q_index
-record grades, update SM‑2, advance indices
+record grades, update FSRS-5, advance indices
 after submission → xp_since_mixed_quiz = 0
 ```
 
@@ -319,31 +334,6 @@ after submission → xp_since_mixed_quiz = 0
 ---
 
 ## 12 UI Components
-
-* **Dashboard** – XP bar, due count, next task.
-* **Lesson Player** – Markdown expos, MCQs.
-* **Review Player** – MCQs for a single AS.
-* **Mixed Quiz Player** – 15 MCQs.
-* **Progress Graph** – D3 force layout; colors: grey unseen, blue in-progress, green mastered, red overdue.
-
-### 12.1 Developer Hot‑Reload
-
-* File‑watcher monitors `course/` and `save/` for changes.
-* On JSON/YAML modification:
-
-  * Validate against JSON Schema.
-  * If valid → patch Redux store (topics, AS pools, etc.) without full reload.
-  * If invalid → disable only the affected AS/topic; banner lists filename and error.
-* Graph distance cache & index.db are rebuilt automatically if any topic file changes.
-
----
-
-* **Dashboard** – XP bar, due count, next task.
-* **Lesson Player** – Markdown expos, MCQs.
-* **Review Player** – MCQs for a single AS.
-* **Mixed Quiz Player** – 15 MCQs.
-* **Progress Graph** – D3 force layout; colors: grey unseen, blue in‑progress, green mastered, red overdue.
-* File‑watcher reloads modified JSON/YAML; invalid items disabled.
 
 ---
 
@@ -426,8 +416,8 @@ pool:
 
 | Platform                                   | API                  | Path                                  |
 | ------------------------------------------ | -------------------- | ------------------------------------- |
-| Desktop                                    | Tauri FS             | `~/.skillmaster/`                     |
-| Android                                    | Capacitor Filesystem | `Android/data/com.skillmaster/files/` |
+| Desktop                                    | Tauri FS             | `~/.mathacademy/`                     |
+| Android                                    | Capacitor Filesystem | `Android/data/com.mathacademy/files/` |
 | Atomic write: write `.tmp`, fsync, rename. |                      |                                       |
 
 ## 21 Profiles
@@ -466,15 +456,15 @@ CSP: `default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'
 
 | Target                             | Artifact               | Notes            |
 | ---------------------------------- | ---------------------- | ---------------- |
-| Windows 10+                        | `skillmaster.exe`      | portable, signed |
-| Linux (glibc ≥ 2.27)               | `skillmaster.AppImage` | portable         |
-| Android (MinSdk23)                 | `skillmaster.apk`      | side‑load MVP    |
+| Windows 10+                        | `mathacademy.exe`      | portable, signed |
+| Linux (glibc ≥ 2.27)               | `mathacademy.AppImage` | portable         |
+| Android (MinSdk23)                 | `mathacademy.apk`      | side‑load MVP    |
 | No installer; double‑click to run. |                        |                  |
 
 ## 29 Testing & QA Checklist
 
 1. First‑run loads sample course.
-2. Answer 20 AS questions – intervals grow as per SM‑2.
+2. Answer 20 AS questions – intervals grow as per FSRS-5.
 3. Implicit prerequisite credit updates `next_due`.
 4. Mixed quiz triggers at 150 XP.
 5. Non‑interference gap enforced (≥10 min before same topic).
