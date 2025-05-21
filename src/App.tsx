@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { fsrs, Rating, createEmptyCard, Card } from 'ts-fsrs';
-
-const scheduler = fsrs();
-const ALPHA_IMPLICIT = 0.3;
+import { Card, createEmptyCard } from 'ts-fsrs';
+import {
+  applyGrade as engineApplyGrade,
+  applyImplicitPrereqs,
+  XP_PER_AS_QUESTION,
+} from './engine.js';
 import CourseLibrary from './CourseLibrary';
 import {
   loadCourses,
@@ -69,6 +71,7 @@ export default function App() {
   const [mastery, setMastery] = useState<Mastery | null>(null);
   const [skill, setSkill] = useState<Skill | null>(null);
   const [coursePath, setCoursePath] = useState('');
+  const [consecutiveEasyCount, setConsecutiveEasyCount] = useState(0);
 
   const dark = prefs.ui_theme === 'dark';
 
@@ -86,6 +89,7 @@ export default function App() {
     setCurrentQ(0);
     setSelected(null);
     setLoading(true);
+    setConsecutiveEasyCount(0);
     const courses = await loadCourses();
     if (courses.length > 0) {
       const course = courses[0];
@@ -133,72 +137,62 @@ export default function App() {
   }
 
   function applyGrade(grade: number) {
-    if (!mastery) return;
-    const rating = grade === 5
-      ? Rating.Easy
-      : grade === 4
-      ? Rating.Good
-      : grade === 3
-      ? Rating.Hard
-      : Rating.Again;
-    const now = new Date();
-    const { card } = scheduler.next(mastery.card, now, rating);
-    let last = [...mastery.lastGrades, grade];
-    if (last.length > 3) last = last.slice(-3);
-    const updated: Mastery = {
-      ...mastery,
-      card,
-      n: mastery.n + 1,
-      lastGrades: last,
-      next_q_index: mastery.next_q_index + 1,
-      status:
-        mastery.n + 1 >= 3 && last.length >= 3 && last.every(g => g === 5)
-          ? 'mastered'
-          : 'in_progress'
-    };
-    setMastery(updated);
-    saveMastery(asId, updated);
+    if (!mastery || !skill || !asId) return;
 
-    if (grade >= 4 && skill && skill.prereqs) {
-      for (const pId of skill.prereqs) {
-        const weight = skill.weights?.[pId] ?? 1;
-        const pm = loadMastery(pId);
-        const res = scheduler.next(pm.card, now, Rating.Good);
-        const damp = Math.max(
-          1,
-          Math.round(ALPHA_IMPLICIT * weight * res.card.scheduled_days)
-        );
-        res.card.due = new Date(now.getTime() + damp * 86400000);
-        res.card.scheduled_days = damp;
-        const upd: Mastery = {
-          ...pm,
-          card: res.card,
-          status: 'in_progress'
-        };
-        saveMastery(pId, upd);
+    const store: Record<string, Mastery> = {};
+    store[asId] = mastery;
+    if (skill.prereqs) {
+      for (const pid of skill.prereqs) {
+        store[pid] = loadMastery(pid);
       }
     }
-    nextQuestion();
+
+    const updatedMastery = engineApplyGrade(store[asId], grade) as Mastery;
+    store[asId] = updatedMastery;
+
+    const newPrefs = {
+      ...prefs,
+      xp_since_mixed_quiz: prefs.xp_since_mixed_quiz + XP_PER_AS_QUESTION,
+    };
+
+    applyImplicitPrereqs(skill, store, grade);
+
+    for (const id of Object.keys(store)) {
+      saveMastery(id, store[id]);
+    }
+
+    const newConsecutiveEasyCount = grade === 5 ? consecutiveEasyCount + 1 : 0;
+
+    setMastery(updatedMastery);
+    setPrefs(newPrefs);
+    setConsecutiveEasyCount(newConsecutiveEasyCount);
+
+    const lessonComplete = newConsecutiveEasyCount >= 2 || updatedMastery.next_q_index >= questions.length;
+
+    if (lessonComplete) {
+      setAlertMsg('Lesson complete!');
+      exitLearning();
+    } else {
+      goToNextQuestion(updatedMastery.next_q_index);
+    }
   }
 
-  function nextQuestion() {
-    const idx = mastery ? mastery.next_q_index : currentQ + 1;
-    if (idx < questions.length) {
-      setCurrentQ(idx);
-      setPhase('question');
-      setSelected(null);
-    } else {
-      setAlertMsg('Skill complete!');
-      exitLearning();
-    }
+  function goToNextQuestion(nextQIndex: number) {
+    setCurrentQ(nextQIndex);
+    setPhase('question');
+    setSelected(null);
   }
 
   function exitLearning() {
-    if (mastery && asId) saveMastery(asId, mastery);
+    if (mastery && asId) {
+      saveMastery(asId, mastery);
+      setPrefs(p => ({ ...p, last_as: asId }));
+    }
     setScreen('home');
     setPhase('exposition');
     setCurrentQ(0);
     setSelected(null);
+    setConsecutiveEasyCount(0);
   }
 
   function confirmExit() {
@@ -227,7 +221,7 @@ export default function App() {
             <div style={{ marginBottom: '0.5rem' }}>
               <button onClick={confirmExit}>Exit</button>
               <span style={{ marginLeft: '1rem' }}>
-                Question {currentQ + 1} of {questions.length}
+                Question {currentQ + 1} 
               </span>
             </div>
             {phase === 'exposition' && (
