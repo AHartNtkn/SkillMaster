@@ -10,11 +10,12 @@ const DEFAULT_PREFS: Prefs = {
   ui_theme: 'default'
 };
 
+import { ensureSaveDir, loadPrefs as loadPrefsFile, savePrefs as savePrefsFile } from './storage';
+
 export function loadPrefs(): Prefs {
+  ensureSaveDir();
   try {
-    const raw = localStorage.getItem('prefs');
-    if (!raw) return { ...DEFAULT_PREFS };
-    const obj = JSON.parse(raw);
+    const obj = loadPrefsFile();
     return { ...DEFAULT_PREFS, ...obj } as Prefs;
   } catch (e) {
     console.error('Failed to load prefs', e);
@@ -24,7 +25,7 @@ export function loadPrefs(): Prefs {
 
 export function savePrefs(p: Prefs) {
   try {
-    localStorage.setItem('prefs', JSON.stringify(p));
+    savePrefsFile(p);
   } catch (e) {
     console.error('Failed to save prefs', e);
   }

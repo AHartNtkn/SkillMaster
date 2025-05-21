@@ -1,4 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import {
+  loadXpLog as loadXpFile,
+  loadSkillLog as loadSkillFile,
+  saveXpLog as saveXpFile,
+  saveSkillLog as saveSkillFile,
+  ensureSaveDir,
+} from './storage';
 
 export interface XpEntry {
   id: number;
@@ -15,26 +22,18 @@ export interface SkillEntry {
 }
 
 function loadXpLog(): XpEntry[] {
+  ensureSaveDir();
   try {
-    const raw = localStorage.getItem('xp_log');
-    if (!raw) return [];
-    const obj = JSON.parse(raw);
-    if (Array.isArray(obj.log)) return obj.log as XpEntry[];
-    if (Array.isArray(obj)) return obj as XpEntry[];
-    return [];
+    return loadXpFile();
   } catch {
     return [];
   }
 }
 
 function loadSkillLog(): SkillEntry[] {
+  ensureSaveDir();
   try {
-    const raw = localStorage.getItem('skill_log');
-    if (!raw) return [];
-    const obj = JSON.parse(raw);
-    if (Array.isArray(obj.log)) return obj.log as SkillEntry[];
-    if (Array.isArray(obj)) return obj as SkillEntry[];
-    return [];
+    return loadSkillFile();
   } catch {
     return [];
   }
@@ -42,13 +41,13 @@ function loadSkillLog(): SkillEntry[] {
 
 function saveXpLog(log: XpEntry[]) {
   try {
-    localStorage.setItem('xp_log', JSON.stringify({ format: 'XP-v1', log }));
+    saveXpFile(log);
   } catch {}
 }
 
 function saveSkillLog(log: SkillEntry[]) {
   try {
-    localStorage.setItem('skill_log', JSON.stringify({ format: 'SkillLog-v1', log }));
+    saveSkillFile(log);
   } catch {}
 }
 

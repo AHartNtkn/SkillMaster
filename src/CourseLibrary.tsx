@@ -20,14 +20,17 @@ interface Mastery {
   next_q_index: number;
 }
 
+import { ensureSaveDir, loadMasteryStore } from './storage';
+
 function loadMastery(asId: string): Mastery {
+  ensureSaveDir();
   try {
-    const raw = localStorage.getItem(`mastery_${asId}`);
-    if (!raw) return initMastery();
-    const obj = JSON.parse(raw);
-    obj.card.due = new Date(obj.card.due);
-    if (obj.card.last_review) obj.card.last_review = new Date(obj.card.last_review);
-    return obj as Mastery;
+    const store = loadMasteryStore();
+    const m = store.ass[asId];
+    if (!m) return initMastery();
+    m.card.due = new Date(m.card.due);
+    if (m.card.last_review) m.card.last_review = new Date(m.card.last_review);
+    return m as Mastery;
   } catch (e) {
     console.error('Failed to load mastery', e);
     return initMastery();

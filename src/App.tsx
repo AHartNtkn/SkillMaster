@@ -20,6 +20,15 @@ import {
   Skill
 } from './courseLoader';
 import { Prefs, loadPrefs, savePrefs } from './prefs';
+import {
+  ensureSaveDir,
+  loadMasteryStore,
+  saveMasteryStore,
+  loadXpLog,
+  loadSkillLog,
+  saveXpLog,
+  saveSkillLog,
+} from './storage';
 
 interface Question {
   stem: string;
@@ -37,24 +46,28 @@ interface Mastery {
 }
 
 function loadMastery(asId: string): Mastery {
-  const raw = localStorage.getItem(`mastery_${asId}`);
-  if (!raw) {
+  ensureSaveDir();
+  const store = loadMasteryStore();
+  const data = store.ass[asId];
+  if (!data) {
     return {
       status: 'unseen',
       card: createEmptyCard(new Date()),
       n: 0,
       lastGrades: [],
-      next_q_index: 0
+      next_q_index: 0,
     };
   }
-  const obj = JSON.parse(raw);
-  obj.card.due = new Date(obj.card.due);
-  if (obj.card.last_review) obj.card.last_review = new Date(obj.card.last_review);
-  return obj as Mastery;
+  data.card.due = new Date(data.card.due);
+  if (data.card.last_review) data.card.last_review = new Date(data.card.last_review);
+  return data as Mastery;
 }
 
 function saveMastery(asId: string, m: Mastery) {
-  localStorage.setItem(`mastery_${asId}`, JSON.stringify(m));
+  ensureSaveDir();
+  const store = loadMasteryStore();
+  store.ass[asId] = m;
+  saveMasteryStore(store);
 }
 
 type Screen = 'home' | 'learning' | 'progress' | 'library' | 'settings';
@@ -105,34 +118,21 @@ export default function App() {
       let currentNewSkillsCount = 0;
       const now = new Date();
 
-      for (let i = 0; i < localStorage.length; i++) {
-        const key = localStorage.key(i);
-        if (key && key.startsWith('mastery_')) {
-          const raw = localStorage.getItem(key);
-          if (raw) {
-            try {
-              const parsedData = JSON.parse(raw);
-              // Reconstruct Mastery object with proper Date types for card
-              const masteryItem: Mastery = {
-                ...parsedData,
-                card: {
-                  ...parsedData.card,
-                  due: parsedData.card && parsedData.card.due ? new Date(parsedData.card.due) : new Date(0), // Default to epoch if undefined after parse
-                  last_review: parsedData.card && parsedData.card.last_review ? new Date(parsedData.card.last_review) : undefined,
-                }
-              };
-
-              if (masteryItem.card && masteryItem.card.due <= now) {
-                currentDueSkillCount++;
-              }
-
-              if (masteryItem.status === 'unseen') {
-                currentNewSkillsCount++;
-              }
-            } catch (e) {
-              console.error(`Failed to parse or process mastery data for key: ${key}`, e);
-            }
-          }
+      const store = loadMasteryStore();
+      for (const m of Object.values(store.ass)) {
+        const masteryItem: Mastery = {
+          ...m,
+          card: {
+            ...m.card,
+            due: new Date((m.card as any).due),
+            last_review: m.card && (m.card as any).last_review ? new Date((m.card as any).last_review) : undefined,
+          },
+        };
+        if (masteryItem.card && masteryItem.card.due <= now) {
+          currentDueSkillCount++;
+        }
+        if (masteryItem.status === 'unseen') {
+          currentNewSkillsCount++;
         }
       }
       setDueSkillCount(currentDueSkillCount);
@@ -331,15 +331,13 @@ export default function App() {
   }
 
   function exportData() {
-    const out: Record<string, unknown> = {};
-    for (let i = 0; i < localStorage.length; i++) {
-      const k = localStorage.key(i);
-      if (!k) continue;
-      if (k.startsWith('mastery_') || k === 'prefs') {
-        const val = localStorage.getItem(k);
-        if (val) out[k] = JSON.parse(val);
-      }
-    }
+    ensureSaveDir();
+    const out = {
+      mastery: loadMasteryStore(),
+      prefs: loadPrefs(),
+      xp: { log: loadXpLog() },
+      skill_log: { log: loadSkillLog() },
+    };
     const blob = new Blob([JSON.stringify(out, null, 2)], {
       type: 'application/json'
     });
@@ -359,11 +357,10 @@ export default function App() {
       try {
         const data = JSON.parse(ev.target?.result as string);
         if (typeof data !== 'object' || data === null) throw new Error();
-        for (const [k, v] of Object.entries(data)) {
-          if (k.startsWith('mastery_') || k === 'prefs') {
-            localStorage.setItem(k, JSON.stringify(v));
-          }
-        }
+        if (data.mastery) saveMasteryStore(data.mastery);
+        if (data.prefs) savePrefs(data.prefs as Prefs);
+        if (data.xp && Array.isArray(data.xp.log)) saveXpLog(data.xp.log);
+        if (data.skill_log && Array.isArray(data.skill_log.log)) saveSkillLog(data.skill_log.log);
         setPrefs(loadPrefs());
         setAlertMsg('Import complete');
       } catch {
@@ -375,13 +372,11 @@ export default function App() {
   }
 
   function resetData() {
-    for (let i = localStorage.length - 1; i >= 0; i--) {
-      const k = localStorage.key(i);
-      if (!k) continue;
-      if (k.startsWith('mastery_') || k === 'prefs') {
-        localStorage.removeItem(k);
-      }
-    }
+    ensureSaveDir();
+    saveMasteryStore({ format: 'Mastery-v2', ass: {} });
+    savePrefs({ xp_since_mixed_quiz: 0, last_as: '', ui_theme: 'default' });
+    saveXpLog([]);
+    saveSkillLog([]);
     setPrefs(loadPrefs());
     setAlertMsg('All data reset');
   }
