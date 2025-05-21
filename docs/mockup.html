@@ -7,9 +7,539 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <script src="https://unpkg.com/lucide@0.378.0/dist/umd/lucide.min.js"></script>
-    <!-- Styles omitted for brevity -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            overscroll-behavior: none; 
+        }
+        .tab-active {
+            color: #3b82f6; /* blue-500 */
+            border-top-color: #3b82f6;
+        }
+        .tab-inactive {
+            color: #6b7280; /* gray-500 */
+        }
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #9ca3af; /* gray-400 */
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6b7280; /* gray-500 */
+        }
+        ::-webkit-scrollbar-track {
+            background: #f3f4f6; /* gray-100 */
+            border-radius: 3px;
+        }
+        [x-cloak] { display: none !important; }
+
+        /* Basic Dark Mode Styles (Demonstration) */
+        .dark-mode {
+            background-color: #1f2937; /* gray-800 */
+            color: #f3f4f6; /* gray-100 */
+        }
+        .dark-mode #main-app-container,
+        .dark-mode .bg-white, 
+        .dark-mode .bg-gray-50,
+        .dark-mode .bg-blue-50 {
+            background-color: #374151; /* gray-700 */
+            border-color: #4b5563; /* gray-600 */
+        }
+        .dark-mode #tab-bar {
+             background-color: #374151; /* gray-700 */
+             border-top-color: #4b5563; /* gray-600 */
+        }
+        .dark-mode .text-gray-800,
+        .dark-mode .text-gray-700,
+        .dark-mode .text-gray-600,
+        .dark-mode .text-gray-500 {
+            color: #d1d5db; /* gray-300 */
+        }
+         .dark-mode .text-blue-700 {
+            color: #60a5fa; /* blue-400 */
+        }
+        .dark-mode .text-blue-600 {
+            color: #93c5fd; /* blue-300 */
+        }
+        .dark-mode .tab-active {
+            color: #60a5fa; /* blue-400 */
+            border-top-color: #60a5fa;
+        }
+        .dark-mode .tab-inactive {
+            color: #9ca3af; /* gray-400 */
+        }
+        .dark-mode .prose { /* Basic prose dark mode */
+            color: #d1d5db;
+        }
+        .dark-mode .prose code {
+            color: #e5e7eb;
+        }
+        .dark-mode .prose strong {
+            color: #f3f4f6;
+        }
+        .dark-mode input[type="checkbox"] {
+            background-color: #4b5563;
+            border-color: #6b7280;
+        }
+        .dark-mode .border-gray-300 {
+            border-color: #4b5563;
+        }
+         .dark-mode .bg-gray-100 { /* Choice buttons */
+            background-color: #4b5563; /* gray-600 */
+        }
+        .dark-mode .bg-gray-100:hover {
+             background-color: #525c6b; /* slightly lighter gray-600 */
+        }
+        .dark-mode .bg-blue-200 { /* Selected choice */
+            background-color: #2563eb; /* blue-600 */
+        }
+         .dark-mode #explanation-modal .bg-white {
+            background-color: #1f2937; /* gray-800 for modal content */
+        }
+
+
+    </style>
 </head>
-<body>
-    <!-- Mockup content here. See design document for details. -->
+<body class="bg-gray-100 flex flex-col items-center h-screen antialiased">
+
+    <div id="main-app-container" class="w-full max-w-md mx-auto bg-white shadow-xl rounded-lg flex flex-col h-full">
+
+        <div id="app-header" class="p-4 border-b border-gray-200 bg-gray-50 rounded-t-lg hidden">
+            <h1 class="text-xl font-semibold text-gray-800 text-center">Skill Mastery</h1>
+        </div>
+
+        <div id="content-area" class="flex-grow overflow-y-auto p-2 pb-20 sm:p-6">
+            <div id="home-screen" class="space-y-6">
+                <div class="flex justify-between items-center">
+                    <h2 class="text-2xl font-bold text-gray-800">Dashboard</h2>
+                    <div class="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white font-semibold cursor-pointer hover:bg-blue-600 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+                    </div>
+                </div>
+
+                <div class="bg-gray-50 p-4 rounded-lg shadow">
+                    <div class="flex justify-between items-center mb-1 text-sm text-gray-600">
+                        <span>XP Progress</span>
+                        <span>750 / 1500 XP</span>
+                    </div>
+                    <div class="w-full bg-gray-200 rounded-full h-4 overflow-hidden">
+                        <div class="bg-green-500 h-4 rounded-full" style="width: 50%;"></div>
+                    </div>
+                    <p class="text-xs text-gray-500 mt-1 text-center">Next Mixed Quiz at 1500 XP</p>
+                </div>
+
+                <div class="bg-blue-50 p-4 rounded-lg shadow text-center">
+                    <p class="text-lg font-semibold text-blue-700">5 Skills Due for Review</p>
+                    <p class="text-sm text-blue-600">Stay sharp by reviewing what you've learned!</p>
+                </div>
+
+                <div class="bg-white p-6 rounded-lg shadow-lg border border-gray-200 text-center">
+                    <h3 class="text-sm font-medium text-gray-500 mb-1">YOUR NEXT TASK:</h3>
+                    <p class="text-lg font-semibold text-gray-800 mb-2">ALG1:AS045_2 - Solve by Factoring</p>
+                    <p class="text-sm text-gray-600 mb-4">Master the art of solving quadratic equations by factoring them.</p>
+                    <button onclick="showScreen('learning-screen', 'home-tab')" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-4 px-6 rounded-lg text-lg shadow-md hover:shadow-lg transition-all duration-150 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                        START NEXT SKILL
+                    </button>
+                </div>
+            </div>
+
+            <div id="learning-screen" class="hidden space-y-4">
+                <div class="bg-gray-50 p-3 rounded-lg shadow sticky top-0 z-10 flex items-center">
+                    <button onclick="confirmExitLearning()" title="Exit to Home" class="text-gray-500 hover:text-gray-700 p-2 -ml-2">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    </button>
+                    <div class="text-center flex-grow px-2">
+                        <h2 class="text-md sm:text-lg font-semibold text-gray-800 truncate" title="ALG1:AS045_2 - Solve by Factoring">ALG1:AS045_2 - Solve by Factoring</h2>
+                        <button onclick="toggleExplanation()" class="text-xs sm:text-sm text-blue-600 hover:text-blue-800 underline mt-0.5">Review Explanation</button>
+                        <p class="text-xs text-gray-500 mt-0.5">Question <span id="current-q">1</span> of <span id="total-q">20</span></p>
+                    </div>
+                    <div class="w-10"></div> </div>
+
+                <div id="explanation-modal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+                    <div class="bg-white p-6 rounded-lg shadow-xl max-w-lg w-full max-h-[80vh] overflow-y-auto">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="text-xl font-semibold">Explanation: Solve by Factoring</h3>
+                            <button onclick="toggleExplanation()" class="text-gray-600 hover:text-gray-800">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                            </button>
+                        </div>
+                        <div class="prose max-w-none">
+                            <p>To solve a quadratic equation like \(ax^2 + bx + c = 0\) by factoring, you need to find two numbers that multiply to \(c\) (or \(ac\) if \(a \neq 1\)) and add up to \(b\).</p>
+                            <p>For example, to solve \(x^2 - 5x + 6 = 0\):</p>
+                            <ol>
+                                <li>Find two numbers that multiply to 6 and add to -5. These are -2 and -3.</li>
+                                <li>Rewrite the equation as \((x - 2)(x - 3) = 0\).</li>
+                                <li>Set each factor to zero and solve:
+                                    <ul>
+                                        <li>\(x - 2 = 0 \Rightarrow x = 2\)</li>
+                                        <li>\(x - 3 = 0 \Rightarrow x = 3\)</li>
+                                    </ul>
+                                </li>
+                            </ol>
+                            <p>So, the solutions are \(x = 2\) or \(x = 3\).</p>
+                            </div>
+                    </div>
+                </div>
+
+                <div id="exposition-phase" class="bg-white p-4 rounded-lg shadow prose max-w-none">
+                    <h3 class="text-xl font-semibold mb-2">Lesson: Understanding Quadratic Factoring</h3>
+                    <p>Welcome to the lesson on solving quadratic equations by factoring. This method is a fundamental skill in algebra.</p>
+                    <p>A quadratic equation is an equation of the form \(ax^2 + bx + c = 0\), where \(a \neq 0\).</p>
+                    <p>Factoring involves rewriting the quadratic expression as a product of two linear factors. For example, \(x^2 - 5x + 6\) can be factored into \((x-2)(x-3)\).</p>
+                    <p>Once factored, if \((x-p)(x-q) = 0\), then either \(x-p=0\) or \(x-q=0\). This gives us the solutions \(x=p\) or \(x=q\).</p>
+                    <button onclick="startQuestions()" class="mt-4 bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-4 rounded-lg">Start Questions</button>
+                </div>
+
+                <div id="question-phase" class="hidden bg-white p-4 rounded-lg shadow">
+                    <div id="question-stem" class="text-lg mb-4 prose max-w-none">
+                        Solve the equation: \(x^2 - 7x + 10 = 0\)
+                    </div>
+                    <div id="choices-area" class="space-y-3">
+                        <button data-correct="false" onclick="selectAnswer(this)" class="w-full text-left p-3 bg-gray-100 hover:bg-gray-200 rounded-lg border border-gray-300 transition-colors">A) x = 1, x = 10</button>
+                        <button data-correct="true" onclick="selectAnswer(this)" class="w-full text-left p-3 bg-gray-100 hover:bg-gray-200 rounded-lg border border-gray-300 transition-colors">B) x = 2, x = 5</button>
+                        <button data-correct="false" onclick="selectAnswer(this)" class="w-full text-left p-3 bg-gray-100 hover:bg-gray-200 rounded-lg border border-gray-300 transition-colors">C) x = -2, x = -5</button>
+                        <button data-correct="false" onclick="selectAnswer(this)" class="w-full text-left p-3 bg-gray-100 hover:bg-gray-200 rounded-lg border border-gray-300 transition-colors">D) x = -1, x = -10</button>
+                    </div>
+                    <button id="submit-answer-btn" onclick="submitAnswer()" class="mt-6 w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-3 px-4 rounded-lg disabled:opacity-50" disabled>Submit Answer</button>
+                </div>
+
+                <div id="feedback-phase" class="hidden p-4 rounded-lg shadow">
+                    <h3 id="feedback-result" class="text-xl font-semibold mb-2"></h3>
+                    <div id="feedback-solution" class="prose max-w-none mb-4">
+                        </div>
+                    <div id="fsrs-rating-buttons" class="hidden space-x-2 mb-4">
+                        <button onclick="rateAnswer(2)" class="flex-1 bg-red-500 hover:bg-red-600 text-white py-2 px-3 rounded-lg text-sm">Again (Hardest)</button>
+                        <button onclick="rateAnswer(3)" class="flex-1 bg-orange-500 hover:bg-orange-600 text-white py-2 px-3 rounded-lg text-sm">Hard</button>
+                        <button onclick="rateAnswer(4)" class="flex-1 bg-yellow-500 hover:bg-yellow-600 text-white py-2 px-3 rounded-lg text-sm">Okay</button>
+                        <button onclick="rateAnswer(5)" class="flex-1 bg-green-500 hover:bg-green-600 text-white py-2 px-3 rounded-lg text-sm">Easy</button>
+                    </div>
+                    <button id="next-question-btn" onclick="nextQuestion()" class="w-full bg-gray-700 hover:bg-gray-800 text-white font-semibold py-3 px-4 rounded-lg">Next Question</button>
+                </div>
+
+                 <div id="mixed-quiz-player" class="hidden space-y-4">
+                    <div class="bg-gray-50 p-3 rounded-lg shadow sticky top-0 z-10">
+                        <h2 class="text-lg font-semibold text-gray-800">Mixed Quiz</h2>
+                        <p class="text-sm text-gray-600">Question <span id="current-mq">1</span> of <span id="total-mq">15</span></p>
+                    </div>
+                    </div>
+            </div>
+
+            <div id="progress-screen" class="hidden text-center">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Progress Graph</h2>
+                <div class="bg-gray-200 p-10 rounded-lg shadow aspect-square flex items-center justify-center">
+                    <p class="text-gray-500">(D3 Force Layout Graph Placeholder)</p>
+                </div>
+                <div class="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-2 text-xs">
+                    <div class="flex items-center"><span class="w-3 h-3 rounded-full bg-gray-400 mr-2"></span>Unseen</div>
+                    <div class="flex items-center"><span class="w-3 h-3 rounded-full bg-blue-500 mr-2"></span>In Progress</div>
+                    <div class="flex items-center"><span class="w-3 h-3 rounded-full bg-green-500 mr-2"></span>Mastered</div>
+                    <div class="flex items-center"><span class="w-3 h-3 rounded-full bg-red-500 mr-2"></span>Overdue</div>
+                </div>
+            </div>
+
+            <div id="library-screen" class="hidden">
+                <h2 class="text-2xl font-bold text-gray-800 mb-4">Course Library</h2>
+                <div class="space-y-4">
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <h3 class="text-lg font-semibold text-gray-700">Algebra I (ALG1)</h3>
+                        <p class="text-sm text-gray-600">Topics: 25, Skills: 150</p>
+                        <button class="mt-2 text-sm text-blue-600 hover:underline">Explore Course</button>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <h3 class="text-lg font-semibold text-gray-700">Geometry (GEOM1)</h3>
+                        <p class="text-sm text-gray-600">Topics: 18, Skills: 120</p>
+                        <button class="mt-2 text-sm text-blue-600 hover:underline">Explore Course</button>
+                    </div>
+                    <div class="bg-gray-100 p-4 rounded-lg text-center">
+                        <p class="text-gray-500">(More courses and topic browser placeholder)</p>
+                    </div>
+                </div>
+            </div>
+
+            <div id="settings-screen" class="hidden">
+                <h2 class="text-2xl font-bold text-gray-800 mb-6">Settings</h2>
+                <div class="space-y-6">
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <h3 class="text-lg font-semibold text-gray-700 mb-2">Appearance</h3>
+                        <label class="flex items-center">
+                            <input type="checkbox" id="dark-mode-toggle" class="form-checkbox h-5 w-5 text-blue-600 rounded">
+                            <span class="ml-2 text-gray-700">Dark Mode</span>
+                        </label>
+                    </div>
+                    <div class="bg-white p-4 rounded-lg shadow">
+                        <h3 class="text-lg font-semibold text-gray-700 mb-2">Data Management</h3>
+                        <button class="w-full mb-2 bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg">Import Progress</button>
+                        <button class="w-full mb-2 bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded-lg">Export Progress</button>
+                        <button class="w-full bg-red-500 hover:bg-red-600 text-white py-2 px-4 rounded-lg">Reset Course Progress</button>
+                    </div>
+                     <div class="bg-white p-4 rounded-lg shadow">
+                        <h3 class="text-lg font-semibold text-gray-700 mb-2">About</h3>
+                        <p class="text-sm text-gray-600">Skill Mastery App v1.0.0</p>
+                        <p class="text-sm text-gray-600">Offline learning, powered by you.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="tab-bar" class="w-full max-w-md fixed bottom-0 left-1/2 transform -translate-x-1/2 sm:relative sm:translate-x-0 sm:bottom-auto sm:left-auto bg-white border-t border-gray-200 flex justify-around items-center shadow-top rounded-b-lg sm:rounded-b-lg">
+            <button id="home-tab" onclick="showScreen('home-screen', 'home-tab')" class="flex-1 flex flex-col items-center justify-center p-3 tab-active border-t-2">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                <span class="text-xs mt-1">Home</span>
+            </button>
+            <button id="progress-tab" onclick="showScreen('progress-screen', 'progress-tab')" class="flex-1 flex flex-col items-center justify-center p-3 tab-inactive border-t-2 border-transparent">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
+                <span class="text-xs mt-1">Progress</span>
+            </button>
+            <button id="library-tab" onclick="showScreen('library-screen', 'library-tab')" class="flex-1 flex flex-col items-center justify-center p-3 tab-inactive border-t-2 border-transparent">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path></svg>
+                <span class="text-xs mt-1">Library</span>
+            </button>
+            <button id="settings-tab" onclick="showScreen('settings-screen', 'settings-tab')" class="flex-1 flex flex-col items-center justify-center p-3 tab-inactive border-t-2 border-transparent">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06-.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                <span class="text-xs mt-1">Settings</span>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        const screens = ['home-screen', 'learning-screen', 'progress-screen', 'library-screen', 'settings-screen'];
+        const tabs = ['home-tab', 'progress-tab', 'library-tab', 'settings-tab'];
+        let currentScreenId = 'home-screen';
+        let currentTabId = 'home-tab';
+        let selectedAnswerElement = null;
+
+        function showScreen(screenId, tabId) {
+            screens.forEach(id => {
+                const screenElement = document.getElementById(id);
+                if (screenElement) screenElement.classList.add('hidden');
+            });
+
+            const targetScreen = document.getElementById(screenId);
+            if (targetScreen) {
+                targetScreen.classList.remove('hidden');
+                if (screenId === 'learning-screen' && !document.getElementById('question-phase').classList.contains('questions-active')) {
+                    document.getElementById('exposition-phase').classList.remove('hidden');
+                    document.getElementById('question-phase').classList.add('hidden');
+                     document.getElementById('feedback-phase').classList.add('hidden');
+                }
+            }
+            currentScreenId = screenId;
+
+            tabs.forEach(id => {
+                const tabElement = document.getElementById(id);
+                if (tabElement) {
+                    tabElement.classList.remove('tab-active', 'border-blue-500');
+                    tabElement.classList.add('tab-inactive', 'border-transparent');
+                }
+            });
+            const activeTab = document.getElementById(tabId);
+            if (activeTab) {
+                activeTab.classList.add('tab-active', 'border-blue-500');
+                activeTab.classList.remove('tab-inactive', 'border-transparent');
+            }
+            currentTabId = tabId;
+
+            const tabBarElement = document.getElementById('tab-bar');
+            
+            if (screenId === 'learning-screen') {
+                tabBarElement.classList.add('sm:hidden'); 
+                if (window.innerWidth < 640) { 
+                     tabBarElement.classList.add('hidden');
+                }
+            } else {
+                tabBarElement.classList.remove('hidden', 'sm:hidden');
+            }
+            document.getElementById('content-area').scrollTop = 0;
+        }
+        
+        function confirmExitLearning() {
+            showCustomConfirm(
+                "Are you sure you want to exit to Home? Progress on the current question will not be saved.",
+                exitLearning // This is the function to call if "Yes" is clicked
+            );
+        }
+
+        function exitLearning() {
+            showScreen('home-screen', 'home-tab');
+            document.getElementById('question-phase').classList.remove('questions-active');
+            document.getElementById('exposition-phase').classList.remove('hidden'); 
+            document.getElementById('question-phase').classList.add('hidden');    
+            document.getElementById('feedback-phase').classList.add('hidden');    
+            document.getElementById('current-q').textContent = '1'; 
+            resetQuestionState(); 
+        }
+
+        function toggleExplanation() {
+            document.getElementById('explanation-modal').classList.toggle('hidden');
+        }
+
+        function startQuestions() {
+            document.getElementById('exposition-phase').classList.add('hidden');
+            document.getElementById('question-phase').classList.remove('hidden');
+            document.getElementById('question-phase').classList.add('questions-active'); 
+            document.getElementById('feedback-phase').classList.add('hidden'); 
+            resetQuestionState();
+        }
+
+        function selectAnswer(buttonElement) {
+            if (selectedAnswerElement) {
+                selectedAnswerElement.classList.remove('bg-blue-200', 'border-blue-500');
+                selectedAnswerElement.classList.add('bg-gray-100', 'border-gray-300');
+            }
+            buttonElement.classList.add('bg-blue-200', 'border-blue-500');
+            buttonElement.classList.remove('bg-gray-100', 'border-gray-300');
+            selectedAnswerElement = buttonElement;
+            document.getElementById('submit-answer-btn').disabled = false;
+        }
+
+        function submitAnswer() {
+            if (!selectedAnswerElement) return;
+
+            const isCorrect = selectedAnswerElement.dataset.correct === 'true';
+            const feedbackResult = document.getElementById('feedback-result');
+            const feedbackSolution = document.getElementById('feedback-solution');
+            const fsrsButtons = document.getElementById('fsrs-rating-buttons');
+
+            if (isCorrect) {
+                feedbackResult.textContent = 'Correct!';
+                feedbackResult.className = 'text-xl font-semibold mb-2 text-green-600';
+                fsrsButtons.classList.remove('hidden');
+                fsrsButtons.classList.add('flex');
+            } else {
+                feedbackResult.textContent = 'Incorrect.';
+                feedbackResult.className = 'text-xl font-semibold mb-2 text-red-600';
+                fsrsButtons.classList.add('hidden');
+                fsrsButtons.classList.remove('flex');
+            }
+            feedbackSolution.innerHTML = `<p>The correct answer is B) x = 2, x = 5.</p><p><strong>Explanation:</strong> To solve \(x^2 - 7x + 10 = 0\), we look for two numbers that multiply to 10 and add to -7. These are -2 and -5. So, \((x-2)(x-5) = 0\). This gives \(x=2\) or \(x=5\).</p>`;
+
+            document.getElementById('question-phase').classList.add('hidden');
+            document.getElementById('feedback-phase').classList.remove('hidden');
+            document.getElementById('submit-answer-btn').disabled = true;
+        }
+
+        function rateAnswer(rating) {
+            console.log('Rated:', rating);
+            nextQuestion();
+        }
+
+        function nextQuestion() {
+            let currentQ = parseInt(document.getElementById('current-q').textContent);
+            let totalQ = parseInt(document.getElementById('total-q').textContent);
+
+            if (currentQ < totalQ) {
+                document.getElementById('current-q').textContent = currentQ + 1;
+                resetQuestionState();
+                document.getElementById('question-phase').classList.remove('hidden');
+                document.getElementById('feedback-phase').classList.add('hidden');
+            } else {
+                showCustomAlert('Skill complete! (Mock)');
+                exitLearning(); 
+            }
+        }
+
+        function resetQuestionState() {
+             if (selectedAnswerElement) {
+                selectedAnswerElement.classList.remove('bg-blue-200', 'border-blue-500');
+                selectedAnswerElement.classList.add('bg-gray-100', 'border-gray-300');
+                selectedAnswerElement = null;
+            }
+            document.getElementById('submit-answer-btn').disabled = true;
+        }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+            showScreen('home-screen', 'home-tab');
+            if (typeof lucide !== 'undefined') {
+                lucide.createIcons();
+            } else {
+                console.error('Lucide library not loaded or ready.');
+            }
+
+            // Dark Mode Toggle Functionality
+            const darkModeToggle = document.getElementById('dark-mode-toggle');
+            if (darkModeToggle) {
+                darkModeToggle.addEventListener('change', () => {
+                    document.body.classList.toggle('dark-mode');
+                    // Optional: Save preference to localStorage
+                    // if (document.body.classList.contains('dark-mode')) {
+                    //    localStorage.setItem('darkMode', 'enabled');
+                    // } else {
+                    //    localStorage.setItem('darkMode', 'disabled');
+                    // }
+                });
+                // Optional: Check localStorage for saved preference on load
+                // if (localStorage.getItem('darkMode') === 'enabled') {
+                //    document.body.classList.add('dark-mode');
+                //    darkModeToggle.checked = true;
+                // }
+            }
+        });
+
+        window.addEventListener('resize', () => {
+            const tabBarElement = document.getElementById('tab-bar');
+            if (currentScreenId === 'learning-screen') {
+                if (window.innerWidth < 640) { 
+                     tabBarElement.classList.add('hidden');
+                } else {
+                     tabBarElement.classList.add('sm:hidden');
+                }
+            } else {
+                 tabBarElement.classList.remove('hidden', 'sm:hidden');
+            }
+        });
+
+        function showCustomAlert(message) {
+            const existingAlert = document.getElementById('custom-alert-modal');
+            if (existingAlert) existingAlert.remove();
+            const alertModal = document.createElement('div');
+            alertModal.id = 'custom-alert-modal';
+            alertModal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50';
+            alertModal.innerHTML = `
+                <div class="bg-white p-6 rounded-lg shadow-xl max-w-sm w-full text-center dark:bg-gray-700 dark:text-gray-200">
+                    <p class="mb-4">${message}</p>
+                    <button onclick="this.parentElement.parentElement.remove()" class="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg">
+                        OK
+                    </button>
+                </div>
+            `;
+            document.body.appendChild(alertModal);
+        }
+
+        // New Custom Confirm Dialog
+        function showCustomConfirm(message, onConfirm) {
+            const existingConfirm = document.getElementById('custom-confirm-modal');
+            if (existingConfirm) existingConfirm.remove();
+
+            const confirmModal = document.createElement('div');
+            confirmModal.id = 'custom-confirm-modal';
+            confirmModal.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50';
+            confirmModal.innerHTML = `
+                <div class="bg-white p-6 rounded-lg shadow-xl max-w-sm w-full text-center dark:bg-gray-700 dark:text-gray-200">
+                    <p class="mb-6">${message}</p>
+                    <div class="flex justify-center space-x-4">
+                        <button id="confirm-yes-btn" class="bg-red-500 hover:bg-red-600 text-white font-semibold py-2 px-6 rounded-lg">
+                            Yes
+                        </button>
+                        <button id="confirm-no-btn" class="bg-gray-300 hover:bg-gray-400 text-gray-800 dark:bg-gray-500 dark:hover:bg-gray-600 dark:text-gray-200 font-semibold py-2 px-6 rounded-lg">
+                            No
+                        </button>
+                    </div>
+                </div>
+            `;
+            document.body.appendChild(confirmModal);
+
+            document.getElementById('confirm-yes-btn').onclick = () => {
+                onConfirm();
+                confirmModal.remove();
+            };
+            document.getElementById('confirm-no-btn').onclick = () => {
+                confirmModal.remove();
+            };
+        }
+
+    </script>
 </body>
 </html>
