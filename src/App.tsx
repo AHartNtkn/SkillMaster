@@ -9,6 +9,7 @@ import {
   MIXED_QUIZ_TRIGGER_XP,
 } from './engine.js';
 import CourseLibrary from './CourseLibrary';
+import ProgressChart, { logXp, logSkillEvent } from './ProgressChart';
 import {
   loadCourses,
   loadCatalog,
@@ -206,6 +207,7 @@ export default function App() {
       }
     }
 
+    const prevStatus = store[asId].status;
     const updatedMainSkillMastery = engineApplyGrade(store[asId], grade) as Mastery;
     store[asId] = updatedMainSkillMastery;
 
@@ -229,6 +231,11 @@ export default function App() {
         xp_since_mixed_quiz: prefs.xp_since_mixed_quiz + XP_PER_AS_QUESTION,
       };
       setPrefs(newPrefs);
+      logXp(XP_PER_AS_QUESTION, asId);
+      logSkillEvent(asId, 'review');
+      if (prevStatus !== 'mastered' && updatedMainSkillMastery.status === 'mastered') {
+        logSkillEvent(asId, 'mastered');
+      }
     }
 
     if (lessonComplete) {
@@ -452,7 +459,7 @@ export default function App() {
             )}
           </div>
         )}
-        {screen === 'progress' && <p>Progress graph placeholder</p>}
+        {screen === 'progress' && <ProgressChart />}
         {screen === 'library' && <CourseLibrary />}
         {screen === 'settings' && (
           <div>
