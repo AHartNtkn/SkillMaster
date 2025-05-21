@@ -25,7 +25,6 @@ file before committing.
 - [ ] Build React components matching `docs/mockup.html` for Home, Learning, Progress, Library, and Settings screens.
 - [ ] Implement lesson flow: exposition → questions → feedback with FSRS rating.
 - [ ] Provide mixed‑quiz player UI and XP progress indicators.
-- [ ] Add dark mode toggle and i18n string loading.
 
 ## Backend (Tauri)
 - [ ] Expose file system access and scheduling commands to the frontend via Tauri.

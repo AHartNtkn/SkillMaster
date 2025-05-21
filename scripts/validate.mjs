@@ -34,6 +34,17 @@ const schemas = {
   prefs: compile('prefs-v1.json')
 };
 
+// simple sanity check for i18n file
+function validateI18n() {
+  const f = path.join(root, 'i18n', 'en.json');
+  const data = readJSON(f);
+  if (typeof data.toggle_dark_mode !== 'string') {
+    console.error('Missing toggle_dark_mode in i18n/en.json');
+    return false;
+  }
+  return true;
+}
+
 function validate(file, schema) {
   const data = file.endsWith('.yaml') ? readYAML(file) : readJSON(file);
   if (!schema(data)) {
@@ -68,6 +79,15 @@ const saveMapping = {
 for (const [file, schema] of Object.entries(saveMapping)) {
   ok &= validate(path.join(root, 'save', file), schema);
 }
+
+// ensure prefs theme is allowed
+const prefs = readJSON(path.join(root, 'save', 'prefs.json'));
+if (!['default', 'dark'].includes(prefs.ui_theme)) {
+  console.error('prefs.ui_theme must be "default" or "dark"');
+  ok = false;
+}
+
+ok &= validateI18n();
 
 if (!ok) {
   process.exit(1);
