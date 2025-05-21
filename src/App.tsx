@@ -73,6 +73,8 @@ export default function App() {
   const [mastery, setMastery] = useState<Mastery | null>(null);
   const [skill, setSkill] = useState<Skill | null>(null);
   const [coursePath, setCoursePath] = useState('');
+  const [initialSkillStatus, setInitialSkillStatus] = useState<Mastery['status'] | null>(null);
+  const [questionsPresentedInSession, setQuestionsPresentedInSession] = useState(0);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [consecutiveEasyCount, setConsecutiveEasyCount] = useState(0);
 
@@ -93,6 +95,7 @@ export default function App() {
     setSelected(null);
     setLoading(true);
     setConsecutiveEasyCount(0);
+    setQuestionsPresentedInSession(1);
     const courses = await loadCourses();
     if (courses.length > 0) {
       const course = courses[0];
@@ -105,6 +108,7 @@ export default function App() {
           setAsId(as);
           const m = loadMastery(as);
           setMastery(m);
+          setInitialSkillStatus(m.status);
           const skillData = await loadSkill(course.path, as);
           setSkill(skillData);
           const md = await loadMarkdown(course.path, as);
@@ -150,33 +154,36 @@ export default function App() {
       }
     }
 
-    const updatedMastery = engineApplyGrade(store[asId], grade) as Mastery;
-    store[asId] = updatedMastery;
-
-    const newPrefs = {
-      ...prefs,
-      xp_since_mixed_quiz: prefs.xp_since_mixed_quiz + XP_PER_AS_QUESTION,
-    };
+    const updatedMainSkillMastery = engineApplyGrade(store[asId], grade) as Mastery;
+    store[asId] = updatedMainSkillMastery;
 
     applyImplicitPrereqs(skill, store, grade);
 
-    for (const id of Object.keys(store)) {
-      saveMastery(id, store[id]);
-    }
+    setMastery(updatedMainSkillMastery);
 
     const newConsecutiveEasyCount = grade === 5 ? consecutiveEasyCount + 1 : 0;
-
-    setMastery(updatedMastery);
-    setPrefs(newPrefs);
     setConsecutiveEasyCount(newConsecutiveEasyCount);
 
-    const lessonComplete = newConsecutiveEasyCount >= 2 || updatedMastery.next_q_index >= questions.length;
+    const lessonComplete = newConsecutiveEasyCount >= 2 || updatedMainSkillMastery.next_q_index >= questions.length;
+
+    const skillWasUnseenAtStart = initialSkillStatus === 'unseen';
+
+    if (!skillWasUnseenAtStart || lessonComplete) {
+      for (const id of Object.keys(store)) {
+        saveMastery(id, store[id]);
+      }
+      const newPrefs = {
+        ...prefs,
+        xp_since_mixed_quiz: prefs.xp_since_mixed_quiz + XP_PER_AS_QUESTION,
+      };
+      setPrefs(newPrefs);
+    }
 
     if (lessonComplete) {
       setAlertMsg('Lesson complete!');
       exitLearning();
     } else {
-      goToNextQuestion(updatedMastery.next_q_index);
+      goToNextQuestion(updatedMainSkillMastery.next_q_index);
     }
   }
 
@@ -184,18 +191,26 @@ export default function App() {
     setCurrentQ(nextQIndex);
     setPhase('question');
     setSelected(null);
+    setQuestionsPresentedInSession(prev => prev + 1);
   }
 
   function exitLearning() {
-    if (mastery && asId) {
-      saveMastery(asId, mastery);
-      setPrefs(p => ({ ...p, last_as: asId }));
+    const lessonSuccessfullyCompleted = alertMsg === 'Lesson complete!';
+
+    if (asId) {
+      const skillWasUnseenAtStart = initialSkillStatus === 'unseen';
+
+      if (!skillWasUnseenAtStart || lessonSuccessfullyCompleted) {
+        setPrefs(p => ({ ...p, last_as: asId }));
+      }
     }
+
     setScreen('home');
     setPhase('exposition');
     setCurrentQ(0);
     setSelected(null);
     setConsecutiveEasyCount(0);
+    setInitialSkillStatus(null);
   }
 
   function confirmExit() {
@@ -290,7 +305,7 @@ export default function App() {
             <div style={{ marginBottom: '0.5rem' }}>
               <button onClick={confirmExit}>Exit</button>
               <span style={{ marginLeft: '1rem' }}>
-                Question {currentQ + 1} 
+                Question {questionsPresentedInSession}
               </span>
             </div>
             {phase === 'exposition' && (
