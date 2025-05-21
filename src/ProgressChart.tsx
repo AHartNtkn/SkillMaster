@@ -123,10 +123,14 @@ export default function ProgressChart() {
   }
 
   return (
-    <div>
+    <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
       <h2>Last 7 Days</h2>
-      <div className="line-chart">
-        <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+      <div className="line-chart" style={{ flexGrow: 1, position: 'relative' }}>
+        <svg
+          viewBox="0 0 100 100"
+          preserveAspectRatio="none"
+          style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%' }}
+        >
           <polyline className="xp-line" points={makePoints('xp')} />
           <polyline className="reviewed-line" points={makePoints('reviewed')} />
           <polyline className="mastered-line" points={makePoints('mastered')} />
