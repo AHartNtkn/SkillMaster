@@ -90,9 +90,9 @@ Pure UI metadata—no graph semantics.
 }
 ```
 
-### 3.2 Atomic Skill File (embedded in topic)
+### 3.2 Atomic Skill File (`skills/<id>.json`)
 
-Each AS carries its own prerequisites.
+Each Atomic Skill is stored in its **own JSON file** inside the `skills/` directory. Topic files merely reference these IDs; they do **not** embed the AS data.
 
 ```jsonc
 {
@@ -103,9 +103,8 @@ Each AS carries its own prerequisites.
 }
 ```
 
-`weights` optional; missing weight defaults to 1.0.
-
-Topic files embed full AS objects or may list them externally in `as_md/` & `as_questions/` directories as before. AS Markdown (`as_md/<as>.md`)
+`weights` is optional; any missing weight defaults to 1.0.
+AS Markdown (`as_md/<as>.md`)
 Shown the first time the AS is attempted; accessible later via “Review Explanation.”
 
 ### 3.3 AS Question Pool (`as_questions/<as>.yaml`)
