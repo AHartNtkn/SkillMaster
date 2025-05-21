@@ -1,35 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import CourseLibrary from './CourseLibrary';
+import {
+  loadCourses,
+  loadCatalog,
+  loadTopic,
+  loadMarkdown,
+  loadQuestions
+} from './courseLoader';
 
-// Simple question data used by the learning mock
 interface Question {
   stem: string;
   choices: string[];
   correct: number;
   explanation: string;
 }
-
-const QUESTIONS: Question[] = [
-  {
-    stem: 'Solve the equation: x^2 - 7x + 10 = 0',
-    choices: ['x = 1, x = 10', 'x = 2, x = 5', 'x = -2, x = -5', 'x = -1, x = -10'],
-    correct: 1,
-    explanation:
-      'To solve x^2 - 7x + 10 = 0, factor as (x-2)(x-5)=0 giving x=2 or x=5.'
-  },
-  {
-    stem: 'Which numeral represents five?',
-    choices: ['5', '3', '1', '7'],
-    correct: 0,
-    explanation: 'The numeral 5 corresponds to the number five.'
-  },
-  {
-    stem: 'Which numeral represents nine?',
-    choices: ['9', '8', '7', '6'],
-    correct: 0,
-    explanation: 'The numeral 9 represents nine.'
-  }
-];
 
 type Screen = 'home' | 'learning' | 'progress' | 'library' | 'settings';
 type Phase = 'exposition' | 'question' | 'feedback';
@@ -42,16 +26,43 @@ export default function App() {
   const [alertMsg, setAlertMsg] = useState<string | null>(null);
   const [confirm, setConfirm] = useState<{ msg: string; onConfirm: () => void } | null>(null);
   const [dark, setDark] = useState(false);
+  const [markdown, setMarkdown] = useState('');
+  const [questions, setQuestions] = useState<Question[]>([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     document.body.classList.toggle('dark', dark);
   }, [dark]);
 
-  function startLearning() {
+  async function startLearning() {
     setScreen('learning');
     setPhase('exposition');
     setCurrentQ(0);
     setSelected(null);
+    setLoading(true);
+    const courses = await loadCourses();
+    if (courses.length > 0) {
+      const course = courses[0];
+      const catalog = await loadCatalog(course.path);
+      if (catalog && catalog.entry_topics.length > 0) {
+        const topic = await loadTopic(course.path, catalog.entry_topics[0]);
+        if (topic && topic.ass.length > 0) {
+          const asId = topic.ass[0];
+          const md = await loadMarkdown(course.path, asId);
+          const qsRaw = await loadQuestions(course.path, asId);
+          setMarkdown(md);
+          setQuestions(
+            qsRaw.map(q => ({
+              stem: q.stem,
+              choices: q.choices,
+              correct: q.correct,
+              explanation: q.solution || ''
+            }))
+          );
+        }
+      }
+    }
+    setLoading(false);
   }
 
   function startQuestions() {
@@ -74,7 +85,7 @@ export default function App() {
 
   function nextQuestion() {
     const next = currentQ + 1;
-    if (next < QUESTIONS.length) {
+    if (next < questions.length) {
       setCurrentQ(next);
       setPhase('question');
       setSelected(null);
@@ -117,20 +128,26 @@ export default function App() {
             <div style={{ marginBottom: '0.5rem' }}>
               <button onClick={confirmExit}>Exit</button>
               <span style={{ marginLeft: '1rem' }}>
-                Question {currentQ + 1} of {QUESTIONS.length}
+                Question {currentQ + 1} of {questions.length}
               </span>
             </div>
             {phase === 'exposition' && (
               <div>
-                <p>Welcome to the lesson on solving quadratics by factoring.</p>
-                <button onClick={startQuestions}>Start Questions</button>
+                {loading ? (
+                  <p>Loading...</p>
+                ) : (
+                  <>
+                    <pre style={{ whiteSpace: 'pre-wrap' }}>{markdown}</pre>
+                    <button onClick={startQuestions}>Start Questions</button>
+                  </>
+                )}
               </div>
             )}
             {phase === 'question' && (
               <div>
-                <p>{QUESTIONS[currentQ].stem}</p>
+                <p>{questions[currentQ].stem}</p>
                 <ul style={{ listStyle: 'none', padding: 0 }}>
-                  {QUESTIONS[currentQ].choices.map((c, i) => (
+                  {questions[currentQ].choices.map((c, i) => (
                     <li key={i} style={{ marginBottom: '0.5rem' }}>
                       <button
                         onClick={() => selectAnswer(i)}
@@ -154,12 +171,12 @@ export default function App() {
             )}
             {phase === 'feedback' && (
               <div>
-                {selected === QUESTIONS[currentQ].correct ? (
+                {selected === questions[currentQ].correct ? (
                   <p style={{ color: 'green' }}>Correct!</p>
                 ) : (
                   <p style={{ color: 'red' }}>Incorrect.</p>
                 )}
-                <p>{QUESTIONS[currentQ].explanation}</p>
+                <p>{questions[currentQ].explanation}</p>
                 <div style={{ margin: '0.5rem 0' }}>
                   <button onClick={rateAnswer}>Next Question</button>
                 </div>
