@@ -349,9 +349,9 @@ export default function App() {
   }
 
   return (
-    <div className="app">
+    <div className="app" style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <header>Skill Mastery</header>
-      <div className="content">
+      <div className="content" style={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
         {screen === 'home' && (
           <div>
             <h2>Dashboard</h2>
