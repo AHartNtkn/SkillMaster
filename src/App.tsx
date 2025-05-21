@@ -83,6 +83,10 @@ export default function App() {
   const [dueSkillCount, setDueSkillCount] = useState(0);
   const [newSkillsCount, setNewSkillsCount] = useState(0);
   const [mixedQuizReady, setMixedQuizReady] = useState(false);
+  const [nextSkillInfo, setNextSkillInfo] = useState<
+    | { id: string; name: string; action: 'Review' | 'New Skill'; coursePath: string }
+    | null
+  >(null);
 
   const dark = prefs.ui_theme === 'dark';
 
@@ -95,7 +99,8 @@ export default function App() {
   }, [prefs]);
 
   useEffect(() => {
-    if (screen === 'home') {
+    async function updateHome() {
+      if (screen !== 'home') return;
       let currentDueSkillCount = 0;
       let currentNewSkillsCount = 0;
       const now = new Date();
@@ -138,8 +143,51 @@ export default function App() {
       } else {
         setMixedQuizReady(false);
       }
+
+      const info = await getNextSkillInfo();
+      setNextSkillInfo(info);
     }
+    updateHome();
   }, [screen, prefs]);
+
+  async function getNextSkillInfo() {
+    const courses = await loadCourses();
+    if (courses.length === 0) return null;
+    const course = courses[0];
+    const catalog = await loadCatalog(course.path);
+    if (!catalog || catalog.entry_topics.length === 0) return null;
+
+    const now = new Date();
+    let newCandidate: string | null = null;
+    let reviewCandidate: string | null = null;
+
+    for (const topicId of catalog.entry_topics) {
+      const topic = await loadTopic(course.path, topicId);
+      if (!topic) continue;
+      for (const as of topic.ass) {
+        const m = loadMastery(as);
+        if (m.status !== 'unseen' && m.card.due <= now) {
+          reviewCandidate = as;
+          break;
+        }
+        if (!newCandidate && m.status === 'unseen') {
+          newCandidate = as;
+        }
+      }
+      if (reviewCandidate) break;
+    }
+
+    const chosenId = reviewCandidate || newCandidate;
+    if (!chosenId) return null;
+    const skillData = await loadSkill(course.path, chosenId);
+    const name = skillData?.name || '';
+    return {
+      id: chosenId,
+      name,
+      action: reviewCandidate ? ('Review' as const) : ('New Skill' as const),
+      coursePath: course.path,
+    };
+  }
 
   async function startLearning() {
     setScreen('learning');
@@ -149,36 +197,36 @@ export default function App() {
     setLoading(true);
     setConsecutiveEasyCount(0);
     setQuestionsPresentedInSession(1);
-    const courses = await loadCourses();
-    if (courses.length > 0) {
-      const course = courses[0];
-      setCoursePath(course.path);
-      const catalog = await loadCatalog(course.path);
-      if (catalog && catalog.entry_topics.length > 0) {
-        const topic = await loadTopic(course.path, catalog.entry_topics[0]);
-        if (topic && topic.ass.length > 0) {
-          const as = topic.ass[0];
-          setAsId(as);
-          const m = loadMastery(as);
-          setMastery(m);
-          setInitialSkillStatus(m.status);
-          const skillData = await loadSkill(course.path, as);
-          setSkill(skillData);
-          const md = await loadMarkdown(course.path, as);
-          const qsRaw = await loadQuestions(course.path, as);
-          setMarkdown(md || 'Content unavailable');
-          setQuestions(
-            qsRaw.map(q => ({
-              stem: q.stem,
-              choices: q.choices,
-              correct: q.correct,
-              explanation: q.solution || ''
-            }))
-          );
-          setCurrentQ(m.next_q_index);
-        }
-      }
+
+    const info = await getNextSkillInfo();
+    if (!info) {
+      setLoading(false);
+      setAlertMsg('No skill available');
+      return;
     }
+
+    const { id, coursePath } = info;
+    setCoursePath(coursePath);
+    setAsId(id);
+
+    const m = loadMastery(id);
+    setMastery(m);
+    setInitialSkillStatus(m.status);
+
+    const skillData = await loadSkill(coursePath, id);
+    setSkill(skillData);
+    const md = await loadMarkdown(coursePath, id);
+    const qsRaw = await loadQuestions(coursePath, id);
+    setMarkdown(md || 'Content unavailable');
+    setQuestions(
+      qsRaw.map(q => ({
+        stem: q.stem,
+        choices: q.choices,
+        correct: q.correct,
+        explanation: q.solution || ''
+      }))
+    );
+    setCurrentQ(m.next_q_index);
     setLoading(false);
   }
 
@@ -364,7 +412,9 @@ export default function App() {
               <p>No skills due for review right now.</p>
             )}
             <button className="btn btn-primary" onClick={startLearning}>
-              Start Next Skill
+              {nextSkillInfo
+                ? `${nextSkillInfo.action}: ${nextSkillInfo.name} (${nextSkillInfo.id})`
+                : 'Start Next Skill'}
             </button>
           </div>
         )}
