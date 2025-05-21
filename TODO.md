@@ -7,7 +7,6 @@ file before committing.
 ## Core Data & Storage
 - [ ] Implement filesystem layout (`courses.json`, `course/<id>/`, `save/`, `.cache/`, etc.).
 - [ ] Build loader that demand-loads topic and skill files and automatically rebuilds `.cache/index.db` with distance matrix (Floyd–Warshall).
-- [ ] Define JSON schemas in `schema/` and validate content and save files via AJV.
 - [ ] Implement persistence of save data (`mastery.json`, `attempt_window.json`, `xp.json`, `prefs.json`) with atomic writes and autosave after every answer.
 - [ ] Support optional multi-profile folders as per `prefs.json` section.
 - [ ] Provide logging to `logs/error.log` and `logs/debug.log` with rotation.

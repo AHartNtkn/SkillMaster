@@ -1,0 +1,11 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "xp_since_mixed_quiz": {"type": "number"},
+    "last_as": {"type": ["string", "null"]},
+    "ui_theme": {"type": "string"}
+  },
+  "required": ["xp_since_mixed_quiz", "last_as", "ui_theme"],
+  "additionalProperties": false
+}
