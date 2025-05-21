@@ -52,11 +52,16 @@ function saveSkillLog(log: SkillEntry[]) {
   } catch {}
 }
 
+function dispatchUpdate() {
+  window.dispatchEvent(new Event('progressDataUpdated'));
+}
+
 export function logXp(delta: number, source: string) {
   const log = loadXpLog();
   const nextId = log.length > 0 ? log[log.length - 1].id + 1 : 1;
   log.push({ id: nextId, ts: new Date().toISOString(), delta, source });
   saveXpLog(log);
+  dispatchUpdate();
 }
 
 export function logSkillEvent(asId: string, type: 'review' | 'mastered') {
@@ -64,6 +69,7 @@ export function logSkillEvent(asId: string, type: 'review' | 'mastered') {
   const nextId = log.length > 0 ? log[log.length - 1].id + 1 : 1;
   log.push({ id: nextId, ts: new Date().toISOString(), asId, type });
   saveSkillLog(log);
+  dispatchUpdate();
 }
 
 export default function ProgressChart() {
@@ -71,7 +77,7 @@ export default function ProgressChart() {
     { date: string; xp: number; reviewed: number; mastered: number }[]
   >([]);
 
-  useEffect(() => {
+  const refreshStats = () => {
     const xpLog = loadXpLog();
     const skillLog = loadSkillLog();
     const today = new Date();
@@ -83,62 +89,58 @@ export default function ProgressChart() {
       const xp = xpLog
         .filter(e => e.ts.slice(0, 10) === dateStr)
         .reduce((sum, e) => sum + e.delta, 0);
-      const reviewed = skillLog.filter(e => e.ts.slice(0, 10) === dateStr && e.type === 'review').length;
-      const mastered = skillLog.filter(e => e.ts.slice(0, 10) === dateStr && e.type === 'mastered').length;
+      const reviewed = skillLog.filter(
+        e => e.ts.slice(0, 10) === dateStr && e.type === 'review'
+      ).length;
+      const mastered = skillLog.filter(
+        e => e.ts.slice(0, 10) === dateStr && e.type === 'mastered'
+      ).length;
       days.push({ date: dateStr, xp, reviewed, mastered });
     }
     setDailyStats(days);
+  };
+
+  useEffect(() => {
+    refreshStats();
+    window.addEventListener('progressDataUpdated', refreshStats);
+    return () => window.removeEventListener('progressDataUpdated', refreshStats);
   }, []);
 
-  const maxXp = Math.max(...dailyStats.map(d => d.xp), 10);
-  const maxReviewed = Math.max(...dailyStats.map(d => d.reviewed), 1);
-  const maxMastered = Math.max(...dailyStats.map(d => d.mastered), 1);
+  const maxVal = Math.max(
+    ...dailyStats.map(d => Math.max(d.xp, d.reviewed, d.mastered)),
+    1
+  );
+
+  function makePoints(field: 'xp' | 'reviewed' | 'mastered') {
+    if (dailyStats.length === 0) return '';
+    return dailyStats
+      .map((d, i) => {
+        const x = (i / (dailyStats.length - 1)) * 100;
+        const y = 100 - (d[field] / maxVal) * 100;
+        return `${x},${y}`;
+      })
+      .join(' ');
+  }
 
   return (
     <div>
-      <h2>XP Earned Last 7 Days</h2>
-      <div className="chart">
-        {dailyStats.map(d => (
-          <div key={d.date} className="bar-container">
-            <div className="bar" style={{ height: `${(d.xp / maxXp) * 100}%` }} />
-            <span className="bar-value">{d.xp}</span>
-          </div>
-        ))}
+      <h2>Last 7 Days</h2>
+      <div className="line-chart">
+        <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+          <polyline className="xp-line" points={makePoints('xp')} />
+          <polyline className="reviewed-line" points={makePoints('reviewed')} />
+          <polyline className="mastered-line" points={makePoints('mastered')} />
+        </svg>
       </div>
       <div className="chart-labels">
         {dailyStats.map(d => (
           <span key={d.date}>{d.date.slice(5)}</span>
         ))}
       </div>
-
-      <h2 style={{ marginTop: '1rem' }}>Skills Reviewed</h2>
-      <div className="chart">
-        {dailyStats.map(d => (
-          <div key={d.date} className="bar-container">
-            <div className="bar" style={{ height: `${(d.reviewed / maxReviewed) * 100}%` }} />
-            <span className="bar-value">{d.reviewed}</span>
-          </div>
-        ))}
-      </div>
-      <div className="chart-labels">
-        {dailyStats.map(d => (
-          <span key={d.date}>{d.date.slice(5)}</span>
-        ))}
-      </div>
-
-      <h2 style={{ marginTop: '1rem' }}>New Skills Mastered</h2>
-      <div className="chart">
-        {dailyStats.map(d => (
-          <div key={d.date} className="bar-container">
-            <div className="bar" style={{ height: `${(d.mastered / maxMastered) * 100}%` }} />
-            <span className="bar-value">{d.mastered}</span>
-          </div>
-        ))}
-      </div>
-      <div className="chart-labels">
-        {dailyStats.map(d => (
-          <span key={d.date}>{d.date.slice(5)}</span>
-        ))}
+      <div className="chart-legend">
+        <span className="xp-line">XP</span>
+        <span className="reviewed-line">Reviewed</span>
+        <span className="mastered-line">Mastered</span>
       </div>
     </div>
   );

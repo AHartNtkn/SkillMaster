@@ -212,3 +212,41 @@ footer {
   margin-top: 0.25rem;
   padding: 0 4px;
 }
+
+.line-chart {
+  height: 150px;
+  width: 100%;
+}
+
+.line-chart svg {
+  width: 100%;
+  height: 100%;
+}
+
+.line-chart polyline {
+  fill: none;
+  stroke-width: 2;
+}
+
+.xp-line {
+  stroke: var(--primary);
+  color: var(--primary);
+}
+
+.reviewed-line {
+  stroke: #10b981;
+  color: #10b981;
+}
+
+.mastered-line {
+  stroke: #f59e0b;
+  color: #f59e0b;
+}
+
+.chart-legend {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  margin-top: 0.25rem;
+}
