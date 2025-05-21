@@ -7,6 +7,7 @@ import {
   loadMarkdown,
   loadQuestions
 } from './courseLoader';
+import { Prefs, loadPrefs, savePrefs } from './prefs';
 
 interface Question {
   stem: string;
@@ -19,20 +20,27 @@ type Screen = 'home' | 'learning' | 'progress' | 'library' | 'settings';
 type Phase = 'exposition' | 'question' | 'feedback';
 
 export default function App() {
+  const [prefs, setPrefs] = useState<Prefs>(() => loadPrefs());
   const [screen, setScreen] = useState<Screen>('home');
   const [phase, setPhase] = useState<Phase>('exposition');
   const [currentQ, setCurrentQ] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
   const [alertMsg, setAlertMsg] = useState<string | null>(null);
   const [confirm, setConfirm] = useState<{ msg: string; onConfirm: () => void } | null>(null);
-  const [dark, setDark] = useState(false);
   const [markdown, setMarkdown] = useState('');
   const [questions, setQuestions] = useState<Question[]>([]);
   const [loading, setLoading] = useState(false);
+  const [currentAs, setCurrentAs] = useState<string | null>(null);
+
+  const dark = prefs.ui_theme === 'dark';
 
   useEffect(() => {
     document.body.classList.toggle('dark', dark);
   }, [dark]);
+
+  useEffect(() => {
+    savePrefs(prefs);
+  }, [prefs]);
 
   async function startLearning() {
     setScreen('learning');
@@ -48,6 +56,7 @@ export default function App() {
         const topic = await loadTopic(course.path, catalog.entry_topics[0]);
         if (topic && topic.ass.length > 0) {
           const asId = topic.ass[0];
+          setCurrentAs(asId);
           const md = await loadMarkdown(course.path, asId);
           const qsRaw = await loadQuestions(course.path, asId);
           setMarkdown(md);
@@ -96,6 +105,9 @@ export default function App() {
   }
 
   function exitLearning() {
+    if (currentAs) {
+      setPrefs(p => ({ ...p, last_as: currentAs }));
+    }
     setScreen('home');
     setPhase('exposition');
     setCurrentQ(0);
@@ -189,7 +201,14 @@ export default function App() {
         {screen === 'settings' && (
           <div>
             <label>
-              <input type="checkbox" checked={dark} onChange={() => setDark(!dark)} /> Dark Mode
+              <input
+                type="checkbox"
+                checked={dark}
+                onChange={() =>
+                  setPrefs(p => ({ ...p, ui_theme: dark ? 'default' : 'dark' }))
+                }
+              />
+              Dark Mode
             </label>
           </div>
         )}
