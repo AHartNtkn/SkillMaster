@@ -9,7 +9,7 @@ import {
   MIXED_QUIZ_TRIGGER_XP,
 } from './engine.js';
 import CourseLibrary from './CourseLibrary';
-import ProgressChart, { logXp } from './ProgressChart';
+import ProgressChart, { logXp, logSkillEvent } from './ProgressChart';
 import {
   loadCourses,
   loadCatalog,
@@ -260,6 +260,11 @@ export default function App() {
 
     applyImplicitPrereqs(skill, store, grade);
 
+    logSkillEvent(asId, 'review');
+    if (mastery.status !== 'mastered' && updatedMainSkillMastery.status === 'mastered') {
+      logSkillEvent(asId, 'mastered');
+    }
+
     setMastery(updatedMainSkillMastery);
 
     const newConsecutiveEasyCount = grade === 5 ? consecutiveEasyCount + 1 : 0;
@@ -392,9 +397,9 @@ export default function App() {
   }
 
   return (
-    <div className="app">
+    <div className="app" style={{ display: 'flex', flexDirection: 'column', minHeight: '100vh' }}>
       <header>Skill Mastery</header>
-      <div className="content">
+      <div className="content" style={{ display: 'flex', flexDirection: 'column', flexGrow: 1 }}>
         {screen === 'home' && (
           <div>
             <h2>Dashboard</h2>
