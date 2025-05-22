@@ -31,7 +31,7 @@ const schemas = {
   mastery: compile('mastery-v2.json'),
   attempts: compile('attempts-v1.json'),
   xp: compile('xp-v1.json'),
-  prefs: compile('prefs-v1.json')
+  prefs: compile('prefs-v2.json')
 };
 
 // simple sanity check for i18n file
