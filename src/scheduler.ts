@@ -67,6 +67,34 @@ export function generateCandidates(
   now: Date = new Date(),
 ): Candidate[] {
   const list: Candidate[] = []
+  const crossCounts: Record<string, number> = {}
+
+  const courseOf = (id: string) => id.split(':')[0]
+
+  // First pass: identify overdue prerequisites from other courses that block
+  // eligible candidates. These skills receive a priority bonus later.
+  for (const skill of Object.values(skills)) {
+    const m = mastery[skill.id]
+    if (!m) continue
+
+    const eligible =
+      (m.status !== 'unseen' && new Date(m.next_due) <= now) ||
+      (m.status === 'unseen' && prerequisitesMastered(skill, mastery))
+    if (!eligible) continue
+
+    for (const p of skill.prereqs ?? []) {
+      const pm = mastery[p]
+      if (
+        pm &&
+        pm.status !== 'unseen' &&
+        new Date(pm.next_due) <= now &&
+        courseOf(p) !== courseOf(skill.id)
+      ) {
+        crossCounts[p] = (crossCounts[p] || 0) + 1
+      }
+    }
+  }
+
   for (const skill of Object.values(skills)) {
     const m = mastery[skill.id]
     if (!m) continue
@@ -80,18 +108,22 @@ export function generateCandidates(
         const pm = mastery[p]
         return pm && pm.status !== 'unseen' && new Date(pm.next_due) <= now
       }).length ?? 0
+      const crossBonus = (crossCounts[skill.id] ?? 0) * 3
       const priority =
         5 +
         overdueBonus +
         3 * overduePrereqs +
-        distanceBonus(prefs.last_as, skill.id, dist)
+        distanceBonus(prefs.last_as, skill.id, dist) +
+        crossBonus
       list.push({ id: skill.id, kind: 'review', priority })
     } else if (m.status === 'unseen' && prerequisitesMastered(skill, mastery)) {
+      const crossBonus = (crossCounts[skill.id] ?? 0) * 3
       const priority =
         3 +
         0 +
         0 +
-        distanceBonus(prefs.last_as, skill.id, dist)
+        distanceBonus(prefs.last_as, skill.id, dist) +
+        crossBonus
       list.push({ id: skill.id, kind: 'new_as', priority })
     }
   }
