@@ -67,6 +67,17 @@ export function generateCandidates(
   now: Date = new Date(),
 ): Candidate[] {
   const list: Candidate[] = []
+  const seen = new Set<string>()
+
+  const add = (c: Candidate) => {
+    if (!seen.has(c.id)) {
+      seen.add(c.id)
+      list.push(c)
+    }
+  }
+
+  const courseOf = (id: string): string => id.split(':')[0]
+
   for (const skill of Object.values(skills)) {
     const m = mastery[skill.id]
     if (!m) continue
@@ -85,18 +96,35 @@ export function generateCandidates(
         overdueBonus +
         3 * overduePrereqs +
         distanceBonus(prefs.last_as, skill.id, dist)
-      list.push({ id: skill.id, kind: 'review', priority })
+      add({ id: skill.id, kind: 'review', priority })
     } else if (m.status === 'unseen' && prerequisitesMastered(skill, mastery)) {
       const priority =
         3 +
         0 +
         0 +
         distanceBonus(prefs.last_as, skill.id, dist)
-      list.push({ id: skill.id, kind: 'new_as', priority })
+      add({ id: skill.id, kind: 'new_as', priority })
+    }
+
+    if (skill.prereqs) {
+      for (const p of skill.prereqs) {
+        if (courseOf(p) !== courseOf(skill.id)) {
+          const pm = mastery[p]
+          if (!pm) continue
+          const dueP = new Date(pm.next_due)
+          const overdueDaysP = daysBetween(now, dueP)
+          if (pm.status !== 'unseen' && overdueDaysP >= 0) {
+            const overdueBonusP = Math.min(Math.max(overdueDaysP, 0), 5)
+            const priorityP =
+              5 + overdueBonusP + distanceBonus(prefs.last_as, p, dist)
+            add({ id: p, kind: 'review', priority: priorityP })
+          }
+        }
+      }
     }
   }
   if (prefs.xp_since_mixed_quiz >= MIXED_QUIZ_TRIGGER_XP) {
-    list.push({ id: 'mixed_quiz', kind: 'mixed_quiz', priority: 2 })
+    add({ id: 'mixed_quiz', kind: 'mixed_quiz', priority: 2 })
   }
   return list.sort((a, b) => b.priority - a.priority)
 }

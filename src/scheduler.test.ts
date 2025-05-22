@@ -58,4 +58,18 @@ describe('generateCandidates', () => {
     const mq = cand.find(c => c.kind === 'mixed_quiz')
     expect(mq).toBeDefined()
   })
+
+  it('includes overdue prerequisites from other courses', () => {
+    const skills2: Record<string, SkillMeta> = {
+      'C1:AS1': { id: 'C1:AS1', topic: 'C1:T1', prereqs: ['C2:AS1'] },
+      'C2:AS1': { id: 'C2:AS1', topic: 'C2:T1' }
+    }
+    const dist2: DistMatrix = { 'C2:AS1': { 'C1:AS1': 1 } }
+    const mastery: Record<string, MasteryEntry> = {
+      'C1:AS1': entry('unseen', '2025-01-15T00:00:00Z'),
+      'C2:AS1': entry('in_progress', '2025-01-07T00:00:00Z')
+    }
+    const cand = generateCandidates(skills2, mastery, { ...prefs, last_as: null }, xp, dist2, now)
+    expect(cand.some(c => c.id === 'C2:AS1')).toBe(true)
+  })
 })
