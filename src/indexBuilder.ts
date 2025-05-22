@@ -93,6 +93,7 @@ export async function loadEdges(coursePath: string): Promise<Edge[]> {
 export interface IndexData {
   dist: DistMatrix
   asCount: Record<string, number>
+  courses: string[]
 }
 
 export async function buildIndex(courseDirs: string[], outFile: string): Promise<IndexData> {
@@ -114,6 +115,6 @@ export async function buildIndex(courseDirs: string[], outFile: string): Promise
   const nodeList = Array.from(nodes)
   const dist = floydWarshall(nodeList, edges)
   await fs.mkdir(path.dirname(outFile), { recursive: true })
-  await fs.writeFile(outFile, JSON.stringify({ dist, asCount }, null, 2))
-  return { dist, asCount }
+  await fs.writeFile(outFile, JSON.stringify({ dist, asCount, courses: courseDirs }, null, 2))
+  return { dist, asCount, courses: courseDirs }
 }
