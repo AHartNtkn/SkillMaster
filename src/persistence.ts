@@ -1,5 +1,6 @@
 import { promises as fs } from 'fs'
 import { existsSync } from 'fs'
+import { readText } from './tauriFs'
 
 /**
  * Atomically write data to a file using a temporary .tmp file then rename.
@@ -24,6 +25,6 @@ export async function readJsonWithRecovery<T>(path: string): Promise<T> {
   if (existsSync(tmp) && !existsSync(path)) {
     await fs.rename(tmp, path)
   }
-  const text = await fs.readFile(path, 'utf8')
+  const text = await readText(path)
   return JSON.parse(text) as T
 }
