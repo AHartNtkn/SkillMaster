@@ -2,15 +2,20 @@ import { render, screen } from '@testing-library/react'
 import App from '../App'
 import { I18nProvider } from '../i18n'
 import { ThemeProvider } from '../theme'
+import { Provider } from 'react-redux'
+import { createAppStore } from '../store'
 
 describe('accessibility', () => {
   function setup() {
+    const store = createAppStore()
     render(
-      <I18nProvider>
-        <ThemeProvider>
-          <App />
-        </ThemeProvider>
-      </I18nProvider>
+      <Provider store={store}>
+        <I18nProvider>
+          <ThemeProvider>
+            <App />
+          </ThemeProvider>
+        </I18nProvider>
+      </Provider>
     )
   }
 
