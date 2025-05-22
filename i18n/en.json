@@ -5,5 +5,10 @@
   "learning": "Learning",
   "progress": "Progress",
   "library": "Library",
-  "settings": "Settings"
+  "settings": "Settings",
+  "xp_progress": "XP Progress",
+  "next_mixed_quiz": "Next Mixed Quiz at",
+  "mixed_quiz": "Mixed Quiz",
+  "question": "Question",
+  "of": "of"
 }
