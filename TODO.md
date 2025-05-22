@@ -12,7 +12,6 @@ file before committing.
 
 ## Scheduling Engine
 
-- [ ] Implement candidate pool generation and priority formula (overdue, new AS, mixed quiz).
 - [ ] Enforce non‑interference gap between tasks and mixed quiz trigger at 150 XP.
 - [ ] Assemble mixed quizzes of mastered ASs with deterministic question cycling.
 
