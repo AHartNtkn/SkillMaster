@@ -12,9 +12,6 @@ file before committing.
 
 ## Scheduling Engine
 
-- [ ] Implement candidate pool generation and priority formula (overdue, new AS, mixed quiz).
-- [ ] Enforce non‑interference gap between tasks and mixed quiz trigger at 150 XP.
-- [ ] Assemble mixed quizzes of mastered ASs with deterministic question cycling.
 
 ## UI
 - [ ] Implement lesson flow: exposition → questions → feedback with FSRS rating.
@@ -29,8 +26,7 @@ file before committing.
 - [ ] Ensure `npm test` runs all tests and `npm run dev` starts without console errors.
 
 ## Packaging & Misc
-- [ ] Implement export/import of progress and course reset features.
+
 # Additional tasks identified during comparison with docs/design_doc.md
 - [ ] Support hot-reloading of JSON edits without restarting the app.
 - [ ] Implement cross-course remediation scheduling when prerequisites from other courses are overdue.
-- [ ] Cap in-memory distance matrix to 1000x1000 entries and compute others on demand.
