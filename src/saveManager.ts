@@ -1,6 +1,7 @@
 import path from 'path'
 import { promises as fs } from 'fs'
-import { atomicWriteFile, readJsonWithRecovery } from './persistence'
+import { atomicWriteFile } from './persistence'
+import { loadWithMigrations } from './migrations'
 import { Prefs, XpLog } from './awardXp'
 
 export interface MasteryFile {
@@ -42,10 +43,10 @@ export class SaveManager implements SaveState {
   }
 
   async load() {
-    this.mastery = await readJsonWithRecovery<MasteryFile>(path.join(this.dir, 'mastery.json'))
-    this.attempts = await readJsonWithRecovery<AttemptsFile>(path.join(this.dir, 'attempt_window.json'))
-    this.xp = await readJsonWithRecovery<XpLog>(path.join(this.dir, 'xp.json'))
-    this.prefs = await readJsonWithRecovery<Prefs>(path.join(this.dir, 'prefs.json'))
+    this.mastery = await loadWithMigrations<MasteryFile>(path.join(this.dir, 'mastery.json'), 'Mastery-v2')
+    this.attempts = await loadWithMigrations<AttemptsFile>(path.join(this.dir, 'attempt_window.json'), 'Attempts-v1')
+    this.xp = await loadWithMigrations<XpLog>(path.join(this.dir, 'xp.json'), 'XP-v1')
+    this.prefs = await loadWithMigrations<Prefs>(path.join(this.dir, 'prefs.json'), 'Prefs-v1')
   }
 
   private async writeAll() {
