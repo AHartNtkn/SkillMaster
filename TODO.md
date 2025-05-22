@@ -45,7 +45,6 @@ file before committing.
 - [ ] Ensure autosave survives simulated crashes via write .tmp + rename.
 - [ ] Implement XP award logic and update `xp_since_mixed_quiz` after each question.
 - [ ] Provide accessibility features: ensure all interactive elements are focusable and inline math has `aria-label`.
-- [ ] Prompt before opening external links in the system browser.
 - [ ] Show toast notifications after three consecutive autosave or disk errors.
 - [ ] Implement cross-course remediation scheduling when prerequisites from other courses are overdue.
 - [ ] Cap in-memory distance matrix to 1000x1000 entries and compute others on demand.
