@@ -14,7 +14,6 @@ file before committing.
 ## Course Content
 
 ## Scheduling Engine
-- [ ] Integrate `ts-fsrs` and implement grade mapping (incorrect=1, default 4, etc.).
 - [ ] Update `mastery.json` according to FSRS‑5 and implicit prerequisite credit.
 - [ ] Implement candidate pool generation and priority formula (overdue, new AS, mixed quiz).
 - [ ] Enforce non‑interference gap between tasks and mixed quiz trigger at 150 XP.
