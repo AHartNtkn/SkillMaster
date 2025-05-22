@@ -99,6 +99,6 @@ After changes are made, tests can be run with `npm test`. Currently, tests are r
 
 Your goal is to create a feature-complete implementation of what's described in the docs/design_doc.md. The interface should closely follow the docs/mockup.html as reference.
 
-As you implement features, make sure to add thorough tests tests, especially end-to-end tests, of all the functionality, and ensure `npm test` works. Also make sure to run `npm run tauri dev` and navigate to the localhost page and check the console for errors any time you implement major functionality.
+As you implement features, make sure to add thorough tests tests, especially end-to-end tests, of all the functionality, and ensure `npm test` works. Also make sure to run `npm run dev` and navigate to the localhost page and check the console for errors any time you implement major functionality.
 
 There is a file, TODO.md, which contains a list of things needed to completely implement docs/design_doc.md. You may have been given a task to accomplish something from TODO.md. If you do, pick a task on that list, plan out its implementation with the content of the design doc and future tasks in mind. Every task also implicitly asks for tests as well. Never commit a TODO task without also implementing thorough tests and running those tests! Whenever a task from TODO.md is done, remove it from TODO.md prior to making a commit.
