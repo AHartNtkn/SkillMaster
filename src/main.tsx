@@ -4,6 +4,7 @@ import './index.css';
 import App from './App.tsx';
 import { I18nProvider } from './i18n.tsx';
 import { ThemeProvider } from './theme.tsx';
+import 'mathjax/es5/tex-mml-chtml.js';
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
