@@ -4,7 +4,7 @@ import { describe, it, expect } from 'vitest'
 function makeState(): { xp: XpLog; prefs: Prefs } {
   return {
     xp: { format: 'XP-v1', log: [] },
-    prefs: { xp_since_mixed_quiz: 0, last_as: null, ui_theme: 'default' }
+    prefs: { format: 'Prefs-v1', xp_since_mixed_quiz: 0, last_as: null, ui_theme: 'default' }
   }
 }
 

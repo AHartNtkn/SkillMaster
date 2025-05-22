@@ -31,7 +31,6 @@ file before committing.
 
 ## Packaging & Misc
 - [ ] Implement export/import of progress and course reset features.
-- [ ] Add migration framework for save data format versions.
 # Additional tasks identified during comparison with docs/design_doc.md
 - [ ] Enforce topic unlock rule when all prerequisite topics are mastered.
 - [ ] Support hot-reloading of JSON edits without restarting the app.

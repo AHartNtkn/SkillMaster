@@ -11,6 +11,7 @@ export interface XpLog {
 }
 
 export interface Prefs {
+  format: 'Prefs-v1'
   xp_since_mixed_quiz: number
   last_as: string | null
   ui_theme: string
