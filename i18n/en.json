@@ -10,5 +10,13 @@
   "next_mixed_quiz": "Next Mixed Quiz at",
   "mixed_quiz": "Mixed Quiz",
   "question": "Question",
-  "of": "of"
+  "of": "of",
+  "start_questions": "Start Questions",
+  "submit_answer": "Submit Answer",
+  "correct": "Correct!",
+  "incorrect": "Incorrect",
+  "again": "Again",
+  "hard": "Hard",
+  "okay": "Okay",
+  "easy": "Easy"
 }
