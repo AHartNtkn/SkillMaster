@@ -13,7 +13,7 @@ file before committing.
 
 
 ## UI
-- Implement lesson flow: exposition → questions → feedback with FSRS rating.
+
 
 ## Backend (Tauri)
 - Expose file system access and scheduling commands to the frontend via Tauri.
