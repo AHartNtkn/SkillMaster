@@ -18,5 +18,8 @@
   "again": "Again",
   "hard": "Hard",
   "okay": "Okay",
-  "easy": "Easy"
+  "easy": "Easy",
+  "export_progress": "Export Progress",
+  "import_progress": "Import Progress",
+  "reset_profile": "Reset Profile"
 }

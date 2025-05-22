@@ -6,16 +6,19 @@ import { I18nProvider } from './i18n.tsx';
 import { ThemeProvider } from './theme.tsx';
 import { Provider } from 'react-redux';
 import { store } from './store';
+import { initSaveManager } from './saveManagerSetup';
 import 'mathjax/es5/tex-mml-chtml.js';
 
-createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <Provider store={store}>
-      <I18nProvider>
-        <ThemeProvider>
-          <App />
-        </ThemeProvider>
-      </I18nProvider>
-    </Provider>
-  </StrictMode>,
-);
+initSaveManager().then(() => {
+  createRoot(document.getElementById('root')!).render(
+    <StrictMode>
+      <Provider store={store}>
+        <I18nProvider>
+          <ThemeProvider>
+            <App />
+          </ThemeProvider>
+        </I18nProvider>
+      </Provider>
+    </StrictMode>,
+  );
+});
