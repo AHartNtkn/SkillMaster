@@ -5,8 +5,7 @@ This list should be kept up to date.  When a task is finished, remove it from th
 file before committing.
 
 ## Core Data & Storage
-- [ ] Implement filesystem layout (`courses.json`, `course/<id>/`, `save/`, `.cache/`, etc.).
-- [ ] Build loader that demand-loads topic and skill files and automatically rebuilds `.cache/index.db` with distance matrix (Floyd–Warshall).
+- Implement filesystem layout (`courses.json`, `course/<id>/`, `save/`, `.cache/`, etc.).
 
 ## Course Content
 
@@ -14,18 +13,18 @@ file before committing.
 
 
 ## UI
-- [ ] Implement lesson flow: exposition → questions → feedback with FSRS rating.
-- [ ] Provide mixed‑quiz player UI and XP progress indicators.
+- Implement lesson flow: exposition → questions → feedback with FSRS rating.
+- Provide mixed‑quiz player UI and XP progress indicators.
 
 ## Backend (Tauri)
-- [ ] Expose file system access and scheduling commands to the frontend via Tauri.
-- [ ] Implement crash‑safe data writes and error handling dialogs.
+- Expose file system access and scheduling commands to the frontend via Tauri.
+- Implement crash‑safe data writes and error handling dialogs.
 
 ## Testing & QA
-- [ ] Add end‑to‑end tests covering lesson progression and mixed quiz trigger.
-- [ ] Ensure `npm test` runs all tests and `npm run dev` starts without console errors.
+- Add end‑to‑end tests covering lesson progression and mixed quiz trigger.
+- Ensure `npm test` runs all tests and `npm run dev` starts without console errors.
 
 ## Packaging & Misc
 
 # Additional tasks identified during comparison with docs/design_doc.md
-- [ ] Implement cross-course remediation scheduling when prerequisites from other courses are overdue.
+- Implement cross-course remediation scheduling when prerequisites from other courses are overdue.
