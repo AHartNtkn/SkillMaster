@@ -26,7 +26,6 @@ file before committing.
 - [ ] Implement crash‑safe data writes and error handling dialogs.
 
 ## Testing & QA
-- [ ] Set up Vitest and React Testing Library; create tests for loaders, schemas, and UI flows.
 - [ ] Add end‑to‑end tests covering lesson progression and mixed quiz trigger.
 - [ ] Ensure `npm test` runs all tests and `npm run dev` starts without console errors.
 
