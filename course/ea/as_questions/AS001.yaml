@@ -1,0 +1,103 @@
+format: ASQ-v1
+id: EA_AS001
+pool:
+  - id: q1
+    stem: |-
+      Which numeral represents number 0?
+    choices: ['0','1','2','3']
+    correct: 0
+  - id: q2
+    stem: |-
+      Which numeral represents number 1?
+    choices: ['1','2','3','4']
+    correct: 0
+  - id: q3
+    stem: |-
+      Which numeral represents number 2?
+    choices: ['2','3','4','5']
+    correct: 0
+  - id: q4
+    stem: |-
+      Which numeral represents number 3?
+    choices: ['3','4','5','6']
+    correct: 0
+  - id: q5
+    stem: |-
+      Which numeral represents number 4?
+    choices: ['4','5','6','7']
+    correct: 0
+  - id: q6
+    stem: |-
+      Which numeral represents number 5?
+    choices: ['5','6','7','8']
+    correct: 0
+  - id: q7
+    stem: |-
+      Which numeral represents number 6?
+    choices: ['6','7','8','9']
+    correct: 0
+  - id: q8
+    stem: |-
+      Which numeral represents number 7?
+    choices: ['7','8','9','0']
+    correct: 0
+  - id: q9
+    stem: |-
+      Which numeral represents number 8?
+    choices: ['8','9','0','1']
+    correct: 0
+  - id: q10
+    stem: |-
+      Which numeral represents number 9?
+    choices: ['9','0','1','2']
+    correct: 0
+  - id: q11
+    stem: |-
+      Identify the numeral for 0.
+    choices: ['0','1','2','3']
+    correct: 0
+  - id: q12
+    stem: |-
+      Identify the numeral for 1.
+    choices: ['1','2','3','4']
+    correct: 0
+  - id: q13
+    stem: |-
+      Identify the numeral for 2.
+    choices: ['2','3','4','5']
+    correct: 0
+  - id: q14
+    stem: |-
+      Identify the numeral for 3.
+    choices: ['3','4','5','6']
+    correct: 0
+  - id: q15
+    stem: |-
+      Identify the numeral for 4.
+    choices: ['4','5','6','7']
+    correct: 0
+  - id: q16
+    stem: |-
+      Identify the numeral for 5.
+    choices: ['5','6','7','8']
+    correct: 0
+  - id: q17
+    stem: |-
+      Identify the numeral for 6.
+    choices: ['6','7','8','9']
+    correct: 0
+  - id: q18
+    stem: |-
+      Identify the numeral for 7.
+    choices: ['7','8','9','0']
+    correct: 0
+  - id: q19
+    stem: |-
+      Identify the numeral for 8.
+    choices: ['8','9','0','1']
+    correct: 0
+  - id: q20
+    stem: |-
+      Identify the numeral for 9.
+    choices: ['9','0','1','2']
+    correct: 0

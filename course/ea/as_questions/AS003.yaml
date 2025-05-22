@@ -1,0 +1,103 @@
+format: ASQ-v1
+id: EA_AS003
+pool:
+  - id: q1
+    stem: |-
+      How many apples are shown when counting each once? (1)
+    choices: ['1','2','3','4']
+    correct: 0
+  - id: q2
+    stem: |-
+      How many apples are shown when counting each once? (2)
+    choices: ['2','3','4','5']
+    correct: 0
+  - id: q3
+    stem: |-
+      How many apples are shown when counting each once? (3)
+    choices: ['3','4','5','6']
+    correct: 0
+  - id: q4
+    stem: |-
+      How many apples are shown when counting each once? (4)
+    choices: ['4','5','6','7']
+    correct: 0
+  - id: q5
+    stem: |-
+      How many apples are shown when counting each once? (5)
+    choices: ['5','6','7','8']
+    correct: 0
+  - id: q6
+    stem: |-
+      How many apples are shown when counting each once? (6)
+    choices: ['6','7','8','9']
+    correct: 0
+  - id: q7
+    stem: |-
+      How many apples are shown when counting each once? (7)
+    choices: ['7','8','9','10']
+    correct: 0
+  - id: q8
+    stem: |-
+      How many apples are shown when counting each once? (8)
+    choices: ['8','9','10','11']
+    correct: 0
+  - id: q9
+    stem: |-
+      How many apples are shown when counting each once? (9)
+    choices: ['9','10','11','12']
+    correct: 0
+  - id: q10
+    stem: |-
+      How many apples are shown when counting each once? (10)
+    choices: ['10','11','12','13']
+    correct: 0
+  - id: q11
+    stem: |-
+      Count the stars one by one. How many? (1)
+    choices: ['1','2','3','4']
+    correct: 0
+  - id: q12
+    stem: |-
+      Count the stars one by one. How many? (2)
+    choices: ['2','3','4','5']
+    correct: 0
+  - id: q13
+    stem: |-
+      Count the stars one by one. How many? (3)
+    choices: ['3','4','5','6']
+    correct: 0
+  - id: q14
+    stem: |-
+      Count the stars one by one. How many? (4)
+    choices: ['4','5','6','7']
+    correct: 0
+  - id: q15
+    stem: |-
+      Count the stars one by one. How many? (5)
+    choices: ['5','6','7','8']
+    correct: 0
+  - id: q16
+    stem: |-
+      Count the stars one by one. How many? (6)
+    choices: ['6','7','8','9']
+    correct: 0
+  - id: q17
+    stem: |-
+      Count the stars one by one. How many? (7)
+    choices: ['7','8','9','10']
+    correct: 0
+  - id: q18
+    stem: |-
+      Count the stars one by one. How many? (8)
+    choices: ['8','9','10','11']
+    correct: 0
+  - id: q19
+    stem: |-
+      Count the stars one by one. How many? (9)
+    choices: ['9','10','11','12']
+    correct: 0
+  - id: q20
+    stem: |-
+      Count the stars one by one. How many? (10)
+    choices: ['10','11','12','13']
+    correct: 0

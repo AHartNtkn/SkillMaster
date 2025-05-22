@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "format": {"const": "Catalog-v1"},
+    "course_id": {"type": "string"},
+    "entry_topics": {"type": "array", "items": {"type": "string"}},
+    "description": {"type": "string"}
+  },
+  "required": ["format", "course_id", "entry_topics", "description"],
+  "additionalProperties": false
+}

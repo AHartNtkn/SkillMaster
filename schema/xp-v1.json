@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "format": {"const": "XP-v1"},
+    "log": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "ts", "delta", "source"],
+        "properties": {
+          "id": {"type": "integer"},
+          "ts": {"type": "string"},
+          "delta": {"type": "number"},
+          "source": {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["format", "log"],
+  "additionalProperties": false
+}

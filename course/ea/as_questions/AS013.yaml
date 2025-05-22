@@ -1,0 +1,103 @@
+format: ASQ-v1
+id: EA_AS013
+pool:
+  - id: q1
+    stem: |-
+      What symbol shows addition?
+    choices: ['+','-','x','/']
+    correct: 0
+  - id: q2
+    stem: |-
+      What symbol shows addition?
+    choices: ['+','-','x','/']
+    correct: 0
+  - id: q3
+    stem: |-
+      What symbol shows addition?
+    choices: ['+','-','x','/']
+    correct: 0
+  - id: q4
+    stem: |-
+      What symbol shows addition?
+    choices: ['+','-','x','/']
+    correct: 0
+  - id: q5
+    stem: |-
+      What symbol shows addition?
+    choices: ['+','-','x','/']
+    correct: 0
+  - id: q6
+    stem: |-
+      What symbol shows addition?
+    choices: ['+','-','x','/']
+    correct: 0
+  - id: q7
+    stem: |-
+      What symbol shows addition?
+    choices: ['+','-','x','/']
+    correct: 0
+  - id: q8
+    stem: |-
+      What symbol shows addition?
+    choices: ['+','-','x','/']
+    correct: 0
+  - id: q9
+    stem: |-
+      What symbol shows addition?
+    choices: ['+','-','x','/']
+    correct: 0
+  - id: q10
+    stem: |-
+      What symbol shows addition?
+    choices: ['+','-','x','/']
+    correct: 0
+  - id: q11
+    stem: |-
+      Which symbol is the equals sign?
+    choices: ['=','+','-','x']
+    correct: 0
+  - id: q12
+    stem: |-
+      Which symbol is the equals sign?
+    choices: ['=','+','-','x']
+    correct: 0
+  - id: q13
+    stem: |-
+      Which symbol is the equals sign?
+    choices: ['=','+','-','x']
+    correct: 0
+  - id: q14
+    stem: |-
+      Which symbol is the equals sign?
+    choices: ['=','+','-','x']
+    correct: 0
+  - id: q15
+    stem: |-
+      Which symbol is the equals sign?
+    choices: ['=','+','-','x']
+    correct: 0
+  - id: q16
+    stem: |-
+      Which symbol is the equals sign?
+    choices: ['=','+','-','x']
+    correct: 0
+  - id: q17
+    stem: |-
+      Which symbol is the equals sign?
+    choices: ['=','+','-','x']
+    correct: 0
+  - id: q18
+    stem: |-
+      Which symbol is the equals sign?
+    choices: ['=','+','-','x']
+    correct: 0
+  - id: q19
+    stem: |-
+      Which symbol is the equals sign?
+    choices: ['=','+','-','x']
+    correct: 0
+  - id: q20
+    stem: |-
+      Which symbol is the equals sign?
+    choices: ['=','+','-','x']
+    correct: 0

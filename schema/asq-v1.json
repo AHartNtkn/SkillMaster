@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "format": {"const": "ASQ-v1"},
+    "id": {"type": "string"},
+    "pool": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {"type": "string"},
+          "stem": {"type": "string"},
+          "choices": {"type": "array", "minItems": 2, "items": {"type": "string"}},
+          "correct": {"type": "integer", "minimum": 0},
+          "solution": {"type": "string"}
+        },
+        "required": ["id", "stem", "choices", "correct"],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    }
+  },
+  "required": ["format", "id", "pool"],
+  "additionalProperties": false
+}
