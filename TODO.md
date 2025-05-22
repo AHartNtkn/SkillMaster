@@ -21,7 +21,6 @@ file before committing.
 - [ ] Assemble mixed quizzes of mastered ASs with deterministic question cycling.
 
 ## UI
-- [ ] Build React components matching `docs/mockup.html` for Home, Learning, Progress, Library, and Settings screens.
 - [ ] Implement lesson flow: exposition → questions → feedback with FSRS rating.
 - [ ] Provide mixed‑quiz player UI and XP progress indicators.
 
