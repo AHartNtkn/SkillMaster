@@ -1,6 +1,7 @@
 use std::fs::{self, File};
 use std::io::{Read, Write};
 use std::path::{Path, PathBuf};
+use tauri::api::shell;
 
 use tauri::command;
 
@@ -43,6 +44,12 @@ fn write_file(path: String, data: String) -> Result<(), String> {
 }
 
 #[command]
+fn open_folder(path: String, window: tauri::Window) -> Result<(), String> {
+  let p = full_path(&path);
+  shell::open(&window.shell_scope(), p, None).map_err(|e| e.to_string())
+}
+
+#[command]
 fn log_error(msg: String) -> Result<(), String> {
   let p = persistence_dir().join("logs/error.log");
   if let Some(parent) = p.parent() {
@@ -82,7 +89,7 @@ fn get_schedule() -> Result<String, String> {
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
   tauri::Builder::default()
-    .invoke_handler(tauri::generate_handler![read_file, write_file, log_error, log_debug, get_schedule])
+    .invoke_handler(tauri::generate_handler![read_file, write_file, log_error, log_debug, get_schedule, open_folder])
     .setup(|app| {
       if cfg!(debug_assertions) {
         app.handle().plugin(

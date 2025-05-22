@@ -7,8 +7,8 @@ import { ThemeProvider } from './theme.tsx';
 import { Provider } from 'react-redux';
 import { store } from './store';
 import { initSaveManager } from './saveManagerSetup';
+import { ToastProvider } from './Toast'
 import 'mathjax/es5/tex-mml-chtml.js';
-
 initSaveManager().then(() => {
   createRoot(document.getElementById('root')!).render(
     <StrictMode>
