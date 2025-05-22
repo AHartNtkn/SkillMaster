@@ -34,5 +34,6 @@
       "icons/icon.ico"
     ],
     "useLocalToolsDir": true
-  }
+  },
+  "commands": ["read_text", "write_text", "build_index"]
 }

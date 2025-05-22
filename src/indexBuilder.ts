@@ -41,8 +41,9 @@ export function floydWarshall(nodes: string[], edges: Array<[string, string]>): 
   return result
 }
 
-import { promises as fs } from 'fs'
 import path from 'path'
+import { readText, writeText } from './tauriFs'
+import { promises as fs } from 'fs'
 
 export interface TopicEntry {
   id: string
@@ -54,8 +55,10 @@ export async function loadTopics(coursePath: string): Promise<TopicEntry[]> {
   const dir = path.join(coursePath, 'topics')
   const files = await fs.readdir(dir)
   const topics: TopicEntry[] = []
+  const isTauri = typeof window !== 'undefined' && '__TAURI__' in window
   for (const f of files) {
-    const txt = await fs.readFile(path.join(dir, f), 'utf8')
+    const p = path.join(dir, f)
+    const txt = isTauri ? await readText(p) : await fs.readFile(p, 'utf8')
     topics.push(JSON.parse(txt))
   }
   return topics
@@ -82,7 +85,8 @@ export async function loadSkills(coursePath: string): Promise<Record<string, Ski
 
 export async function loadEdges(coursePath: string): Promise<Edge[]> {
   const file = path.join(coursePath, 'edges.csv')
-  const text = await fs.readFile(file, 'utf8')
+  const isTauri = typeof window !== 'undefined' && '__TAURI__' in window
+  const text = isTauri ? await readText(file) : await fs.readFile(file, 'utf8')
   const lines = text.trim().split(/\r?\n/).slice(1)
   return lines.map((line) => {
     const [src, dst, weight] = line.split(',')
@@ -95,7 +99,7 @@ export interface IndexData {
   asCount: Record<string, number>
 }
 
-export async function buildIndex(courseDirs: string[], outFile: string): Promise<IndexData> {
+async function buildIndexLocal(courseDirs: string[], outFile: string): Promise<IndexData> {
   const edges: Array<[string, string]> = []
   const asCount: Record<string, number> = {}
   const nodes = new Set<string>()
@@ -116,4 +120,15 @@ export async function buildIndex(courseDirs: string[], outFile: string): Promise
   await fs.mkdir(path.dirname(outFile), { recursive: true })
   await fs.writeFile(outFile, JSON.stringify({ dist, asCount }, null, 2))
   return { dist, asCount }
+}
+
+export async function buildIndex(courseDirs: string[], outFile: string): Promise<IndexData> {
+  const isTauri = typeof window !== 'undefined' && '__TAURI__' in window
+  if (isTauri) {
+    const { invoke } = await import('@tauri-apps/api/core')
+    const index = await invoke<IndexData>('build_index', { courseDirs })
+    await writeText(outFile, JSON.stringify(index, null, 2))
+    return index
+  }
+  return buildIndexLocal(courseDirs, outFile)
 }
