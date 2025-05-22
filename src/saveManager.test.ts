@@ -134,9 +134,10 @@ describe('SaveManager', () => {
 
     const xpPath = path.join(dir, 'xp.json')
     const updated = { format: 'XP-v1', log: [{ id: 1, ts: '2025-01-01T00:00:00Z', delta: 5, source: 'q1' }] }
+    await new Promise(res => setTimeout(res, 50))
     await fs.writeFile(xpPath, JSON.stringify(updated))
 
-    await new Promise((res) => setTimeout(res, 1100))
+    await new Promise((res) => setTimeout(res, 1500))
     expect(manager.xp.log.length).toBe(1)
     expect(manager.xp.log[0].delta).toBe(5)
     manager.unwatch()

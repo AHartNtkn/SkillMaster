@@ -27,7 +27,8 @@ describe('generateCandidates', () => {
       P: entry('in_progress', '2025-01-08T00:00:00Z')
     }
     const cand = generateCandidates(skills, mastery, { ...prefs, last_as: "P" }, { format: "XP-v1", log: [{ id: 1, ts: "2025-01-09T23:40:00Z", delta: 10, source: "P_q1" }] }, dist, now)
-    expect(cand[0]).toEqual({ id: 'A', kind: 'review', priority: 5 + 3 + 3 + 2 })
+    expect(cand[0]).toEqual({ id: 'P', kind: 'review', priority: 5 + 2 + 5 + 3 })
+    expect(cand[1]).toEqual({ id: 'A', kind: 'review', priority: 5 + 3 + 3 + 2 })
   })
 
   it('includes new skills when prereqs mastered', () => {
@@ -57,5 +58,20 @@ describe('generateCandidates', () => {
     const cand = generateCandidates(skills, mastery, { ...prefs, xp_since_mixed_quiz: 200 }, xp, dist, now)
     const mq = cand.find(c => c.kind === 'mixed_quiz')
     expect(mq).toBeDefined()
+  })
+
+  it('applies cross-course remediation bonus', () => {
+    const crossSkills: Record<string, SkillMeta> = {
+      'C2:A': { id: 'C2:A', topic: 'T0', prereqs: ['C1:P'] },
+      'C1:P': { id: 'C1:P', topic: 'T1' }
+    }
+    const crossDist: DistMatrix = { 'C1:P': { 'C2:A': 1 } }
+    const mastery: Record<string, MasteryEntry> = {
+      'C2:A': entry('in_progress', '2025-01-07T00:00:00Z'),
+      'C1:P': entry('in_progress', '2025-01-08T00:00:00Z')
+    }
+    const cand = generateCandidates(crossSkills, mastery, { ...prefs, last_as: 'C1:P' }, xp, crossDist, now)
+    expect(cand[0].id).toBe('C1:P')
+    expect(cand[1].id).toBe('C2:A')
   })
 })
