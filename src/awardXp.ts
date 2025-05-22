@@ -26,3 +26,14 @@ export function awardXp(xp: XpLog, prefs: Prefs, delta: number, source: string, 
   prefs.xp_since_mixed_quiz += delta
 }
 
+
+import { SaveManager } from './saveManager'
+
+/**
+ * Award XP and immediately autosave via SaveManager.
+ */
+export async function awardXpAndSave(manager: SaveManager, delta: number, source: string, ts: Date = new Date()): Promise<void> {
+  awardXp(manager.xp, manager.prefs, delta, source, ts)
+  await manager.autosave()
+}
+
