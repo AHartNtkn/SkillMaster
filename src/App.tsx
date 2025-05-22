@@ -2,6 +2,7 @@ import { useState } from 'react';
 import './App.css';
 import { useI18n } from './i18n.tsx';
 import { useTheme } from './theme.tsx';
+import useExternalLinks from './useExternalLinks.tsx';
 import Home from './screens/Home.tsx';
 import Learning from './screens/Learning.tsx';
 import Progress from './screens/Progress.tsx';
@@ -14,6 +15,7 @@ export default function App() {
   const [screen, setScreen] = useState<Screen>('home');
   const { toggle } = useTheme();
   const strings = useI18n();
+  useExternalLinks();
 
   const renderScreen = () => {
     switch (screen) {
