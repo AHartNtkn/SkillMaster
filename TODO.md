@@ -34,7 +34,6 @@ file before committing.
 
 ## Packaging & Misc
 - [ ] Implement export/import of progress and course reset features.
-- [ ] Enforce CSP and sanitise Markdown with DOMPurify and MathJax rendering.
 - [ ] Add migration framework for save data format versions.
 # Additional tasks identified during comparison with docs/design_doc.md
 - [ ] Enforce topic unlock rule when all prerequisite topics are mastered.
