@@ -26,5 +26,6 @@ describe('buildIndex', async () => {
     expect(index.dist[skillA][skillB]).toBeGreaterThan(0)
     const saved = JSON.parse(await fs.readFile(outFile, 'utf8'))
     expect(saved.dist[skillA][skillB]).toBe(index.dist[skillA][skillB])
+    expect(saved.courses).toEqual([courseDir])
   })
 })
