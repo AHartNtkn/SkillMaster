@@ -37,7 +37,6 @@ file before committing.
 - [ ] Add migration framework for save data format versions.
 # Additional tasks identified during comparison with docs/design_doc.md
 - [ ] Enforce topic unlock rule when all prerequisite topics are mastered.
-- [ ] Handle missing Markdown or YAML gracefully, showing "Content unavailable" but keeping the skill schedulable.
 - [ ] Support hot-reloading of JSON edits without restarting the app.
 - [ ] Ensure autosave survives simulated crashes via write .tmp + rename.
 - [ ] Show toast notifications after three consecutive autosave or disk errors.
