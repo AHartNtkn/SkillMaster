@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "tauri": "npx tauri",
-    "test": "node ./scripts/validate.mjs"
+    "test": "node ./scripts/validate.mjs && node ./scripts/checkSkillTerm.mjs"
   },
   "dependencies": {
     "ajv": "^8.17.1",

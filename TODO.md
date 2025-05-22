@@ -43,7 +43,6 @@ file before committing.
 - [ ] Handle missing Markdown or YAML gracefully, showing "Content unavailable" but keeping the skill schedulable.
 - [ ] Support hot-reloading of JSON edits without restarting the app.
 - [ ] Ensure autosave survives simulated crashes via write .tmp + rename.
-- [ ] Follow UI text guidelines (use "Skill" instead of "AS") throughout components.
 - [ ] Implement XP award logic and update `xp_since_mixed_quiz` after each question.
 - [ ] Provide accessibility features: ensure all interactive elements are focusable and inline math has `aria-label`.
 - [ ] Prompt before opening external links in the system browser.
