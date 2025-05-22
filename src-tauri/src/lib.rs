@@ -1,6 +1,14 @@
+use std::fs;
+
+#[tauri::command]
+async fn read_text_file(path: String) -> Result<String, String> {
+    fs::read_to_string(path).map_err(|e| e.to_string())
+}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
   tauri::Builder::default()
+    .invoke_handler(tauri::generate_handler![read_text_file])
     .setup(|app| {
       if cfg!(debug_assertions) {
         app.handle().plugin(
