@@ -3,6 +3,9 @@ import { promises as fs } from 'fs'
 import { atomicWriteFile } from './persistence'
 import { loadWithMigrations } from './migrations'
 import { Prefs, XpLog } from './awardXp'
+import { execFile } from 'child_process'
+import { promisify } from 'util'
+import { tmpdir } from 'os'
 
 export interface MasteryFile {
   format: string
@@ -42,11 +45,34 @@ export class SaveManager implements SaveState {
     this.options = options
   }
 
+  private seedBlank() {
+    this.mastery = { format: 'Mastery-v2', ass: {}, topics: {} }
+    this.attempts = { format: 'Attempts-v1', ass: {}, topics: {} }
+    this.xp = { format: 'XP-v1', log: [] }
+    this.prefs = {
+      format: 'Prefs-v2',
+      profile: path.basename(this.dir),
+      xp_since_mixed_quiz: 0,
+      last_as: null,
+      ui_theme: 'default'
+    }
+  }
+
+  private static execFile = promisify(execFile)
+
+  private static versionGt(a: string, b: string): boolean {
+    const get = (v: string) => {
+      const m = v.match(/v(\d+)/)
+      return m ? parseInt(m[1]) : 0
+    }
+    return get(a) > get(b)
+  }
+
   async load() {
     this.mastery = await loadWithMigrations<MasteryFile>(path.join(this.dir, 'mastery.json'), 'Mastery-v2')
     this.attempts = await loadWithMigrations<AttemptsFile>(path.join(this.dir, 'attempt_window.json'), 'Attempts-v1')
     this.xp = await loadWithMigrations<XpLog>(path.join(this.dir, 'xp.json'), 'XP-v1')
-    this.prefs = await loadWithMigrations<Prefs>(path.join(this.dir, 'prefs.json'), 'Prefs-v1')
+    this.prefs = await loadWithMigrations<Prefs>(path.join(this.dir, 'prefs.json'), 'Prefs-v2')
   }
 
   private async writeAll() {
@@ -76,6 +102,56 @@ export class SaveManager implements SaveState {
         delay = Math.min(delay * 2, maxDelay)
       }
     }
+  }
+
+  async exportProgress(outFile: string) {
+    await SaveManager.execFile('zip', [
+      '-q',
+      '-j',
+      outFile,
+      'mastery.json',
+      'attempt_window.json',
+      'xp.json',
+      'prefs.json',
+    ], { cwd: this.dir })
+  }
+
+  async importProgress(zipFile: string) {
+    const tmp = await fs.mkdtemp(path.join(tmpdir(), 'import-'))
+    await SaveManager.execFile('unzip', ['-qq', zipFile, '-d', tmp])
+
+    const files = {
+      mastery: 'Mastery-v2',
+      attempt_window: 'Attempts-v1',
+      xp: 'XP-v1',
+      prefs: 'Prefs-v2',
+    }
+
+    for (const [name, fmt] of Object.entries(files)) {
+      const p = path.join(tmp, `${name}.json`)
+      const data = JSON.parse(await fs.readFile(p, 'utf8'))
+      if (SaveManager.versionGt(data.format, fmt)) {
+        throw new Error('Unsupported format')
+      }
+    }
+
+    await fs.mkdir(this.dir, { recursive: true })
+    for (const name of Object.keys(files)) {
+      await fs.copyFile(path.join(tmp, `${name}.json`), path.join(this.dir, `${name}.json`))
+    }
+  }
+
+  async resetProfile() {
+    const ts = new Date().toISOString().replace(/[-:]/g, '').slice(0, 15)
+    const archiveRoot = path.join(path.dirname(this.dir), 'archive')
+    await fs.mkdir(archiveRoot, { recursive: true })
+    const dest = path.join(archiveRoot, ts)
+    if (await fs.stat(this.dir).catch(() => false)) {
+      await fs.rename(this.dir, dest)
+    }
+    await fs.mkdir(this.dir, { recursive: true })
+    this.seedBlank()
+    await this.writeAll()
   }
 }
 

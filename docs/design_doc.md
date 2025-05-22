@@ -352,7 +352,7 @@ after submission → xp_since_mixed_quiz = 0
 
 ## 14 Unlock Rule
 
-Topic unlocks when **all** prerequisite ASs are mastered; first AS enters candidate pool as `new_as`.
+Atomic skills unlock when **all** prerequisite ASs are mastered; first AS enters candidate pool as `new_as`.
 
 ---
 
