@@ -120,5 +120,26 @@ describe('SaveManager', () => {
     const mastery = JSON.parse(await fs.readFile(path.join(dir, 'mastery.json'), 'utf8'))
     expect(mastery.ass).toEqual({})
   })
+
+  it('hot reloads on file change', async () => {
+    const dir = await fs.mkdtemp(path.join(tmpdir(), 'save-'))
+    const state = sampleState()
+    await fs.writeFile(path.join(dir, 'mastery.json'), JSON.stringify(state.mastery))
+    await fs.writeFile(path.join(dir, 'attempt_window.json'), JSON.stringify(state.attempts))
+    await fs.writeFile(path.join(dir, 'xp.json'), JSON.stringify(state.xp))
+    await fs.writeFile(path.join(dir, 'prefs.json'), JSON.stringify(state.prefs))
+
+    const manager = new SaveManager(dir)
+    await manager.load()
+
+    const xpPath = path.join(dir, 'xp.json')
+    const updated = { format: 'XP-v1', log: [{ id: 1, ts: '2025-01-01T00:00:00Z', delta: 5, source: 'q1' }] }
+    await fs.writeFile(xpPath, JSON.stringify(updated))
+
+    await new Promise((res) => setTimeout(res, 1100))
+    expect(manager.xp.log.length).toBe(1)
+    expect(manager.xp.log[0].delta).toBe(5)
+    manager.unwatch()
+  })
 })
 
