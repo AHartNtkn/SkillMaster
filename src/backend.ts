@@ -10,3 +10,13 @@ export async function getSchedule(): Promise<any> {
     throw e
   }
 }
+
+export async function openFolder(path: string): Promise<void> {
+  try {
+    await invoke('open_folder', { path })
+  } catch (e) {
+    await logError(String(e))
+    throw e
+  }
+}
+

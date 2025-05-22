@@ -4,6 +4,7 @@ import path from 'path'
 import { tmpdir } from 'os'
 import { describe, it, expect, vi } from 'vitest'
 import * as persistence from './persistence'
+import * as backend from './backend'
 
 function sampleState() {
   return {
@@ -24,6 +25,7 @@ describe('autosave retries', () => {
     await fs.writeFile(path.join(dir, 'prefs.json'), JSON.stringify(state.prefs))
 
     const toast = vi.fn()
+    vi.spyOn(backend, 'openFolder').mockResolvedValue()
     const manager = new SaveManager(dir, { toast, initialDelayMs: 1, maxDelayMs: 1 })
     await manager.load()
 
@@ -37,5 +39,7 @@ describe('autosave retries', () => {
 
     expect(calls).toBe(16)
     expect(toast).toHaveBeenCalledTimes(1)
+    expect(toast.mock.calls[0][0]).toBe('Autosave failed')
+    expect(Array.isArray(toast.mock.calls[0][1])).toBe(true)
   })
 })

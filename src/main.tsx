@@ -6,6 +6,7 @@ import { I18nProvider } from './i18n.tsx';
 import { ThemeProvider } from './theme.tsx';
 import { Provider } from 'react-redux';
 import { store } from './store';
+import { ToastProvider } from './Toast'
 import 'mathjax/es5/tex-mml-chtml.js';
 
 createRoot(document.getElementById('root')!).render(
@@ -13,9 +14,12 @@ createRoot(document.getElementById('root')!).render(
     <Provider store={store}>
       <I18nProvider>
         <ThemeProvider>
-          <App />
+          <ToastProvider>
+            <App />
+          </ToastProvider>
         </ThemeProvider>
       </I18nProvider>
     </Provider>
   </StrictMode>,
 );
+
