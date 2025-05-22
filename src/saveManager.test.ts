@@ -10,7 +10,7 @@ function sampleState() {
     mastery: { format: 'Mastery-v2', ass: {}, topics: {} },
     attempts: { format: 'Attempts-v1', ass: {}, topics: {} },
     xp: { format: 'XP-v1', log: [] },
-    prefs: { format: 'Prefs-v1', xp_since_mixed_quiz: 0, last_as: null, ui_theme: 'default' }
+    prefs: { format: 'Prefs-v2', profile: 'save', xp_since_mixed_quiz: 0, last_as: null, ui_theme: 'default' }
   }
 }
 
@@ -50,7 +50,7 @@ describe('SaveManager', () => {
     await manager.load()
     vi.useRealTimers()
 
-    expect(manager.prefs).toEqual({ format: 'Prefs-v1', xp_since_mixed_quiz: 0, last_as: null, ui_theme: 'default' })
+    expect(manager.prefs).toEqual({ format: 'Prefs-v2', profile: 'save', xp_since_mixed_quiz: 0, last_as: null, ui_theme: 'default' })
     const backupDir = path.join(dir, 'backup_20250101')
     const backups = await fs.readdir(backupDir)
     expect(backups).toContain('prefs.json')

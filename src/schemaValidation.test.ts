@@ -53,6 +53,6 @@ describe('sample data matches JSON schemas', () => {
     await validate(path.join(root, 'schema/mastery-v2.json'), path.join(root, 'save/mastery.json'))
     await validate(path.join(root, 'schema/attempts-v1.json'), path.join(root, 'save/attempt_window.json'))
     await validate(path.join(root, 'schema/xp-v1.json'), path.join(root, 'save/xp.json'))
-    await validate(path.join(root, 'schema/prefs-v1.json'), path.join(root, 'save/prefs.json'))
+    await validate(path.join(root, 'schema/prefs-v2.json'), path.join(root, 'save/prefs.json'))
   })
 })

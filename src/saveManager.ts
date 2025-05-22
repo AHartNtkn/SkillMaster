@@ -46,7 +46,7 @@ export class SaveManager implements SaveState {
     this.mastery = await loadWithMigrations<MasteryFile>(path.join(this.dir, 'mastery.json'), 'Mastery-v2')
     this.attempts = await loadWithMigrations<AttemptsFile>(path.join(this.dir, 'attempt_window.json'), 'Attempts-v1')
     this.xp = await loadWithMigrations<XpLog>(path.join(this.dir, 'xp.json'), 'XP-v1')
-    this.prefs = await loadWithMigrations<Prefs>(path.join(this.dir, 'prefs.json'), 'Prefs-v1')
+    this.prefs = await loadWithMigrations<Prefs>(path.join(this.dir, 'prefs.json'), 'Prefs-v2')
   }
 
   private async writeAll() {

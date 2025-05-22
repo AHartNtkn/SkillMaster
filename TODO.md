@@ -7,7 +7,6 @@ file before committing.
 ## Core Data & Storage
 - [ ] Implement filesystem layout (`courses.json`, `course/<id>/`, `save/`, `.cache/`, etc.).
 - [ ] Build loader that demand-loads topic and skill files and automatically rebuilds `.cache/index.db` with distance matrix (Floyd–Warshall).
-- [ ] Support optional multi-profile folders as per `prefs.json` section.
 
 ## Course Content
 
