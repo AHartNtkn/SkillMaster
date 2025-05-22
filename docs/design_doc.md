@@ -292,10 +292,10 @@ base: review 5 | new_as 3 | mixed_quiz 2
 
 overdue_bonus          = clamp(floor(days_overdue),0,5)
 foundational_gap_bonus = 3 * overdue_prereqs_covered(candidate_as)
-distance_bonus         = min(5, graph_distance(prefs.last_as, candidate_as))))
+distance_bonus         = min(5, graph_distance(prefs.last_as, candidate_as))
 ```
 
-`overdue_prereqs_covered` counts prerequisite topics whose **any** AS is overdue.
+`overdue_prereqs_covered` counts prerequisite ASs that are themselves overdue
 *Graph distance* uses undirected shortest path; disconnected → bonus 5.
 
 ### 8.3 Execution Rules
@@ -352,7 +352,7 @@ after submission → xp_since_mixed_quiz = 0
 
 ## 14 Unlock Rule
 
-Topic unlocks when **all** prerequisite topics mastered; first AS enters candidate pool as `new_as`.
+Topic unlocks when **all** prerequisite ASs are mastered; first AS enters candidate pool as `new_as`.
 
 ---
 
