@@ -1,5 +1,5 @@
 import path from 'path'
-import { promises as fs } from 'fs'
+import { promises as fs, watchFile, unwatchFile, Stats } from 'fs'
 import { atomicWriteFile } from './persistence'
 import { loadWithMigrations } from './migrations'
 import { Prefs, XpLog } from './awardXp'
@@ -38,11 +38,40 @@ export class SaveManager implements SaveState {
   xp!: XpLog
   prefs!: Prefs
 
+  private watchers: Array<{ file: string; handler: (curr: Stats, prev: Stats) => void }> = []
+
   private consecutiveFails = 0
   private options: SaveManagerOptions
 
   constructor(public dir: string, options: SaveManagerOptions = {}) {
     this.options = options
+  }
+
+  watch(interval = 1000) {
+    this.unwatch()
+    const watchFileHelper = async (
+      name: string,
+      assign: (data: any) => void,
+    ) => {
+      const file = path.join(this.dir, name)
+      const handler = async (curr: Stats, prev: Stats) => {
+        if (curr.mtimeMs === prev.mtimeMs) return
+        assign(JSON.parse(await fs.readFile(file, 'utf8')))
+      }
+      watchFile(file, { persistent: false, interval }, handler)
+      this.watchers.push({ file, handler })
+    }
+    watchFileHelper('mastery.json', (d) => (this.mastery = d))
+    watchFileHelper('attempt_window.json', (d) => (this.attempts = d))
+    watchFileHelper('xp.json', (d) => (this.xp = d))
+    watchFileHelper('prefs.json', (d) => (this.prefs = d))
+  }
+
+  unwatch() {
+    for (const w of this.watchers) {
+      unwatchFile(w.file, w.handler)
+    }
+    this.watchers = []
   }
 
   private seedBlank() {
@@ -73,6 +102,7 @@ export class SaveManager implements SaveState {
     this.attempts = await loadWithMigrations<AttemptsFile>(path.join(this.dir, 'attempt_window.json'), 'Attempts-v1')
     this.xp = await loadWithMigrations<XpLog>(path.join(this.dir, 'xp.json'), 'XP-v1')
     this.prefs = await loadWithMigrations<Prefs>(path.join(this.dir, 'prefs.json'), 'Prefs-v2')
+    this.watch()
   }
 
   private async writeAll() {
@@ -117,6 +147,7 @@ export class SaveManager implements SaveState {
   }
 
   async importProgress(zipFile: string) {
+    this.unwatch()
     const tmp = await fs.mkdtemp(path.join(tmpdir(), 'import-'))
     await SaveManager.execFile('unzip', ['-qq', zipFile, '-d', tmp])
 
@@ -139,9 +170,11 @@ export class SaveManager implements SaveState {
     for (const name of Object.keys(files)) {
       await fs.copyFile(path.join(tmp, `${name}.json`), path.join(this.dir, `${name}.json`))
     }
+    this.watch()
   }
 
   async resetProfile() {
+    this.unwatch()
     const ts = new Date().toISOString().replace(/[-:]/g, '').slice(0, 15)
     const archiveRoot = path.join(path.dirname(this.dir), 'archive')
     await fs.mkdir(archiveRoot, { recursive: true })
@@ -152,6 +185,7 @@ export class SaveManager implements SaveState {
     await fs.mkdir(this.dir, { recursive: true })
     this.seedBlank()
     await this.writeAll()
+    this.watch()
   }
 }
 
