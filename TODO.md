@@ -35,6 +35,5 @@ file before committing.
 # Additional tasks identified during comparison with docs/design_doc.md
 - [ ] Enforce topic unlock rule when all prerequisite topics are mastered.
 - [ ] Support hot-reloading of JSON edits without restarting the app.
-- [ ] Show toast notifications after three consecutive autosave or disk errors.
 - [ ] Implement cross-course remediation scheduling when prerequisites from other courses are overdue.
 - [ ] Cap in-memory distance matrix to 1000x1000 entries and compute others on demand.

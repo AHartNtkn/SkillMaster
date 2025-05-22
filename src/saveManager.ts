@@ -22,13 +22,24 @@ export interface SaveState {
   prefs: Prefs
 }
 
+export interface SaveManagerOptions {
+  toast?: (msg: string) => void
+  initialDelayMs?: number
+  maxDelayMs?: number
+}
+
 export class SaveManager implements SaveState {
   mastery!: MasteryFile
   attempts!: AttemptsFile
   xp!: XpLog
   prefs!: Prefs
 
-  constructor(public dir: string) {}
+  private consecutiveFails = 0
+  private options: SaveManagerOptions
+
+  constructor(public dir: string, options: SaveManagerOptions = {}) {
+    this.options = options
+  }
 
   async load() {
     this.mastery = await readJsonWithRecovery<MasteryFile>(path.join(this.dir, 'mastery.json'))
@@ -37,7 +48,7 @@ export class SaveManager implements SaveState {
     this.prefs = await readJsonWithRecovery<Prefs>(path.join(this.dir, 'prefs.json'))
   }
 
-  async autosave() {
+  private async writeAll() {
     await fs.mkdir(this.dir, { recursive: true })
     await Promise.all([
       atomicWriteFile(path.join(this.dir, 'mastery.json'), JSON.stringify(this.mastery, null, 2)),
@@ -45,6 +56,25 @@ export class SaveManager implements SaveState {
       atomicWriteFile(path.join(this.dir, 'xp.json'), JSON.stringify(this.xp, null, 2)),
       atomicWriteFile(path.join(this.dir, 'prefs.json'), JSON.stringify(this.prefs, null, 2)),
     ])
+  }
+
+  async autosave() {
+    let delay = this.options.initialDelayMs ?? 100
+    const maxDelay = this.options.maxDelayMs ?? 32000
+    while (true) {
+      try {
+        await this.writeAll()
+        this.consecutiveFails = 0
+        return
+      } catch (err) {
+        this.consecutiveFails++
+        if (this.consecutiveFails >= 3 && this.options.toast) {
+          this.options.toast('Autosave failed')
+        }
+        await new Promise((res) => setTimeout(res, delay))
+        delay = Math.min(delay * 2, maxDelay)
+      }
+    }
   }
 }
 
