@@ -1,0 +1,4 @@
+source,destination,weight
+EA:AS001,EA:AS004,1.0
+EA:AS003,EA:AS004,1.0
+EA:AS001,EA:AS013,1.0

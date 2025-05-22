@@ -1,0 +1,39 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "format": {"const": "Mastery-v2"},
+    "ass": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "status": {"type": "string"},
+          "s": {"type": "number"},
+          "d": {"type": "number"},
+          "r": {"type": "number"},
+          "l": {"type": "number"},
+          "next_due": {"type": "string"},
+          "next_q_index": {"type": "integer"}
+        },
+        "required": ["status", "s", "d", "r", "l", "next_due", "next_q_index"],
+        "additionalProperties": false
+      }
+    },
+    "topics": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "status": {"type": "string"},
+          "last_quiz_score": {"type": "number"},
+          "last_quiz_date": {"type": "string"}
+        },
+        "required": ["status", "last_quiz_score", "last_quiz_date"],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": ["format", "ass", "topics"],
+  "additionalProperties": false
+}

@@ -1,22 +1,3 @@
-When making changes to this codebase, please ensure that they align with the detailed specifications outlined in the design document located at [docs/design_doc.md](docs/design_doc.md).
-
-This document covers:
-- Terminology and definitions (e.g., Atomic Skill)
-- Filesystem layout and data structures
-- Course asset formats (JSON, YAML, Markdown)
-- Save data schemas
-- Scheduling logic (FSRS-5)
-- UI component considerations (though not fully detailed)
-- Error handling procedures
-- Technology stack and build pipeline
-
-Adherence to these specifications is crucial for maintaining the integrity, consistency, and quality of the project.
-
-After changes are made, tests can be run with `npm test`. Currently, tests are run for
-- Course, topic, and skill existance and formatting
-
-Before finalizing any changes, make sure to rune `npm run dev`, and open the localhost web page and check the console for any errors.
-
 ## Project Structure and Navigation Guide
 
 This project combines a React/TypeScript frontend with a Rust backend using Tauri. Understanding the layout is key to effective development.
@@ -96,3 +77,28 @@ This project combines a React/TypeScript frontend with a Rust backend using Taur
     *   Build: `npm run tauri build`
 
 By understanding these key areas, you can more effectively locate relevant code, understand data flow, and make changes consistent with the project's design.
+
+# Prime Directive
+
+No matter what task you've been given, all that you do has to align with the detailed specifications outlined in the design document located at [docs/design_doc.md](docs/design_doc.md).
+
+This document covers:
+- Terminology and definitions (e.g., Atomic Skill)
+- Filesystem layout and data structures
+- Course asset formats (JSON, YAML, Markdown)
+- Save data schemas
+- Scheduling logic (FSRS-5)
+- UI component considerations (though not fully detailed)
+- Error handling procedures
+- Technology stack and build pipeline
+
+Adherence to these specifications is crucial for maintaining the integrity, consistency, and quality of the project.
+
+After changes are made, tests can be run with `npm test`. Currently, tests are run for
+- Course, topic, and skill existance and formatting
+
+Your goal is to create a feature-complete implementation of what's described in the docs/design_doc.md. The interface should closely follow the docs/mockup.html as reference.
+
+As you implement features, make sure to add thorough tests tests, especially end-to-end tests, of all the functionality, and ensure `npm test` works. Also make sure to run `npm run dev` and navigate to the localhost page and check the console for errors any time you implement major functionality.
+
+There is a file, TODO.md, which contains a list of things needed to completely implement docs/design_doc.md. You may have been given a task to accomplish something from TODO.md. If you do, pick a task on that list, plan out its implementation with the content of the design doc and future tasks in mind. Every task also implicitly asks for tests as well. Never commit a TODO task without also implementing thorough tests and running those tests! Whenever a task from TODO.md is done, remove it from TODO.md prior to making a commit.
