@@ -13,7 +13,6 @@ file before committing.
 ## Scheduling Engine
 
 - [ ] Enforce non‑interference gap between tasks and mixed quiz trigger at 150 XP.
-- [ ] Assemble mixed quizzes of mastered ASs with deterministic question cycling.
 
 ## UI
 - [ ] Implement lesson flow: exposition → questions → feedback with FSRS rating.
