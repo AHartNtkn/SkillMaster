@@ -12,7 +12,6 @@ file before committing.
 
 ## Scheduling Engine
 
-- [ ] Enforce non‑interference gap between tasks and mixed quiz trigger at 150 XP.
 
 ## UI
 - [ ] Implement lesson flow: exposition → questions → feedback with FSRS rating.
