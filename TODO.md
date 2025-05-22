@@ -38,7 +38,6 @@ file before committing.
 - [ ] Add migration framework for save data format versions.
 # Additional tasks identified during comparison with docs/design_doc.md
 - [ ] Enforce topic unlock rule when all prerequisite topics are mastered.
-- [ ] Advance `next_q_index` after every attempt to enable dynamic question exposure.
 - [ ] Handle missing Markdown or YAML gracefully, showing "Content unavailable" but keeping the skill schedulable.
 - [ ] Support hot-reloading of JSON edits without restarting the app.
 - [ ] Ensure autosave survives simulated crashes via write .tmp + rename.
