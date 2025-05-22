@@ -40,7 +40,6 @@ file before committing.
 - [ ] Handle missing Markdown or YAML gracefully, showing "Content unavailable" but keeping the skill schedulable.
 - [ ] Support hot-reloading of JSON edits without restarting the app.
 - [ ] Ensure autosave survives simulated crashes via write .tmp + rename.
-- [ ] Implement XP award logic and update `xp_since_mixed_quiz` after each question.
 - [ ] Show toast notifications after three consecutive autosave or disk errors.
 - [ ] Implement cross-course remediation scheduling when prerequisites from other courses are overdue.
 - [ ] Cap in-memory distance matrix to 1000x1000 entries and compute others on demand.
