@@ -26,8 +26,7 @@ file before committing.
 - [ ] Ensure `npm test` runs all tests and `npm run dev` starts without console errors.
 
 ## Packaging & Misc
-- [ ] Implement export/import of progress and course reset features.
+
 # Additional tasks identified during comparison with docs/design_doc.md
 - [ ] Support hot-reloading of JSON edits without restarting the app.
 - [ ] Implement cross-course remediation scheduling when prerequisites from other courses are overdue.
-- [ ] Cap in-memory distance matrix to 1000x1000 entries and compute others on demand.
