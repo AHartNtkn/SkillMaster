@@ -14,7 +14,6 @@ file before committing.
 
 ## UI
 - Implement lesson flow: exposition → questions → feedback with FSRS rating.
-- Provide mixed‑quiz player UI and XP progress indicators.
 
 ## Backend (Tauri)
 - Expose file system access and scheduling commands to the frontend via Tauri.
