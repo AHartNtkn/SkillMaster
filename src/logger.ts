@@ -1,5 +1,6 @@
 import { promises as fs } from 'fs'
 import path from 'path'
+import { invoke } from '@tauri-apps/api/core'
 
 const ROTATIONS = 3
 
@@ -47,11 +48,23 @@ async function append(file: string, msg: string) {
   await fs.appendFile(file, msg + '\n')
 }
 
+function isTauri(): boolean {
+  return typeof window !== 'undefined' && '__TAURI__' in window
+}
+
 export async function logError(msg: string) {
-  await append(path.join(logDir(), 'error.log'), msg)
+  if (isTauri()) {
+    await invoke('log_error', { msg })
+  } else {
+    await append(path.join(logDir(), 'error.log'), msg)
+  }
 }
 
 export async function logDebug(msg: string) {
   if (process.env.NODE_ENV === 'production') return
-  await append(path.join(logDir(), 'debug.log'), msg)
+  if (isTauri()) {
+    await invoke('log_debug', { msg })
+  } else {
+    await append(path.join(logDir(), 'debug.log'), msg)
+  }
 }
