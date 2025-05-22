@@ -5,7 +5,7 @@ This list should be kept up to date.  When a task is finished, remove it from th
 file before committing.
 
 ## Core Data & Storage
-- Implement filesystem layout (`courses.json`, `course/<id>/`, `save/`, `.cache/`, etc.).
+
 
 ## Course Content
 
