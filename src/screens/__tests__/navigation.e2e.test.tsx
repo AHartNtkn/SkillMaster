@@ -1,5 +1,7 @@
 import { render, screen, fireEvent } from '@testing-library/react'
 import App from '../../App'
+import { SaveManagerProvider } from '../../saveContext'
+import { SaveManager } from '../../saveManager'
 import { I18nProvider } from '../../i18n'
 import { ThemeProvider } from '../../theme'
 import { Provider } from 'react-redux'
@@ -8,11 +10,14 @@ import { createAppStore } from '../../store'
 describe('navigation between screens', () => {
   function setup() {
     const store = createAppStore()
+    const manager = new SaveManager('.') as any
     render(
       <Provider store={store}>
         <I18nProvider>
           <ThemeProvider>
-            <App />
+            <SaveManagerProvider manager={manager}>
+              <App />
+            </SaveManagerProvider>
           </ThemeProvider>
         </I18nProvider>
       </Provider>

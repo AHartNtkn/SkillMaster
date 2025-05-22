@@ -4,6 +4,8 @@ import Learning from '../Learning'
 import Progress from '../Progress'
 import Library from '../Library'
 import Settings from '../Settings'
+import { SaveManagerProvider } from '../../saveContext'
+import { SaveManager } from '../../saveManager'
 
 describe('screen headings match mockup', () => {
   it('home screen shows Dashboard heading', () => {
@@ -27,7 +29,12 @@ describe('screen headings match mockup', () => {
   })
 
   it('settings screen shows Settings heading', () => {
-    render(<Settings />)
+    const manager = new SaveManager('.') as any
+    render(
+      <SaveManagerProvider manager={manager}>
+        <Settings />
+      </SaveManagerProvider>
+    )
     expect(screen.getByRole('heading', { name: /settings/i })).toBeInTheDocument()
   })
 })

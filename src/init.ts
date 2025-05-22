@@ -23,7 +23,7 @@ async function needsRebuild(indexPath: string, courseDirs: string[]): Promise<bo
     const indexTime = stat.mtimeMs
     for (const dir of courseDirs) {
       const m = await newestMTime(path.join(dir, 'topics'))
-      if (m > indexTime) return true
+      if (m >= indexTime) return true
     }
     return false
   } catch {

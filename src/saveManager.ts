@@ -34,6 +34,7 @@ export interface SaveManagerOptions {
   toast?: (msg: string, actions?: ToastAction[]) => void
   initialDelayMs?: number
   maxDelayMs?: number
+  onChange?: (state: SaveState) => void
 }
 
 export class SaveManager implements SaveState {
@@ -61,6 +62,7 @@ export class SaveManager implements SaveState {
       const handler = async (curr: Stats, prev: Stats) => {
         if (curr.mtimeMs === prev.mtimeMs) return
         assign(JSON.parse(await fs.readFile(file, 'utf8')))
+        this.options.onChange?.(this)
       }
       watchFile(file, { persistent: false, interval }, handler)
       this.watchers.push({ file, handler })
@@ -107,6 +109,7 @@ export class SaveManager implements SaveState {
     this.xp = await loadWithMigrations<XpLog>(path.join(this.dir, 'xp.json'), 'XP-v1')
     this.prefs = await loadWithMigrations<Prefs>(path.join(this.dir, 'prefs.json'), 'Prefs-v2')
     this.watch()
+    this.options.onChange?.(this)
   }
 
   private async writeAll() {
@@ -179,6 +182,7 @@ export class SaveManager implements SaveState {
       await fs.copyFile(path.join(tmp, `${name}.json`), path.join(this.dir, `${name}.json`))
     }
     this.watch()
+    this.options.onChange?.(this)
   }
 
   async resetProfile() {
@@ -194,6 +198,7 @@ export class SaveManager implements SaveState {
     this.seedBlank()
     await this.writeAll()
     this.watch()
+    this.options.onChange?.(this)
   }
 }
 
