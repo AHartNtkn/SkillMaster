@@ -1,6 +1,8 @@
 import path from 'path'
 import { promises as fs, watchFile, unwatchFile, Stats } from 'fs'
 import { atomicWriteFile } from './persistence'
+import { logError } from './logger'
+import { openFolder } from './backend'
 import { loadWithMigrations } from './migrations'
 import { Prefs, XpLog } from './awardXp'
 import { execFile } from 'child_process'
@@ -26,8 +28,10 @@ export interface SaveState {
   prefs: Prefs
 }
 
+import { ToastAction } from './Toast'
+
 export interface SaveManagerOptions {
-  toast?: (msg: string) => void
+  toast?: (msg: string, actions?: ToastAction[]) => void
   initialDelayMs?: number
   maxDelayMs?: number
 }
@@ -124,9 +128,13 @@ export class SaveManager implements SaveState {
         this.consecutiveFails = 0
         return
       } catch (err) {
+        await logError(String(err))
         this.consecutiveFails++
         if (this.consecutiveFails >= 3 && this.options.toast) {
-          this.options.toast('Autosave failed')
+          this.options.toast('Autosave failed', [
+            { label: 'Retry', onClick: () => this.autosave() },
+            { label: 'Open Folder', onClick: () => openFolder(this.dir) }
+          ])
         }
         await new Promise((res) => setTimeout(res, delay))
         delay = Math.min(delay * 2, maxDelay)
