@@ -1,6 +1,5 @@
 import path from 'path'
 import { promises as fs, watchFile, unwatchFile, Stats } from 'fs'
-import { readText } from './tauriFs'
 import { atomicWriteFile } from './persistence'
 import { loadWithMigrations } from './migrations'
 import { Prefs, XpLog } from './awardXp'
@@ -55,11 +54,9 @@ export class SaveManager implements SaveState {
       assign: (data: any) => void,
     ) => {
       const file = path.join(this.dir, name)
-      const isTauri = typeof window !== 'undefined' && '__TAURI__' in window
       const handler = async (curr: Stats, prev: Stats) => {
         if (curr.mtimeMs === prev.mtimeMs) return
-        const text = isTauri ? await readText(file) : await fs.readFile(file, 'utf8')
-        assign(JSON.parse(text))
+        assign(JSON.parse(await fs.readFile(file, 'utf8')))
       }
       watchFile(file, { persistent: false, interval }, handler)
       this.watchers.push({ file, handler })
@@ -161,11 +158,9 @@ export class SaveManager implements SaveState {
       prefs: 'Prefs-v2',
     }
 
-    const isTauri = typeof window !== 'undefined' && '__TAURI__' in window
     for (const [name, fmt] of Object.entries(files)) {
       const p = path.join(tmp, `${name}.json`)
-      const text = isTauri ? await readText(p) : await fs.readFile(p, 'utf8')
-      const data = JSON.parse(text)
+      const data = JSON.parse(await fs.readFile(p, 'utf8'))
       if (SaveManager.versionGt(data.format, fmt)) {
         throw new Error('Unsupported format')
       }
