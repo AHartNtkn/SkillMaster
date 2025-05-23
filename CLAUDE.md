@@ -480,4 +480,4 @@ Your goal is to create a feature-complete implementation of what's described her
 
 As you implement features, make sure to add thorough tests, especially end-to-end tests, of all the functionality.
 
-DO NOT implement a simple prototype which can act as a starting point. DO NOT EVER hardcode ANYTHING! DO NOT EVER make ANY placeholders! DO NOT implement ANYTHING that you do not plan to finish COMPLETELY then and there! You must periodically look back at docs/design_doc.md and compare it thoroughly with the current implementation to identify shortcomings.
+DO NOT implement a simple prototype which can act as a starting point. DO NOT EVER hardcode ANYTHING! DO NOT EVER make ANY placeholders! DO NOT implement ANYTHING that you do not plan to finish COMPLETELY then and there! You must periodically look back at this file and compare it thoroughly with the current implementation to identify shortcomings.
