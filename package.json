@@ -29,7 +29,8 @@
       "node_modules/(?!(fsrs\\.js|js-yaml|d3)/)"
     ],
     "moduleNameMapper": {
-      "^(\\.{1,2}/.*)\\.js$": "$1"
+      "^(\\.{1,2}/.*)\\.js$": "$1",
+      "^fsrs\\.js$": "<rootDir>/tests/__mocks__/fsrs.js"
     }
   }
 }

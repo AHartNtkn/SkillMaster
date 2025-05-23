@@ -102,6 +102,15 @@ export class Course {
     }
 
     /**
+     * Check if course has a skill
+     * @param {string} skillId
+     * @returns {boolean}
+     */
+    hasSkill(skillId) {
+        return this.skills.has(skillId);
+    }
+
+    /**
      * Validate the course structure
      * @returns {Object} Validation result {valid: boolean, errors: string[]}
      */

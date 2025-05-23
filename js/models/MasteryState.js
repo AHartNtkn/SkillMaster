@@ -78,8 +78,8 @@ export class MasteryState {
     }
 
     /**
-     * Get all overdue skills
-     * @returns {Array<string>} Skill IDs that are overdue
+     * Get all overdue skills (skills with pending reviews)
+     * @returns {Array<string>} Skill IDs that have next_due <= now
      */
     getOverdueSkills() {
         const overdue = [];
@@ -88,7 +88,7 @@ export class MasteryState {
         for (const [skillId, state] of this.skills) {
             if (state.status !== 'unseen' && state.next_due) {
                 const dueDate = new Date(state.next_due);
-                if (dueDate < now) {
+                if (dueDate <= now) {
                     overdue.push(skillId);
                 }
             }

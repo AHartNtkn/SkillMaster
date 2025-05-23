@@ -17,10 +17,27 @@ export class FSRSService {
         if (this.initialized) return;
         
         // Dynamic import to handle ES module
-        const module = await import('../../node_modules/fsrs.js/dist/fsrs.js.esm.js');
-        this.fsrsModule = module;
-        this.Rating = module.Rating;
-        this.scheduler = module.fsrs(module.generatorParameters());
+        try {
+            // Try ES module import first
+            const module = await import('fsrs.js');
+            this.fsrsModule = module;
+            this.Rating = module.Rating || module.default?.Rating;
+            const fsrs = module.fsrs || module.default?.fsrs;
+            const generatorParameters = module.generatorParameters || module.default?.generatorParameters;
+            
+            if (!this.Rating || !fsrs || !generatorParameters) {
+                // Fallback to CommonJS if ES module doesn't work
+                const fsrsModule = await import('../../node_modules/fsrs.js/dist/fsrs.js.cjs.development.js');
+                this.fsrsModule = fsrsModule;
+                this.Rating = fsrsModule.Rating;
+                this.scheduler = fsrsModule.fsrs(fsrsModule.generatorParameters());
+            } else {
+                this.scheduler = fsrs(generatorParameters());
+            }
+        } catch (e) {
+            console.error('Failed to import FSRS:', e);
+            throw e;
+        }
         
         // Set up grade mapping
         this.gradeToRating = {
@@ -122,26 +139,25 @@ export class FSRSService {
     }
 
     /**
-     * Check if a skill is overdue
+     * Check if a skill is overdue (has a pending review)
      * @param {string} nextDue - ISO date string
      * @returns {boolean}
      */
     isOverdue(nextDue) {
-        return new Date(nextDue) < new Date();
+        return new Date(nextDue) <= new Date();
     }
 
     /**
      * Calculate days overdue
      * @param {string} nextDue - ISO date string
-     * @returns {number} Days overdue (0 if not overdue)
+     * @returns {number} Days overdue (negative if in future)
      */
     getDaysOverdue(nextDue) {
         const dueDate = new Date(nextDue);
         const now = new Date();
-        if (dueDate >= now) return 0;
         
         const msPerDay = 1000 * 60 * 60 * 24;
-        return Math.floor((now - dueDate) / msPerDay);
+        return (now - dueDate) / msPerDay;
     }
 
     /**

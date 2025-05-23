@@ -39,7 +39,7 @@ describe('Integration Tests (without FSRS)', () => {
         expect(courses.length).toBeGreaterThan(0);
         
         const course = courses[0];
-        expect(course.courseId).toBe('elementary_arithmetic');
+        expect(course.courseId).toBe('EA');
         expect(course.title).toBe('Elementary Arithmetic');
         
         const skills = course.getAllSkills();
@@ -162,7 +162,17 @@ describe('Integration Tests (without FSRS)', () => {
         
         available = taskSelector.getAvailableNewSkills();
         
-        // Now EA:AS004 should be available (depends on EA:AS001)
+        // EA:AS004 still not available (also needs EA:AS003)
+        expect(available).not.toContain('EA:AS004');
+        
+        // Master EA:AS003
+        courseManager.masteryState.updateSkillState('EA:AS003', {
+            status: 'mastered'
+        });
+        
+        available = taskSelector.getAvailableNewSkills();
+        
+        // Now EA:AS004 should be available (both prereqs mastered)
         expect(available).toContain('EA:AS004');
     });
 

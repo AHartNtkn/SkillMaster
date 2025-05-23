@@ -15,30 +15,20 @@ export class MixedQuizView {
     }
 
     async startMixedQuiz() {
-        // Select questions for the quiz
-        const selectedQuestions = this.taskSelector.selectMixedQuizQuestions();
+        // Get assembled questions from CourseManager
+        const assembledQuestions = this.courseManager.assembleMixedQuiz();
         
-        if (selectedQuestions.length === 0) {
+        if (assembledQuestions.length === 0) {
             this.showNoQuestionsAvailable();
             return;
         }
         
-        // Load all questions
-        this.quizQuestions = [];
-        for (const {skillId, questionIndex} of selectedQuestions) {
-            const questions = await this.courseManager.getSkillQuestions(skillId);
-            if (questions.length > 0) {
-                const qIndex = questionIndex % questions.length;
-                this.quizQuestions.push({
-                    skillId,
-                    question: questions[qIndex],
-                    questionIndex: qIndex
-                });
-            }
-        }
-        
-        // Ensure we have exactly 15 questions (or less if not enough available)
-        this.quizQuestions = this.quizQuestions.slice(0, 15);
+        // Questions are already loaded and formatted by assembleMixedQuiz
+        this.quizQuestions = assembledQuestions.map(q => ({
+            skillId: q.skillId,
+            question: q,
+            questionIndex: q.questionIndex
+        }));
         
         // Reset state
         this.currentQuestionIndex = 0;
@@ -58,7 +48,7 @@ export class MixedQuizView {
                 <div class="task-card">
                     <p>No eligible skills for mixed quiz.</p>
                     <p class="text-secondary">
-                        Skills must be mastered and practiced within the last 30 days to appear in mixed quizzes.
+                        Skills must have pending reviews (next_due ≤ now) to appear in mixed quizzes.
                     </p>
                 </div>
                 <button class="btn btn-primary btn-full" onclick="app.showHome()">

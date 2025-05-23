@@ -252,7 +252,7 @@ A Topic is considered mastered when all of its constituent Atomic Skills are mas
 5.2. Task Candidate Pools
 The system selects the next task for the learner from three distinct pools:
 
-Overdue AS Reviews: Any Atomic Skill where the next_due date is in the past.
+Overdue AS Reviews: Any Atomic Skill where the next_due date is less than or equal to the current time (next_due <= now). This includes skills due today.
 
 New AS: An "unseen" Atomic Skill for which all prerequisite ASs have the "mastered" status.
 
@@ -330,11 +330,15 @@ If the mastery criteria are met during the session, the AS status is set to mast
 7.2. Mixed Quiz Assembly
 Trigger: A mixed quiz is generated when xp_since_mixed_quiz (in prefs.json) reaches 150.
 
-Eligibility: Questions are drawn from ASs that are "mastered" and were last attempted within the last 30 days (derived from mastery.json and attempt_window.json).
+Eligibility: Questions are drawn from ALL atomic skills (ASs) that have pending reviews. Note that ONLY the FSRS system can determine this; THERE IS NO SEPARATE TRACKER FOR WHEN REVIEWS ARE NEEDED!
 
-Selection: The system selects 15 questions. The selection is weighted proportionally to how overdue a mastered skill is (a skill that is not overdue has a weight of 0). Questions for a given skill are pulled sequentially using its next_q_index.
+IMPORTANT CLARIFICATION: A skill has a "pending review" if and only if its next_due timestamp is less than or equal to the current time (next_due <= now). The terms "pending review", "overdue", and "due for review" all mean the same thing in this system. There is no distinction between being "due" and being "overdue".
 
-Post-Quiz: After the quiz is submitted, grades are recorded, FSRS states are updated, and xp_since_mixed_quiz is reset to 0.
+Selection: The system selects 15 questions. The selection is weighted proportionally to how overdue a skill is (skills due today have a small positive weight, skills due in the past have larger weights based on days overdue). Questions for a given skill are pulled sequentially using its next_q_index.
+
+FSRS is updated per-question.
+
+Post-Quiz: After the quiz is submitted, and xp_since_mixed_quiz is reset to 0.
 
 8. Filesystem and Data Formats
 The application's data is organized in a clear, file-based structure, designed to be easily managed by content authors.
@@ -481,3 +485,53 @@ Your goal is to create a feature-complete implementation of what's described her
 As you implement features, make sure to add thorough tests, especially end-to-end tests, of all the functionality.
 
 DO NOT implement a simple prototype which can act as a starting point. DO NOT EVER hardcode ANYTHING! DO NOT EVER make ANY placeholders! DO NOT implement ANYTHING that you do not plan to finish COMPLETELY then and there! You must periodically look back at this file and compare it thoroughly with the current implementation to identify shortcomings.
+
+# Implementation Audit
+
+## 🟢 Fully Implemented
+- **Directory Structure & File Organization**: Complete filesystem layout matches specification exactly
+- **Data Schemas**: All JSON/YAML schemas implemented correctly (courses.json, catalog.json, skills/*.json, topics/*.json, as_questions/*.yaml, as_md/*.md)
+- **Core UI Framework**: Tab-based navigation with Home, Progress, Library, Settings views
+- **Application Architecture**: Proper MVC pattern with CourseManager, TaskSelector services and dedicated view classes
+- **FSRS Integration**: FSRS.js properly imported and integrated with grade mapping (1-5 scale to FSRS ratings)
+- **Basic Learning Flow**: Skill progression through unseen → in_progress → mastered states
+- **Test Infrastructure**: Jest setup with 5 test files covering major components
+
+## 🟡 Partially Implemented
+- **Save System**: Directory structure exists but no save files present (mastery.json, prefs.json, xp.json, attempt_window.json missing)
+- **Task Selection Logic**: Core prioritization algorithm implemented but missing some bonus calculations (foundational_gap_bonus, distance_bonus)
+- **Learning View**: Basic structure exists but missing complete question flow, feedback phases, and FSRS self-rating
+- **Mixed Quiz System**: Infrastructure present but needs complete implementation of 15-question assembly and eligibility logic
+- **Progress Visualization**: View exists but needs D3.js knowledge graph implementation
+- **Error Handling**: Basic structure but needs atomic saves and comprehensive content error handling
+
+## 🔴 Not Implemented
+- **Implicit Prerequisite Credit**: FSRS dampening algorithm for prerequisite skills when main skill scores 4-5
+- **Non-Interference Rule**: 10-minute gap enforcement between same-topic tasks
+- **XP System**: Experience point tracking and awards (+10 per question, +20 per mixed quiz question)
+- **Mixed Quiz Eligibility**: Selection mechanism for questions is not properly implemented.
+- **Data Persistence**: Atomic save operations and localStorage integration
+- **Settings Functionality**: Dark mode toggle, import/export, reset operations
+- **Content Validation**: Missing content file handling and format versioning
+- **Graph Distance Calculation**: Cache system for prerequisite path distances
+
+## Current Issues Identified
+1. **Test Failures**: Integration tests failing due to incorrect file paths (looking for `/course/ea/` instead of `/course/elementary_arithmetic/`)
+2. **Missing Save Data**: No persistence layer active - all progress lost on refresh
+3. **Incomplete Learning Loop**: Questions load but no complete answer→feedback→rating→next cycle
+4. **No Mixed Quiz Trigger**: XP accumulation not tracked, so mixed quizzes never appear
+5. **Static Progress View**: Knowledge graph visualization not implemented
+
+## Architecture Assessment
+- **Modularity**: Excellent separation of concerns
+- **Extensibility**: Well-structured for adding new features
+- **Data Layer**: Proper abstraction but needs persistence implementation
+- **UI Framework**: Responsive design principles followed
+- **Testing**: Good coverage of core logic, needs more integration tests
+
+## Recommendations for Completion
+1. **Priority 1**: Implement save system and data persistence
+2. **Priority 2**: Complete learning flow with FSRS rating integration
+3. **Priority 3**: Add XP tracking and mixed quiz assembly
+4. **Priority 4**: Implement prerequisite credit and non-interference rules
+5. **Priority 5**: Add progress visualization and settings functionality
