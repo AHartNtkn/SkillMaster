@@ -1,10 +1,9 @@
 {
-  "format": "Courses-v1",
   "courses": [
     {
-      "id": "EA",
+      "id": "elementary_arithmetic",
       "name": "Elementary Arithmetic",
-      "path": "course/elementary_arithmetic/"
+      "description": "Basic arithmetic operations and number sense"
     }
   ]
 }

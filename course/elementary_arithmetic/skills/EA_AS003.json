@@ -1,6 +1,6 @@
 {
   "id": "EA:AS003",
-  "name": "Understand one-to-one correspondence when counting",
-  "prereqs": [],
-  "weights": {}
+  "title": "Understand one-to-one correspondence when counting",
+  "desc": "Understand one-to-one correspondence when counting",
+  "prereqs": []
 }

@@ -1,6 +1,6 @@
 {
   "format": "Catalog-v1",
   "course_id": "EA",
-  "entry_topics": ["EA:T001"],
-  "description": "Elementary Arithmetic fundamentals"
+  "title": "Elementary Arithmetic",
+  "entry_topics": ["EA:T001"]
 }

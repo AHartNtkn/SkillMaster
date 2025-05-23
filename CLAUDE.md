@@ -474,7 +474,7 @@ Data Versioning: Every JSON and YAML file includes a format version string. The 
 
 Implementation State:
 
-The application is current unimplemented. Initial skill data for four basic arithmetic skills are already implemented to act as the seed for the knowledge graph, but no functional aspects have yet been implemented.
+The application is parially implemented. The core interface, most datastructure, and most logic is implemented to some degree.
 
 Your goal is to create a feature-complete implementation of what's described here. You are to import the FSRS implementation; don't implement it on your own.
 
