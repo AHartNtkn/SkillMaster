@@ -1,4 +1,4 @@
-import { describe, test, expect, beforeEach, jest } from '@jest/globals';
+import { describe, test, expect, beforeEach, vi } from 'vitest';
 import { LearningView } from '../js/views/LearningView.js';
 import { MixedQuizView } from '../js/views/MixedQuizView.js';
 import { CourseManager } from '../js/services/CourseManager.js';
@@ -52,7 +52,7 @@ describe('View Start Methods', () => {
         
         // Mock DOM manipulation
         global.document = {
-            getElementById: jest.fn(() => ({
+            getElementById: vi.fn(() => ({
                 innerHTML: ''
             }))
         };
@@ -62,10 +62,10 @@ describe('View Start Methods', () => {
         const learningView = new LearningView(courseManager);
         
         // Mock getSkill to return null
-        jest.spyOn(courseManager, 'getSkill').mockReturnValue(null);
+        vi.spyOn(courseManager, 'getSkill').mockReturnValue(null);
         
         // Mock console.error to verify it's called
-        const consoleError = jest.spyOn(console, 'error').mockImplementation(() => {});
+        const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
         
         await learningView.startSkill('NONEXISTENT');
         
@@ -78,10 +78,10 @@ describe('View Start Methods', () => {
         const mixedQuizView = new MixedQuizView(courseManager, taskSelector);
         
         // Mock assembleMixedQuiz to return empty array
-        jest.spyOn(courseManager, 'assembleMixedQuiz').mockReturnValue([]);
+        vi.spyOn(courseManager, 'assembleMixedQuiz').mockReturnValue([]);
         
         // Mock showNoQuestionsAvailable
-        jest.spyOn(mixedQuizView, 'showNoQuestionsAvailable').mockImplementation(() => {});
+        vi.spyOn(mixedQuizView, 'showNoQuestionsAvailable').mockImplementation(() => {});
         
         await mixedQuizView.startMixedQuiz();
         

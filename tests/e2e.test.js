@@ -1,6 +1,7 @@
-import { describe, test, expect, beforeEach, afterEach } from '@jest/globals';
+import { describe, test, expect, beforeEach, afterEach, vi } from 'vitest';
 import { CourseManager } from '../js/services/CourseManager.js';
 import { TaskSelector } from '../js/services/TaskSelector.js';
+import { SkillMasterApp } from '../js/app.js';
 
 describe('End-to-End Tests', () => {
     let courseManager;
@@ -272,5 +273,98 @@ describe('End-to-End Tests', () => {
             const state = courseManager.masteryState.getSkillState(task.skillId);
             expect(state.status).not.toBe('unseen');
         }
+    });
+});
+
+describe('Learning Flow E2E', () => {
+    let app;
+
+    beforeEach(async () => {
+        // Clear localStorage and JSDOM document state
+        localStorage.clear();
+        document.body.innerHTML = ''; // Clear body
+        document.head.innerHTML = ''; // Clear head if styles are added there
+
+        // Setup basic HTML structure that the app expects
+        document.body.innerHTML = `
+            <div id="main-content"></div>
+            <div id="tab-bar">
+                <div class="tab-item" data-tab="home">Home</div>
+                <div class="tab-item" data-tab="progress">Progress</div>
+                <div class="tab-item" data-tab="library">Library</div>
+                <div class="tab-item" data-tab="settings">Settings</div>
+            </div>
+        `;
+
+        app = new SkillMasterApp();
+        // Note: app.initialize() will be called at the start of the test case
+        // to allow for specific mocks or spies to be set up beforehand if needed.
+    });
+
+    afterEach(() => {
+        localStorage.clear();
+        document.body.innerHTML = '';
+        document.head.innerHTML = '';
+        vi.restoreAllMocks(); // Restore all mocks after each test
+    });
+
+    test('should complete a question, rate it, and advance without FSRS errors', async () => {
+        // 1. Initialize App and navigate to a skill
+        await app.initialize();
+        const skillId = 'EA:AS001'; // Assuming this skill and its questions exist
+        app.showView('learning');
+        await app.views.learning.startSkill(skillId);
+
+        // Wait for question to be displayed (simulate async rendering if any)
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        // Spy on console.error to catch FSRS errors
+        const consoleErrorSpy = vi.spyOn(console, 'error');
+
+        // 2. Simulate answering a question
+        // Ensure question is loaded
+        expect(app.views.learning.questions.length).toBeGreaterThan(0);
+        const initialQuestionIndex = app.views.learning.currentQuestionIndex;
+
+        // Set up DOM structure needed for feedback display
+        const mainContent = document.getElementById('main-content');
+        if (mainContent) {
+            mainContent.innerHTML = '<div class="choices-list"></div>';
+        }
+        
+        app.views.learning.selectAnswer(0); // Select first choice
+        app.views.learning.submitAnswer();
+
+        // Wait for feedback/rating to be displayed
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        // 3. Simulate rating the answer (e.g., grade 4 "Okay")
+        await app.views.learning.rateAndContinue(4);
+
+        // Wait for next question or session end to be processed
+        await new Promise(resolve => setTimeout(resolve, 100));
+
+        // 4. Assertions
+        // Check that no FSRS-related errors were logged
+        consoleErrorSpy.mock.calls.forEach(call => {
+            if (call[0] && typeof call[0] === 'string') {
+                expect(call[0]).not.toContain('Failed to import FSRS');
+                expect(call[0]).not.toContain('resolve module specifier \'fsrs.js\'');
+            }
+        });
+
+        // Check if the question index advanced or session ended
+        const skillState = app.courseManager.masteryState.getSkillState(skillId);
+        if (app.views.learning.shouldEndSession()) {
+            // If session ended, check if UI reflects this (e.g., shows session complete)
+            expect(document.getElementById('main-content').innerHTML).toContain('Session Complete');
+        } else {
+            // If session continues, check if question index changed
+            expect(skillState.next_q_index).not.toBe(initialQuestionIndex);
+            expect(app.views.learning.currentQuestionIndex).not.toBe(initialQuestionIndex);
+        }
+
+        // Clean up spy
+        consoleErrorSpy.mockRestore();
     });
 });

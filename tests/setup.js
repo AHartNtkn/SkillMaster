@@ -1,4 +1,4 @@
-// Setup file for Jest tests
+// Setup file for Vitest tests
 import { readFileSync } from 'fs';
 import { join } from 'path';
 import { fileURLToPath } from 'url';

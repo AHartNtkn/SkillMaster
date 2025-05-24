@@ -16,33 +16,39 @@ export class FSRSService {
     async initialize() {
         if (this.initialized) return;
         
-        // Dynamic import to handle ES module
         try {
-            // In test environment, use the mock
-            if (typeof process !== 'undefined' && process.env.NODE_ENV === 'test') {
-                // The mock is already loaded via Jest's moduleNameMapper
+            // Check if running in Jest or Vitest test environment
+            if (process.env.JEST_WORKER_ID !== undefined || process.env.VITEST_WORKER_ID !== undefined || process.env.NODE_ENV === 'test') {
+                // In Jest/Vitest, dynamically import 'fsrs.js'. 
+                // The mock should intercept this.
                 const module = await import('fsrs.js');
                 this.fsrsModule = module;
                 this.Rating = module.Rating;
                 const fsrs = module.fsrs;
                 const generatorParameters = module.generatorParameters;
+                if (!this.Rating || !fsrs || !generatorParameters) {
+                    throw new Error('FSRS module (mocked via fsrs.js) missing required exports in test environment');
+                }
                 this.scheduler = fsrs(generatorParameters());
             } else {
-                // In production, load the actual module
+                // In browser or other non-Jest environments, load via relative path to the ESM distribution
                 const module = await import('../../node_modules/fsrs.js/dist/fsrs.js.esm.js');
                 this.fsrsModule = module;
                 this.Rating = module.Rating;
                 const fsrs = module.fsrs;
                 const generatorParameters = module.generatorParameters;
-                
                 if (!this.Rating || !fsrs || !generatorParameters) {
-                    throw new Error('FSRS module missing required exports');
+                    throw new Error('FSRS module (fsrs.js.esm.js) missing required exports in Browser');
                 }
-                
                 this.scheduler = fsrs(generatorParameters());
             }
         } catch (e) {
-            console.error('Failed to import FSRS:', e);
+            console.error('Failed to initialize FSRS module:', e);
+            if (process.env.JEST_WORKER_ID !== undefined || process.env.VITEST_WORKER_ID !== undefined || process.env.NODE_ENV === 'test') {
+                console.error('FSRS import error in test environment. Ensure \'fsrs.js\' is mocked correctly and the mock provides all necessary exports.');
+            } else {
+                console.error('FSRS import error in Browser. Check the path to "../../node_modules/fsrs.js/dist/fsrs.js.esm.js".');
+            }
             throw e;
         }
         

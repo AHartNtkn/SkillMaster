@@ -1,4 +1,4 @@
-import { describe, test, expect, beforeEach } from '@jest/globals';
+import { describe, test, expect, beforeEach } from 'vitest';
 import { Course, Topic, AtomicSkill } from '../js/models/Course.js';
 import { MasteryState, SkillState } from '../js/models/MasteryState.js';
 import { AttemptWindow } from '../js/models/AttemptWindow.js';

@@ -1,4 +1,4 @@
-import { jest, describe, test, expect, beforeEach, afterEach } from '@jest/globals';
+import { vi, describe, test, expect, beforeEach, afterEach } from 'vitest';
 import { MixedQuizView } from '../js/views/MixedQuizView.js';
 import { CourseManager } from '../js/services/CourseManager.js';
 import { TaskSelector } from '../js/services/TaskSelector.js';
@@ -19,7 +19,7 @@ describe('MixedQuizView FSRS Update', () => {
         taskSelector = new TaskSelector(courseManager);
         
         // Mock the recordSkillAttempt method to track calls
-        mockRecordSkillAttempt = jest.spyOn(courseManager, 'recordSkillAttempt');
+        mockRecordSkillAttempt = vi.spyOn(courseManager, 'recordSkillAttempt');
         
         // Create the view
         mixedQuizView = new MixedQuizView(courseManager, taskSelector);
@@ -29,7 +29,7 @@ describe('MixedQuizView FSRS Update', () => {
     });
     
     afterEach(() => {
-        jest.restoreAllMocks();
+        vi.restoreAllMocks();
         localStorage.clear();
     });
     

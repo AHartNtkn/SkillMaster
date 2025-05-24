@@ -1,4 +1,4 @@
-import { describe, test, expect, beforeEach, jest } from '@jest/globals';
+import { describe, test, expect, beforeEach, vi } from 'vitest';
 import { TaskSelector } from '../js/services/TaskSelector.js';
 import { CourseManager } from '../js/services/CourseManager.js';
 import { Course, Topic, AtomicSkill } from '../js/models/Course.js';

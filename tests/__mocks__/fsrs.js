@@ -1,4 +1,4 @@
-// Mock FSRS module for testing
+// Mock FSRS module for testing with Vitest
 export const Rating = {
     Again: 1,
     Hard: 2,

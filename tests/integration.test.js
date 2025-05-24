@@ -1,4 +1,4 @@
-import { describe, test, expect, beforeEach, afterEach } from '@jest/globals';
+import { describe, test, expect, beforeEach, afterEach } from 'vitest';
 import { CourseManager } from '../js/services/CourseManager.js';
 import { TaskSelector } from '../js/services/TaskSelector.js';
 
