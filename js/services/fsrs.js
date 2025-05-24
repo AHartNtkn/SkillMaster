@@ -18,36 +18,43 @@ export class FSRSService {
         
         try {
             // Check if running in Jest or Vitest test environment
-            if (process.env.JEST_WORKER_ID !== undefined || process.env.VITEST_WORKER_ID !== undefined || process.env.NODE_ENV === 'test') {
+            if (typeof process !== 'undefined' && (process.env.JEST_WORKER_ID !== undefined || process.env.VITEST_WORKER_ID !== undefined || process.env.NODE_ENV === 'test')) {
                 // In Jest/Vitest, dynamically import 'fsrs.js'. 
                 // The mock should intercept this.
                 const module = await import('fsrs.js');
                 this.fsrsModule = module;
                 this.Rating = module.Rating;
-                const fsrs = module.fsrs;
-                const generatorParameters = module.generatorParameters;
-                if (!this.Rating || !fsrs || !generatorParameters) {
+                
+                // Check if we have the old mock API or new API
+                if (module.fsrs && module.generatorParameters) {
+                    // Old mock API
+                    const fsrs = module.fsrs;
+                    const generatorParameters = module.generatorParameters;
+                    this.scheduler = fsrs(generatorParameters());
+                } else if (module.FSRS) {
+                    // New API (both real and updated mock)
+                    const FSRS = module.FSRS;
+                    this.scheduler = new FSRS();
+                } else {
                     throw new Error('FSRS module (mocked via fsrs.js) missing required exports in test environment');
                 }
-                this.scheduler = fsrs(generatorParameters());
             } else {
-                // In browser or other non-Jest environments, load via relative path to the ESM distribution
-                const module = await import('../../node_modules/fsrs.js/dist/fsrs.js.esm.js');
+                // In browser environment, import fsrs.js normally
+                const module = await import('fsrs.js');
                 this.fsrsModule = module;
                 this.Rating = module.Rating;
-                const fsrs = module.fsrs;
-                const generatorParameters = module.generatorParameters;
-                if (!this.Rating || !fsrs || !generatorParameters) {
-                    throw new Error('FSRS module (fsrs.js.esm.js) missing required exports in Browser');
+                const FSRS = module.FSRS;
+                if (!this.Rating || !FSRS) {
+                    throw new Error('FSRS module missing required exports');
                 }
-                this.scheduler = fsrs(generatorParameters());
+                this.scheduler = new FSRS();
             }
         } catch (e) {
             console.error('Failed to initialize FSRS module:', e);
-            if (process.env.JEST_WORKER_ID !== undefined || process.env.VITEST_WORKER_ID !== undefined || process.env.NODE_ENV === 'test') {
+            if (typeof process !== 'undefined' && (process.env.JEST_WORKER_ID !== undefined || process.env.VITEST_WORKER_ID !== undefined || process.env.NODE_ENV === 'test')) {
                 console.error('FSRS import error in test environment. Ensure \'fsrs.js\' is mocked correctly and the mock provides all necessary exports.');
             } else {
-                console.error('FSRS import error in Browser. Check the path to "../../node_modules/fsrs.js/dist/fsrs.js.esm.js".');
+                console.error('FSRS import error in Browser. Check that fsrs.js module is available.');
             }
             throw e;
         }
@@ -74,15 +81,15 @@ export class FSRSService {
                 due: new Date(),
                 stability: 0,
                 difficulty: 0,
-                elapsedDays: 0,
-                scheduledDays: 0,
+                elapsed_days: 0,
+                scheduled_days: 0,
                 reps: 0,
                 lapses: 0,
                 state: 0,
-                lastReview: new Date()
+                last_review: new Date()
             };
         }
-        return this.fsrsModule.createEmptyCard();
+        return new this.fsrsModule.Card();
     }
 
     /**
@@ -95,17 +102,16 @@ export class FSRSService {
         await this.initialize();
         
         // Convert our state format to FSRS card format
-        const card = {
-            due: new Date(currentState.next_due || new Date()),
-            stability: currentState.s || 0,
-            difficulty: currentState.d || 0,
-            elapsedDays: 0,
-            scheduledDays: 0,
-            reps: currentState.r || 0,
-            lapses: currentState.l || 0,
-            state: this._determineCardState(currentState),
-            lastReview: new Date()
-        };
+        const card = new this.fsrsModule.Card();
+        card.due = new Date(currentState.next_due || new Date());
+        card.stability = currentState.s || 0;
+        card.difficulty = currentState.d || 0;
+        card.elapsed_days = 0;
+        card.scheduled_days = 0;
+        card.reps = currentState.r || 0;
+        card.lapses = currentState.l || 0;
+        card.state = this._determineCardState(currentState);
+        card.last_review = new Date();
 
         const rating = this.gradeToRating[grade];
         const schedulingInfo = this.scheduler.repeat(card, new Date());

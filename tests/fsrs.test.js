@@ -1,6 +1,36 @@
 import { describe, test, expect, beforeEach, vi } from 'vitest';
 import { FSRSService } from '../js/services/fsrs.js';
 
+// Mock Card class
+class MockCard {
+    constructor() {
+        this.due = new Date();
+        this.stability = 0;
+        this.difficulty = 0;
+        this.elapsed_days = 0;
+        this.scheduled_days = 0;
+        this.reps = 0;
+        this.lapses = 0;
+        this.state = 0;
+        this.last_review = new Date();
+    }
+}
+
+// Mock FSRS class
+class MockFSRS {
+    constructor() {}
+    
+    repeat(card, reviewDate) {
+        const now = reviewDate || new Date();
+        return {
+            1: { card: Object.assign(new MockCard(), { due: new Date(now.getTime() + 1000), stability: 0.1, difficulty: 1, reps: 1, lapses: 1 }) },
+            2: { card: Object.assign(new MockCard(), { due: new Date(now.getTime() + 2000), stability: 0.2, difficulty: 2, reps: 1, lapses: 0 }) },
+            3: { card: Object.assign(new MockCard(), { due: new Date(now.getTime() + 3000), stability: 0.3, difficulty: 3, reps: 1, lapses: 0 }) },
+            4: { card: Object.assign(new MockCard(), { due: new Date(now.getTime() + 4000), stability: 0.4, difficulty: 4, reps: 1, lapses: 0 }) },
+        };
+    }
+}
+
 // Mock the fsrs.js module
 vi.mock('fsrs.js', () => ({
     Rating: {
@@ -9,25 +39,11 @@ vi.mock('fsrs.js', () => ({
         Good: 3,
         Easy: 4,
     },
-    fsrs: vi.fn(() => ({
-        repeat: vi.fn(() => ({
-            1: { card: { due: new Date(), stability: 0.1, difficulty: 1, reps: 1, lapses: 0 } },
-            2: { card: { due: new Date(), stability: 0.2, difficulty: 2, reps: 1, lapses: 0 } },
-            3: { card: { due: new Date(), stability: 0.3, difficulty: 3, reps: 1, lapses: 0 } },
-            4: { card: { due: new Date(), stability: 0.4, difficulty: 4, reps: 1, lapses: 0 } },
-        })),
-    })),
-    createEmptyCard: vi.fn(() => ({
-        due: new Date(),
-        stability: 0,
-        difficulty: 0,
-        elapsedDays: 0,
-        scheduledDays: 0,
-        reps: 0,
-        lapses: 0,
-        state: 0,
-        lastReview: new Date()
-    })),
+    Card: MockCard,
+    FSRS: MockFSRS,
+    // Legacy support for old mock API
+    fsrs: vi.fn(() => new MockFSRS()),
+    createEmptyCard: vi.fn(() => new MockCard()),
     generatorParameters: vi.fn(() => ({
         request_retention: 0.9,
         maximum_interval: 36500,

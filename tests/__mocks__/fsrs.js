@@ -86,18 +86,90 @@ export const generatorParameters = () => {
     };
 };
 
+export class Card {
+    constructor() {
+        this.due = new Date();
+        this.stability = 0;
+        this.difficulty = 0;
+        this.elapsed_days = 0;
+        this.scheduled_days = 0;
+        this.reps = 0;
+        this.lapses = 0;
+        this.state = State.New;
+        this.last_review = null;
+    }
+}
+
+export class FSRS {
+    constructor() {
+        // Mock constructor
+    }
+    
+    repeat(card, reviewDate) {
+        // Simple mock implementation
+        const now = reviewDate || new Date();
+        
+        // Return scheduling info for all ratings
+        const schedulingInfo = {};
+        
+        [Rating.Again, Rating.Hard, Rating.Good, Rating.Easy].forEach(rating => {
+            // Mock scheduling based on rating
+            let interval = 1;
+            let stability = card.stability || 1;
+            let difficulty = card.difficulty || 5;
+            
+            if (rating === Rating.Easy) {
+                interval = 0.00001; // Due in ~1 second (for testing)
+                stability = stability * 1.3;
+                difficulty = Math.max(1, difficulty - 0.15);
+            } else if (rating === Rating.Good) {
+                interval = 0.000007; // Due in ~0.6 seconds (for testing)
+                stability = stability * 1.2;
+                difficulty = Math.max(1, difficulty - 0.1);
+            } else if (rating === Rating.Hard) {
+                interval = 0.000005; // Due in ~0.4 seconds (for testing)
+                stability = stability * 1.1;
+            } else { // Again
+                interval = 0.000003; // Due in ~0.25 seconds (for testing)
+                stability = stability * 0.8;
+                difficulty = Math.min(10, difficulty + 0.2);
+            }
+            
+            const nextDue = new Date(now.getTime() + interval * 24 * 60 * 60 * 1000);
+            
+            const updatedCard = new Card();
+            Object.assign(updatedCard, card);
+            updatedCard.due = nextDue;
+            updatedCard.stability = stability;
+            updatedCard.difficulty = difficulty;
+            updatedCard.elapsed_days = 0;
+            updatedCard.scheduled_days = interval;
+            updatedCard.reps = (card.reps || 0) + 1;
+            updatedCard.lapses = rating === Rating.Again ? (card.lapses || 0) + 1 : (card.lapses || 0);
+            updatedCard.state = rating === Rating.Again ? State.Learning : State.Review;
+            updatedCard.last_review = now;
+            
+            schedulingInfo[rating] = {
+                card: updatedCard,
+                log: {
+                    rating: rating,
+                    state: card.state || State.New,
+                    due: card.due || now,
+                    stability: card.stability || 1,
+                    difficulty: card.difficulty || 5,
+                    elapsed_days: 0,
+                    scheduled_days: interval,
+                    review: now
+                }
+            };
+        });
+        
+        return schedulingInfo;
+    }
+}
+
 export const createEmptyCard = () => {
-    return {
-        due: new Date(),
-        stability: 0,
-        difficulty: 0,
-        elapsed_days: 0,
-        scheduled_days: 0,
-        reps: 0,
-        lapses: 0,
-        state: State.New,
-        last_review: null
-    };
+    return new Card();
 };
 
-export default { Rating, State, fsrs, generatorParameters, createEmptyCard };
+export default { Rating, State, fsrs, generatorParameters, createEmptyCard, Card, FSRS };

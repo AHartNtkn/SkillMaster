@@ -273,12 +273,8 @@ export class LearningView {
     }
 
     async rateAndContinue(grade) {
-        // Record the grade
+        // Record the grade first
         this.grades.push(grade);
-        await this.courseManager.recordSkillAttempt(this.currentSkill.id, grade);
-        
-        // Add XP
-        this.courseManager.addXP(10, `${this.currentSkill.id}_q${this.currentQuestionIndex}`);
         
         // Update consecutive easy count
         if (grade === 5) {
@@ -287,11 +283,28 @@ export class LearningView {
             this.consecutiveEasy = 0;
         }
         
-        // Move to next question
+        try {
+            await this.courseManager.recordSkillAttempt(this.currentSkill.id, grade);
+            
+            // Add XP
+            this.courseManager.addXP(10, `${this.currentSkill.id}_q${this.currentQuestionIndex}`);
+        } catch (error) {
+            console.error('Error in rateAndContinue:', error);
+            // Show error toast but continue session
+            this.showToast('Failed to record skill attempt, but continuing session', 'error');
+        }
+        
+        // Always move to next question regardless of FSRS success/failure
         this.currentQuestionIndex++;
         const skillState = this.courseManager.masteryState.getSkillState(this.currentSkill.id);
         skillState.next_q_index = this.currentQuestionIndex % this.questions.length;
-        this.courseManager.saveState();
+        
+        try {
+            this.courseManager.saveState();
+        } catch (saveError) {
+            console.error('Error saving state:', saveError);
+            this.showToast('Failed to save progress, but continuing session', 'error');
+        }
         
         // Check if session should end
         if (this.shouldEndSession()) {
