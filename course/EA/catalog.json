@@ -1,6 +1,5 @@
 {
   "format": "Catalog-v1",
   "course_id": "EA",
-  "title": "Elementary Arithmetic",
-  "entry_topics": ["EA:T001"]
+  "title": "Elementary Arithmetic"
 }

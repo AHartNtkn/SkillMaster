@@ -18,20 +18,27 @@ export class FSRSService {
         
         // Dynamic import to handle ES module
         try {
-            // Try ES module import first
-            const module = await import('fsrs.js');
-            this.fsrsModule = module;
-            this.Rating = module.Rating || module.default?.Rating;
-            const fsrs = module.fsrs || module.default?.fsrs;
-            const generatorParameters = module.generatorParameters || module.default?.generatorParameters;
-            
-            if (!this.Rating || !fsrs || !generatorParameters) {
-                // Fallback to CommonJS if ES module doesn't work
-                const fsrsModule = await import('../../node_modules/fsrs.js/dist/fsrs.js.cjs.development.js');
-                this.fsrsModule = fsrsModule;
-                this.Rating = fsrsModule.Rating;
-                this.scheduler = fsrsModule.fsrs(fsrsModule.generatorParameters());
+            // In test environment, use the mock
+            if (typeof process !== 'undefined' && process.env.NODE_ENV === 'test') {
+                // The mock is already loaded via Jest's moduleNameMapper
+                const module = await import('fsrs.js');
+                this.fsrsModule = module;
+                this.Rating = module.Rating;
+                const fsrs = module.fsrs;
+                const generatorParameters = module.generatorParameters;
+                this.scheduler = fsrs(generatorParameters());
             } else {
+                // In production, load the actual module
+                const module = await import('../../node_modules/fsrs.js/dist/fsrs.js.esm.js');
+                this.fsrsModule = module;
+                this.Rating = module.Rating;
+                const fsrs = module.fsrs;
+                const generatorParameters = module.generatorParameters;
+                
+                if (!this.Rating || !fsrs || !generatorParameters) {
+                    throw new Error('FSRS module missing required exports');
+                }
+                
                 this.scheduler = fsrs(generatorParameters());
             }
         } catch (e) {

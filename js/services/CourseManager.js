@@ -392,14 +392,6 @@ export class CourseManager {
     }
 
     /**
-     * Get total XP
-     * @returns {number}
-     */
-    getTotalXP() {
-        return this.xpLog.log.reduce((sum, entry) => sum + entry.delta, 0);
-    }
-
-    /**
      * Save all state to localStorage
      */
     saveState() {

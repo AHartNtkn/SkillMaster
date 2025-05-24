@@ -48,8 +48,7 @@ describe('Course Models', () => {
             course = new Course({
                 format: 'Catalog-v1',
                 course_id: 'TEST',
-                title: 'Test Course',
-                entry_topics: ['TEST:T001']
+                title: 'Test Course'
             });
         });
 
@@ -75,11 +74,6 @@ describe('Course Models', () => {
             expect(validation.errors).toHaveLength(0);
         });
 
-        test('detects missing entry topics', () => {
-            const validation = course.validate();
-            expect(validation.valid).toBe(false);
-            expect(validation.errors).toContain('Entry topic TEST:T001 not found');
-        });
 
         test('detects prerequisite cycles', () => {
             const skill1 = new AtomicSkill({

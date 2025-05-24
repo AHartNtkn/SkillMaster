@@ -222,11 +222,16 @@ class SkillMasterApp {
     }
 }
 
+// Export for testing
+export { SkillMasterApp };
+
 // Initialize app when DOM is ready
-document.addEventListener('DOMContentLoaded', () => {
-    const app = new SkillMasterApp();
-    app.initialize();
-});
+if (typeof document !== 'undefined') {
+    document.addEventListener('DOMContentLoaded', () => {
+        const app = new SkillMasterApp();
+        app.initialize();
+    });
+}
 
 // Handle errors
 window.addEventListener('error', (event) => {

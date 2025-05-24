@@ -13,6 +13,21 @@ export class LearningView {
         this.correctAnswers = 0;
         this.consecutiveEasy = 0;
         this.grades = [];
+        this.pendingSkillId = null;
+    }
+
+    render() {
+        // Initial render shows loading state
+        return `
+            <div class="screen">
+                <div class="learning-content">
+                    <div class="task-card">
+                        <h3>Loading...</h3>
+                        <p>Preparing skill content...</p>
+                    </div>
+                </div>
+            </div>
+        `;
     }
 
     async startSkill(skillId) {

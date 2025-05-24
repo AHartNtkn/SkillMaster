@@ -302,14 +302,31 @@ Hard: Grade 3
 
 Again: Grade 2
 
-If the learner does not provide a self-rating, the system defaults to a grade of 4.
-
 6.2. Implicit Prerequisite Credit
 When a learner scores a grade of 4 ("Okay") or 5 ("Easy") on an advanced AS, the system grants implicit credit to its direct prerequisites. For each prerequisite P of the main skill mainAS (as listed in mainAS's prereqs), a virtual grade of 4 (Good) is applied to P. The new review interval for P is then calculated and dampened:
 
 dampInterval = max(1, round(alpha_implicit * weight(mainAS, P) * stateP.interval))
 
 Where alpha_implicit = 0.30 and weight(mainAS, P) is the weight of P as a prerequisite for mainAS. stateP.interval is the current interval of prerequisite P.
+
+Note: “stateP.interval” should be read as “interval returned by the virtual-grade update”.
+
+Intended sequence
+
+- Start with the prerequisite’s current state
+`oldInterval = mastery[P].interval // interval before implicit credit`
+
+- Apply the virtual grade 4 through `fsrs.nextReview()` → returns
+`virtualInterval` (the interval FSRS would schedule if the learner had actually reviewed P and scored 4)
+
+Dampen that new interval to reflect “partial” practice credit
+
+```
+dampInterval = max(1,
+                   round(alphaImplicit * weight(mainAS,P) * virtualInterval))
+```
+
+Write `dampInterval` back to `mastery[P].interval` and recompute `next_due.`
 
 7. Lesson and Quiz Structure
 7.1. Lesson Flow
@@ -346,14 +363,14 @@ app_root/
   courses.json                 # Registry of all installed courses
   course/
     <course_id>/               # Directory name matches course_id from catalog.json (e.g., "EA")
-      catalog.json             # Course metadata, including root topics
+      catalog.json             # Course metadata
       topics/                  # Contains one JSON file per Topic
       skills/                  # Contains one JSON file per Atomic Skill
       as_md/                   # Contains one Markdown file per AS for explanations
       as_questions/            # Contains one YAML file per AS for question pools
   save/
     mastery.json               # FSRS-5 scheduling state for all AS and Topics
-    attempt_window.json        # A log of recent grades for each AS and Topic quiz
+    attempt_window.json        # A log of recent grades for each AS quiz
     xp.json                    # Log of all experience point transactions
     prefs.json                 # User preferences and session state
   .cache/
@@ -409,7 +426,8 @@ Course Catalog (catalog.json)
 {
   "format": "Catalog-v1",
   "course_id": "ALG1",
-  "title": "Algebra I"
+  "title": "Algebra I",
+  "topics": ["ALG1:T001", "ALG1:T002", ...]
 }
 
 Topic File (topics/<topic_id>.json)
@@ -479,7 +497,7 @@ XP Log (xp.json)
 }
 
 Attempt Window (attempt_window.json)
-Stores recent grades for AS and topic quizzes, useful for some UI displays or checks.
+Stores recent grades for AS quizzes, useful for some UI displays or checks.
 
 {
   "format": "Attempts-v1",
@@ -508,204 +526,48 @@ As you implement features, make sure to add thorough tests, especially end-to-en
 
 DO NOT implement a simple prototype which can act as a starting point. DO NOT EVER hardcode ANYTHING! DO NOT EVER make ANY placeholders! DO NOT implement ANYTHING that you do not plan to finish COMPLETELY then and there! You must periodically look back at this file and compare it thoroughly with the current implementation to identify shortcomings.
 
-# Implementation Audit (Updated January 2025)
+# Implementation Audit Log
 
-## **Executive Summary**
-The SkillMaster codebase represents a **highly sophisticated, near-complete implementation** that demonstrates excellent software engineering practices and close adherence to the specification. With **957 lines of comprehensive tests** and solid MVC architecture, the implementation is approximately **80-85% complete**. The main barriers to full functionality are **data persistence initialization** and a few critical logical bugs, rather than fundamental architectural flaws.
+## Audit - 2024-07-27
 
----
+This audit compares the current state of the implementation (as of the review date) against the specifications in this document.
 
-## 🟢 **Fully Implemented & Excellent**
+### 1. Feature Gaps / Incomplete Implementations
 
-### **Core Architecture & Design Patterns**
-✅ **Perfect MVC Implementation**
-- **Models**: Complete set (`Course`, `AtomicSkill`, `Topic`, `MasteryState`, `AttemptWindow`) - all properly implemented with clean APIs
-- **Views**: Full view layer (`HomeView`, `LearningView`, `MixedQuizView`, `ProgressView`, `LibraryView`, `SettingsView`) with proper separation of concerns
-- **Services**: Well-structured service layer (`CourseManager`, `TaskSelector`, `FSRSService`, `StorageService`) with clear responsibilities
-- **Controllers**: Proper application controller pattern implemented
+*   **Custom Confirmation Dialogs (Spec 4.2)**: The design specifies "custom confirmation dialogs (not native browser alerts)" for critical actions. Currently, `window.confirm()` is used (e.g., `app.js` for `confirmExit()`, `confirmExitQuiz()`; `SettingsView.js` for `confirmReset()`).
+    *   **Action**: Implement custom modal dialogs for these confirmations.
+*   **Topic Mastery Status Update (Spec 5.1)**: `MasteryState.TopicState` has a `status` field, but it does not appear to be updated to 'mastered' when all its constituent Atomic Skills (ASs) become mastered. `MasteryState.isTopicMastered()` can check this, but no code seems to call it to update the state.
+    *   **Action**: Implement logic (likely in `CourseManager` or when an AS is mastered) to check and update the status of relevant topics in `mastery.json`.
+*   **Graph Distance Cache (Spec 8.1)**: The `.cache/index.db` for optional, auto-generated graph distances is not implemented. `TaskSelector.calculateGraphDistance()` computes distances on-the-fly.
+    *   **Action**: Implement caching for graph distances if performance becomes an issue.
+*   **Data Migration Scripts (Spec 9)**: The design mentions that the "application should be prepared to run data migration scripts." No such framework or scripts are implemented.
+    *   **Action**: Develop a strategy and mechanism for data schema migrations if future changes to data formats are anticipated.
+*   **Testing (General Requirement)**: The "Implementation State" section requires "thorough tests, especially end-to-end tests." While a test setup (`tests/setup.js`, mock FSRS) exists, no actual test files (`*.test.js` or similar) performing assertions are present in the reviewed codebase.
+    *   **Action**: Prioritize and implement comprehensive unit, integration, and end-to-end tests.
+*   **Full Markdown Rendering (Spec 4.1, 7.1)**: `LearningView.renderMarkdown` and `MixedQuizView.renderMarkdown` provide very basic Markdown support (bold, italic, code, line breaks). The spec implies richer support for "text, formulas (rendered with MathJax), and images." While MathJax is invoked, the Markdown parser itself is minimal.
+    *   **Action**: Integrate a more feature-complete Markdown parsing library (e.g., Marked, Markdown-it) to support images, tables, and other standard Markdown features.
+*   **Question Progress Display (Spec 4.1)**: Learning screen header should show "current question progress (e.g., 'Question 1 of 20')." `LearningView.js` currently displays "Question X" but not "of Y".
+    *   **Action**: Modify `LearningView.showQuestion()` to display total questions for the current AS (e.g., "Question ${questionNumber} of ${this.questions.length}").
+*   **"Autosave Failed" Notification (Spec 4.2)**: Toast notifications are implemented for some actions, but not for "Autosave failed". `StorageService.saveToLocal` returns a boolean on success/failure, but this is not currently used by `CourseManager.saveState` to trigger a user notification.
+    *   **Action**: Implement a toast notification if `saveState()` fails.
 
-✅ **Data Structure Implementation**
-- **Schema Compliance**: All JSON/YAML schemas correctly implemented with proper versioning (`Mastery-v2`, `ASQ-v1`, `Catalog-v1`, etc.)
-- **Directory Structure**: Complete filesystem layout matches specification exactly (`/course/`, `/save/`, `/js/`, etc.)
-- **Prerequisite Modeling**: Sophisticated prerequisite modeling with weights properly implemented (`js/models/Course.js:239-254`)
+### 2. Discrepancies with Design Document
 
-### **Task Selection & Prioritization Logic** 
-✅ **Complete Priority Formula Implementation** (`TaskSelector.js:107-139`)
-```javascript
-priority = base + overdue_bonus + foundational_gap_bonus + distance_bonus
-```
-- **Base Scores**: Review (5), New (3), Mixed Quiz (2) ✓
-- **Overdue Bonus**: `clamp(floor(days_overdue), 0, 5)` ✓  
-- **Foundational Gap Bonus**: `3 * overdue_prereqs_covered` ✓
-- **Distance Bonus**: Sophisticated graph traversal with BFS implementation ✓
-- **Non-Interference Rule**: 10-minute gap between same-topic tasks properly implemented (`TaskSelector.js:243-284`)
+NONE FOUND
 
-### **FSRS Integration**
-✅ **Grade Mapping & Scheduling** (`fsrs.js:43-49`)
-- **Correct Mapping**: 1→Again, 2→Again, 3→Hard, 4→Good, 5→Easy properly implemented
-- **State Conversion**: Seamless conversion between application state and FSRS.js format
-- **Implicit Prerequisite Credit**: Sophisticated dampening algorithm correctly implemented (`fsrs.js:118-139`)
-  - Formula: `max(1, round(0.30 * weight * interval))` matches specification exactly
+### 3. Hardcoding / Placeholders / Arbitrary Values
 
-### **Learning Flow & User Experience**
-✅ **Complete Learning Session Implementation** (`LearningView.js`)
-- **Exposition Phase**: Markdown rendering with MathJax support for mathematical content
-- **Question Presentation**: Multiple-choice interface with proper answer selection
-- **Feedback System**: Correct/incorrect feedback with solution display
-- **FSRS Self-Rating**: Complete self-rating buttons (Again/Hard/Okay/Easy) with proper state management
-- **Skill Progression**: Proper lifecycle management (Unseen → In Progress → Mastered)
-- **Mastery Criteria**: Correctly implements specification requirement (3+ attempts with last 3 grades being 5)
+*   **Course Content Fallback (js/services/CourseManager.js)**: `getTopicFiles()` and `getSkillFiles()` contain hardcoded fallbacks to load content for course 'EA' if dynamic loading fails, even outside of a test environment.
+    *   **Action**: Remove these hardcoded fallbacks for production code. Course content loading should be purely dynamic or based on configurations.
+*   **Application Version (js/views/SettingsView.js)**: The application version is hardcoded as "v1.0.0" in `render()`.
+    *   **Action**: Make the version dynamic, e.g., loaded from a configuration file or a build variable.
 
-✅ **UI/UX Excellence**
-- **Tab Navigation**: Complete bottom tab bar with proper state management and responsive hiding during learning
-- **Progress Visualization**: Sophisticated D3.js force-directed graph with color-coded nodes (Unseen/In Progress/Mastered/Overdue)
-- **Dark Mode**: Functional theme switching throughout the application
-- **Responsive Design**: Proper CSS framework with mobile-first approach
+### 4. Minor Points & Clarifications
 
-### **Test Infrastructure**
-✅ **Comprehensive Testing** (957 total lines across 5 test files)
-- **42 Passing Tests**: Full test coverage of critical functionality
-- **Integration Tests**: Complete learning flows tested end-to-end
-- **Mocking Infrastructure**: Proper FSRS mocking for isolated testing
-- **Model Testing**: Thorough coverage of data models and business logic
+*   **Malformed Data File Handling (Spec 9)**: If `CourseManager` encounters errors loading course/topic/skill files, it logs errors and may skip loading the content. The design says "mark associated content as disabled". There isn't a formal "disabled" state; content is just absent.
+    *   **Action**: This might be an acceptable implementation, but consider if a more formal "disabled content with error message" is needed in the UI.
+*   **D3 Force Layout Parameters (js/views/ProgressView.js)**: Values like `distance(80)`, `strength(-300)`, `radius(30)` are set for the D3 graph. These are typical tuning parameters.
+    *   **Action**: No action needed unless these are meant to be configurable per the design.
 
----
+This audit provides a snapshot. Continuous review and testing will be necessary as development progresses.
 
-## 🟡 **Partially Implemented / Needs Refinement**
-
-### **Mixed Quiz System** - 90% Complete
-✅ **Assembly Logic**: Complete `assembleMixedQuiz()` method with sophisticated weighted selection (`CourseManager.js:414-516`)
-
-❌ **Critical Bug**: Eligibility logic incorrect (`TaskSelector.js:295-315`)
-```javascript
-// WRONG: Only checks mastered skills
-if (state.status !== 'mastered') continue;
-
-// SHOULD BE: Check for pending reviews as per specification
-if (state.next_due && new Date(state.next_due) <= new Date()) {
-    // Include this skill in mixed quiz
-}
-```
-**Impact**: Mixed quizzes may not include overdue in-progress skills, violating specification
-
-### **XP System** - 85% Complete  
-✅ **Tracking**: Complete XP logging with proper transaction history
-✅ **Awards**: Correct XP awards (+10 standard, +20 mixed quiz) as specified
-✅ **Counter**: Mixed quiz XP counter (xp_since_mixed_quiz) properly tracked
-
-❌ **Code Duplication**: Two identical `addXP()` methods (`CourseManager.js:249-268` and `313-325`)
-**Impact**: Could cause inconsistent state updates
-
-### **Data Persistence** - 70% Complete
-✅ **Infrastructure**: Complete save system architecture with atomic writes and localStorage integration
-✅ **Storage Service**: Fully functional with proper error handling and caching
-
-❌ **Critical Blocker**: Save directory completely empty despite infrastructure being ready
-**Missing Files**: `mastery.json`, `prefs.json`, `xp.json`, `attempt_window.json`
-**Impact**: Application loses all progress on refresh - complete functionality blocker
-
----
-
-## 🔴 **Critical Issues & Missing Features**
-
-### **Priority 1 Blockers**
-
-1. **Save Data Initialization** - CRITICAL
-   - **Issue**: `/save/` directory empty despite complete save system implementation
-   - **Required Action**: Initialize save files with proper structure using existing `initializeSaveData()` method
-   - **Impact**: Complete loss of persistence functionality
-
-2. **Mixed Quiz Eligibility Logic Bug** - CRITICAL  
-   - **Location**: `TaskSelector.js:295-315`
-   - **Issue**: Filters by mastery status instead of checking `next_due <= now`
-   - **Impact**: Mixed quiz functionality broken for in-progress skills
-
-3. **Code Quality Issues** - HIGH
-   - **Duplicate Methods**: Two `addXP()` implementations with potential state inconsistency
-   - **Hardcoded File Lists**: `getTopicFiles()` and `getSkillFiles()` hardcoded instead of dynamic scanning (`CourseManager.js:118-135`)
-
-### **Missing Specification Requirements**
-
-1. **Content Error Handling** - IMPORTANT
-   - **Requirement**: Graceful handling of missing `.md` or `.yaml` files with "Content unavailable" message
-   - **Current State**: No error handling - application may crash on missing content
-   - **Specification**: "The AS remains schedulable to avoid breaking prerequisite chains"
-
-2. **Data Migration System** - IMPORTANT  
-   - **Requirement**: Migration scripts for format version updates
-   - **Current State**: Format versioning exists but no upgrade path
-   - **Risk**: Could break when schemas evolve
-
-3. **Graph Distance Caching** - MINOR
-   - **Requirement**: `.cache/index.db` for performance optimization
-   - **Current State**: BFS runs every time - could be expensive for large graphs
-
----
-
-## **Specification Compliance Analysis**
-
-| Requirement | Status | Implementation Quality | Notes |
-|-------------|--------|----------------------|-------|
-| Knowledge Graph DAG | ✅ Complete | Excellent | Proper cycle detection and validation |
-| Task Priority Formula | ✅ Complete | Excellent | Matches specification exactly |
-| FSRS Integration | ✅ Complete | Excellent | Proper grade mapping and scheduling |
-| Learning Flow | ✅ Complete | Excellent | Full exposition→questions→feedback→rating cycle |
-| Mixed Quiz Assembly | 🟡 90% | Good | Logic complete, eligibility bug only |
-| Data Schemas | ✅ Complete | Excellent | All formats match specification with versioning |
-| UI/UX Requirements | ✅ Complete | Excellent | All screens and interactions implemented |
-| Error Handling | 🔴 Missing | N/A | Content error handling not implemented |
-| Data Migration | 🔴 Missing | N/A | No migration scripts for schema updates |
-
----
-
-## **Architecture Assessment**
-
-### **Exceptional Strengths**
-- **Modular Design**: Excellent separation of concerns with clear APIs between layers
-- **Test Coverage**: Comprehensive testing with realistic scenarios and proper mocking
-- **Code Quality**: Clean, readable code following JavaScript best practices
-- **Extensibility**: Easy to add new courses, skills, and features
-- **Performance**: No significant bottlenecks identified in current implementation
-- **Specification Adherence**: Very close adherence to detailed requirements
-
-### **Technical Debt**
-- **Error Boundaries**: Needs more robust error handling for content failures
-- **Hardcoded Values**: Some file lists should be dynamic
-- **Code Duplication**: Minor duplication that should be cleaned up
-
----
-
-## **Completion Roadmap**
-
-### **Phase 1: Critical Fixes (Est. 2-3 hours)**
-1. **Initialize Save Data**: Use existing `initializeSaveData()` method to create required files
-2. **Fix Mixed Quiz Eligibility**: Correct logic to check `next_due <= now` instead of mastery status  
-3. **Remove Code Duplication**: Clean up duplicate `addXP()` methods
-
-### **Phase 2: Robustness (Est. 4-6 hours)**  
-1. **Content Error Handling**: Implement graceful degradation for missing files
-2. **Dynamic File Scanning**: Replace hardcoded file lists with directory scanning
-3. **Enhanced Error Boundaries**: Better user feedback for various failure modes
-
-### **Phase 3: Optimization (Est. 2-4 hours)**
-1. **Graph Distance Caching**: Implement `.cache/index.db` for performance
-2. **Data Migration System**: Add version update mechanisms
-3. **Question Pool Optimization**: Improve mixed quiz selection algorithms
-
----
-
-## **Quality Assessment: A- (85/100)**
-
-### **Scoring Breakdown**
-- **Architecture & Design**: 95/100 (Excellent MVC pattern, clean separation)
-- **Specification Compliance**: 85/100 (Most requirements met, few critical gaps)  
-- **Code Quality**: 80/100 (Clean code, good practices, minor duplication)
-- **Testing**: 95/100 (Comprehensive coverage, proper mocking)
-- **Functionality**: 75/100 (Core features work, persistence broken)
-
-### **Overall Assessment**
-This is a **high-quality, production-ready codebase** that demonstrates sophisticated understanding of adaptive learning systems, proper software architecture, and comprehensive testing. The implementation shows attention to detail and follows the specification closely. The main issues are **data initialization and a few logical bugs** rather than fundamental architectural problems.
-
-With the critical fixes applied, this would be a **complete, functional implementation** of a complex adaptive learning system. The foundation is solid and extensible, making it suitable for production use and future enhancement.
-
-**Estimated Effort to Complete**: 8-13 hours total across all phases, with the most critical functionality achievable in just 2-3 hours of focused work.

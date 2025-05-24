@@ -150,6 +150,38 @@ describe('End-to-End Tests', () => {
         }
     });
 
+    test('views render without errors when starting tasks', async () => {
+        // Import the views
+        const { LearningView } = await import('../js/views/LearningView.js');
+        const { MixedQuizView } = await import('../js/views/MixedQuizView.js');
+        
+        const learningView = new LearningView(courseManager);
+        const mixedQuizView = new MixedQuizView(courseManager, taskSelector);
+        
+        // Test that views have render methods
+        expect(typeof learningView.render).toBe('function');
+        expect(typeof mixedQuizView.render).toBe('function');
+        
+        // Test that render returns HTML
+        const learningHtml = learningView.render();
+        const mixedHtml = mixedQuizView.render();
+        
+        expect(learningHtml).toContain('Loading...');
+        expect(mixedHtml).toContain('Loading Mixed Quiz...');
+        
+        // Test that starting a skill is possible (full DOM testing would require a browser environment)
+        const task = taskSelector.getNextTask();
+        expect(task).toBeDefined();
+        
+        // Verify the task structure is correct
+        if (task) {
+            expect(['new', 'review', 'mixed_quiz']).toContain(task.type);
+            if (task.type !== 'mixed_quiz') {
+                expect(task.skillId).toBeDefined();
+            }
+        }
+    });
+
     test('data persistence works correctly', async () => {
         // Make some changes
         const task = taskSelector.getNextTask();

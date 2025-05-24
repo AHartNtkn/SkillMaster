@@ -11,7 +11,20 @@ export class MixedQuizView {
         this.selectedAnswer = null;
         this.isAnswered = false;
         this.correctAnswers = 0;
-        this.skillGrades = new Map(); // skillId -> [grades]
+    }
+
+    render() {
+        // Initial render shows loading state
+        return `
+            <div class="screen">
+                <div class="mixed-quiz-content">
+                    <div class="task-card">
+                        <h3>Loading Mixed Quiz...</h3>
+                        <p>Preparing questions from multiple skills...</p>
+                    </div>
+                </div>
+            </div>
+        `;
     }
 
     async startMixedQuiz() {
@@ -35,7 +48,6 @@ export class MixedQuizView {
         this.selectedAnswer = null;
         this.isAnswered = false;
         this.correctAnswers = 0;
-        this.skillGrades.clear();
         
         // Show first question
         this.showQuestion();
@@ -144,14 +156,6 @@ export class MixedQuizView {
             this.correctAnswers++;
         }
 
-        // Record grade for the skill
-        const grade = isCorrect ? 4 : 1; // Default to "Good" for correct, "Again" for incorrect
-        
-        if (!this.skillGrades.has(quizItem.skillId)) {
-            this.skillGrades.set(quizItem.skillId, []);
-        }
-        this.skillGrades.get(quizItem.skillId).push(grade);
-
         this.showFeedback(isCorrect, quizItem.question);
     }
 
@@ -171,13 +175,35 @@ export class MixedQuizView {
         const choicesList = document.querySelector('.choices-list');
         choicesList.insertAdjacentHTML('afterend', feedbackHtml);
 
-        // Add continue button
-        const continueBtn = `
-            <button class="btn btn-primary btn-full" onclick="app.mixedQuizView.nextQuestion()">
-                ${this.currentQuestionIndex < this.quizQuestions.length - 1 ? 'Next Question' : 'Finish Quiz'}
-            </button>
-        `;
-        document.querySelector('.feedback').insertAdjacentHTML('afterend', continueBtn);
+        // Show rating buttons if correct
+        if (isCorrect) {
+            const ratingHtml = `
+                <div class="fsrs-rating">
+                    <button class="rating-btn again" onclick="app.mixedQuizView.rateAndContinue(2)">
+                        Again<br><small>(Hardest)</small>
+                    </button>
+                    <button class="rating-btn hard" onclick="app.mixedQuizView.rateAndContinue(3)">
+                        Hard
+                    </button>
+                    <button class="rating-btn okay" onclick="app.mixedQuizView.rateAndContinue(4)">
+                        Okay
+                    </button>
+                    <button class="rating-btn easy" onclick="app.mixedQuizView.rateAndContinue(5)">
+                        Easy
+                    </button>
+                </div>
+            `;
+            
+            document.querySelector('.feedback').insertAdjacentHTML('afterend', ratingHtml);
+        } else {
+            // For incorrect, automatically continue with grade 1
+            const continueBtn = `
+                <button class="btn btn-primary btn-full" onclick="app.mixedQuizView.rateAndContinue(1)">
+                    ${this.currentQuestionIndex < this.quizQuestions.length - 1 ? 'Next Question' : 'Finish Quiz'}
+                </button>
+            `;
+            document.querySelector('.feedback').insertAdjacentHTML('afterend', continueBtn);
+        }
 
         // Hide submit button
         const submitBtn = document.querySelector('.btn-primary');
@@ -191,16 +217,21 @@ export class MixedQuizView {
         }
     }
 
-    nextQuestion() {
+    async rateAndContinue(grade) {
         const quizItem = this.quizQuestions[this.currentQuestionIndex];
+        
+        // Record the attempt with FSRS
+        await this.courseManager.recordSkillAttempt(quizItem.skillId, grade, true);
         
         // Update question index for the skill
         const skillState = this.courseManager.masteryState.getSkillState(quizItem.skillId);
-        skillState.next_q_index = (quizItem.questionIndex + 1) % 999; // Increment for next time
+        const questions = this.courseManager.getSkillQuestions(quizItem.skillId);
+        skillState.next_q_index = (quizItem.questionIndex + 1) % questions.length;
         
-        // Add XP for the question
-        this.courseManager.addXP(20, `mixed_quiz_${quizItem.skillId}`);
+        // Save state after updating question index
+        this.courseManager.saveState();
         
+        // Move to next question
         this.currentQuestionIndex++;
         
         if (this.currentQuestionIndex >= this.quizQuestions.length) {
@@ -214,13 +245,6 @@ export class MixedQuizView {
     }
 
     async finishQuiz() {
-        // Record all skill attempts with their grades
-        for (const [skillId, grades] of this.skillGrades) {
-            // Average the grades for this skill
-            const avgGrade = Math.round(grades.reduce((a, b) => a + b, 0) / grades.length);
-            await this.courseManager.recordSkillAttempt(skillId, avgGrade);
-        }
-        
         // Reset mixed quiz XP counter
         this.courseManager.resetMixedQuizXP();
         
@@ -229,6 +253,9 @@ export class MixedQuizView {
         
         // Show results
         const accuracy = (this.correctAnswers / this.quizQuestions.length * 100).toFixed(1);
+        
+        // Count unique skills reviewed
+        const uniqueSkills = new Set(this.quizQuestions.map(q => q.skillId)).size;
         
         const content = `
             <div class="screen">
@@ -243,7 +270,7 @@ export class MixedQuizView {
                     <p>Accuracy: ${accuracy}%</p>
                     
                     <p class="text-secondary" style="margin-top: 16px;">
-                        ${this.skillGrades.size} skills reviewed
+                        ${uniqueSkills} skills reviewed
                     </p>
                 </div>
                 

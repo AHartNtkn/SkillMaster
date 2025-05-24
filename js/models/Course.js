@@ -7,7 +7,6 @@ export class Course {
         this.format = data.format || 'Catalog-v1';
         this.courseId = data.course_id;
         this.title = data.title;
-        this.entryTopics = data.entry_topics || [];
         this.topics = new Map(); // topic_id -> Topic
         this.skills = new Map(); // skill_id -> AtomicSkill
     }
@@ -63,21 +62,15 @@ export class Course {
     }
 
     /**
-     * Get entry point skills (skills in entry topics with no prerequisites)
+     * Get entry point skills (skills with no prerequisites)
      * @returns {Array<AtomicSkill>}
      */
     getEntrySkills() {
         const entrySkills = [];
         
-        for (const topicId of this.entryTopics) {
-            const topic = this.getTopic(topicId);
-            if (topic) {
-                for (const skillId of topic.skillIds) {
-                    const skill = this.getSkill(skillId);
-                    if (skill && skill.prerequisites.length === 0) {
-                        entrySkills.push(skill);
-                    }
-                }
+        for (const skill of this.skills.values()) {
+            if (skill.prerequisites.length === 0) {
+                entrySkills.push(skill);
             }
         }
         
@@ -117,12 +110,6 @@ export class Course {
     validate() {
         const errors = [];
 
-        // Check that all entry topics exist
-        for (const topicId of this.entryTopics) {
-            if (!this.topics.has(topicId)) {
-                errors.push(`Entry topic ${topicId} not found`);
-            }
-        }
 
         // Check that all skills in topics exist
         for (const topic of this.topics.values()) {

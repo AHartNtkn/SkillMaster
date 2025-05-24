@@ -73,8 +73,7 @@ describe('TaskSelector', () => {
         // Set up a test course
         course = new Course({
             course_id: 'TEST',
-            title: 'Test Course',
-            entry_topics: ['TEST:T001']
+            title: 'Test Course'
         });
 
         const topic = new Topic({
