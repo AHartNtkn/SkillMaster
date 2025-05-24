@@ -86,24 +86,55 @@ export class LibraryView {
 
     renderTopicDetails(course, topic) {
         const skills = topic.skillIds.map(id => course.getSkill(id)).filter(Boolean);
-        
+
         return `
             <div class="task-card">
                 <h3>${topic.name}</h3>
                 <ul class="skill-list">
                     ${skills.map(skill => {
                         const state = this.courseManager.masteryState.getSkillState(skill.id);
-                        const statusClass = state.status === 'mastered' ? 'text-success' : 
-                                          state.status === 'in_progress' ? 'text-warning' : 
+                        const statusClass = state.status === 'mastered' ? 'text-success' :
+                                          state.status === 'in_progress' ? 'text-warning' :
                                           'text-secondary';
                         const statusText = state.status === 'mastered' ? '✓ Mastered' :
                                          state.status === 'in_progress' ? '● In Progress' :
                                          '○ Not Started';
-                        
+
+                        const prereqText = skill.prerequisites.map(pr => {
+                            const mastered = this.courseManager.masteryState.isSkillMastered(pr.id);
+                            const color = mastered ? 'var(--success-color)' : 'var(--text-secondary)';
+                            return `<span style="color: ${color}">${pr.id}</span>`;
+                        }).join(', ');
+
+                        const prereqSection = skill.prerequisites.length > 0 ?
+                            `<div class="skill-prereqs">Prereqs: ${prereqText}</div>` : '';
+
+                        let reviewInfo = '';
+                        if (state.status !== 'unseen' && state.next_due) {
+                            const nextDue = new Date(state.next_due);
+                            const now = new Date();
+                            if (nextDue <= now) {
+                                reviewInfo = `<div class="review-info" style="color: var(--error-color)">Review due</div>`;
+                            } else {
+                                const diffMs = nextDue - now;
+                                const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+                                const hours = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                                const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+                                const parts = [];
+                                if (days > 0) parts.push(`${days}d`);
+                                if (hours > 0) parts.push(`${hours}h`);
+                                if (minutes > 0 && days === 0) parts.push(`${minutes}m`);
+                                const countdown = parts.join(' ');
+                                reviewInfo = `<div class="review-info" style="color: var(--text-secondary)">Next review in ${countdown}</div>`;
+                            }
+                        }
+
                         return `
                             <li>
                                 <span class="${statusClass}">${statusText}</span>
-                                ${skill.title}
+                                ${skill.id} - ${skill.title}
+                                ${prereqSection}
+                                ${reviewInfo}
                             </li>
                         `;
                     }).join('')}
