@@ -1,0 +1,9 @@
+{
+  "courses": [
+    {
+      "id": "EA",
+      "name": "Elementary Arithmetic",
+      "description": "Basic arithmetic operations and number sense"
+    }
+  ]
+}

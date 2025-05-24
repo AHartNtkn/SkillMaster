@@ -1,0 +1,9 @@
+{
+  "id": "EA:AS004",
+  "title": "Count objects up to 10",
+  "desc": "Count objects up to 10",
+  "prereqs": [
+    { "id": "EA:AS001", "weight": 1.0 },
+    { "id": "EA:AS003", "weight": 1.0 }
+  ]
+}

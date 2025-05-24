@@ -1,0 +1,122 @@
+format: ASQ-v1
+id: EA:AS004
+pool:
+  - id: q1
+    stem: "How many circles are there? ○ ○ ○"
+    choices: ["2", "3", "4", "5"]
+    correct: 1
+    solution: "Count each circle: 1, 2, 3. There are 3 circles."
+  
+  - id: q2
+    stem: "Count the stars: ★ ★ ★ ★ ★"
+    choices: ["4", "5", "6", "7"]
+    correct: 1
+    solution: "Count each star: 1, 2, 3, 4, 5. There are 5 stars."
+  
+  - id: q3
+    stem: "How many dots do you see? • • • • • • •"
+    choices: ["6", "7", "8", "9"]
+    correct: 1
+    solution: "Count each dot: 1, 2, 3, 4, 5, 6, 7. There are 7 dots."
+  
+  - id: q4
+    stem: "Count the triangles: △ △ △ △"
+    choices: ["3", "4", "5", "6"]
+    correct: 1
+    solution: "Count each triangle: 1, 2, 3, 4. There are 4 triangles."
+  
+  - id: q5
+    stem: "How many squares are shown? ■ ■"
+    choices: ["1", "2", "3", "4"]
+    correct: 1
+    solution: "Count each square: 1, 2. There are 2 squares."
+  
+  - id: q6
+    stem: "Count these hearts: ♥ ♥ ♥ ♥ ♥ ♥"
+    choices: ["5", "6", "7", "8"]
+    correct: 1
+    solution: "Count each heart: 1, 2, 3, 4, 5, 6. There are 6 hearts."
+  
+  - id: q7
+    stem: "How many X's are there? X X X X X X X X"
+    choices: ["7", "8", "9", "10"]
+    correct: 1
+    solution: "Count each X: 1, 2, 3, 4, 5, 6, 7, 8. There are 8 X's."
+  
+  - id: q8
+    stem: "Count the diamonds: ♦"
+    choices: ["0", "1", "2", "3"]
+    correct: 1
+    solution: "There is only 1 diamond shown."
+  
+  - id: q9
+    stem: "How many plus signs are shown? + + + + + + + + +"
+    choices: ["8", "9", "10", "11"]
+    correct: 1
+    solution: "Count each plus sign: 1, 2, 3, 4, 5, 6, 7, 8, 9. There are 9 plus signs."
+  
+  - id: q10
+    stem: "Count the flowers: ❀ ❀ ❀ ❀ ❀ ❀ ❀ ❀ ❀ ❀"
+    choices: ["9", "10", "11", "12"]
+    correct: 1
+    solution: "Count each flower: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10. There are 10 flowers."
+  
+  - id: q11
+    stem: "How many objects are in this group? There are no objects shown."
+    choices: ["0", "1", "2", "3"]
+    correct: 0
+    solution: "When there are no objects to count, the answer is 0."
+  
+  - id: q12
+    stem: "Count the arrows: → → → → →"
+    choices: ["4", "5", "6", "7"]
+    correct: 1
+    solution: "Count each arrow: 1, 2, 3, 4, 5. There are 5 arrows."
+  
+  - id: q13
+    stem: "How many smiley faces? ☺ ☺ ☺"
+    choices: ["2", "3", "4", "5"]
+    correct: 1
+    solution: "Count each smiley face: 1, 2, 3. There are 3 smiley faces."
+  
+  - id: q14
+    stem: "Count these letters: A A A A A A A"
+    choices: ["6", "7", "8", "9"]
+    correct: 1
+    solution: "Count each letter A: 1, 2, 3, 4, 5, 6, 7. There are 7 letter A's."
+  
+  - id: q15
+    stem: "How many rectangles do you see? ▬ ▬ ▬ ▬"
+    choices: ["3", "4", "5", "6"]
+    correct: 1
+    solution: "Count each rectangle: 1, 2, 3, 4. There are 4 rectangles."
+  
+  - id: q16
+    stem: "Count the crescents: ☽ ☽ ☽ ☽ ☽ ☽ ☽ ☽"
+    choices: ["7", "8", "9", "10"]
+    correct: 1
+    solution: "Count each crescent: 1, 2, 3, 4, 5, 6, 7, 8. There are 8 crescents."
+  
+  - id: q17
+    stem: "How many checkmarks are shown? ✓ ✓"
+    choices: ["1", "2", "3", "4"]
+    correct: 1
+    solution: "Count each checkmark: 1, 2. There are 2 checkmarks."
+  
+  - id: q18
+    stem: "Count the musical notes: ♪ ♪ ♪ ♪ ♪ ♪"
+    choices: ["5", "6", "7", "8"]
+    correct: 1
+    solution: "Count each musical note: 1, 2, 3, 4, 5, 6. There are 6 musical notes."
+  
+  - id: q19
+    stem: "How many peace signs? ☮ ☮ ☮ ☮ ☮ ☮ ☮ ☮ ☮"
+    choices: ["8", "9", "10", "11"]
+    correct: 1
+    solution: "Count each peace sign: 1, 2, 3, 4, 5, 6, 7, 8, 9. There are 9 peace signs."
+  
+  - id: q20
+    stem: "Count all the clouds: ☁ ☁ ☁ ☁ ☁ ☁ ☁ ☁ ☁ ☁"
+    choices: ["9", "10", "11", "12"]
+    correct: 1
+    solution: "Count each cloud: 1, 2, 3, 4, 5, 6, 7, 8, 9, 10. There are 10 clouds."

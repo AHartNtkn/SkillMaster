@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test SkillMaster App</title>
+</head>
+<body>
+    <h1>Testing SkillMaster App</h1>
+    <p>Open the browser console to see test results.</p>
+    
+    <script type="module">
+        // Test loading the app modules
+        try {
+            const { CourseManager } = await import('./js/services/CourseManager.js');
+            const { TaskSelector } = await import('./js/services/TaskSelector.js');
+            
+            console.log('✓ Modules loaded successfully');
+            
+            // Initialize
+            const courseManager = new CourseManager();
+            await courseManager.initialize();
+            const taskSelector = new TaskSelector(courseManager);
+            
+            console.log('✓ Services initialized');
+            
+            // Test course loading
+            const courses = courseManager.getAllCourses();
+            console.log(`✓ Loaded ${courses.length} courses`);
+            
+            if (courses.length > 0) {
+                const course = courses[0];
+                console.log(`  - Course: ${course.title} (${course.courseId})`);
+                console.log(`  - Skills: ${course.getAllSkills().length}`);
+                console.log(`  - Topics: ${course.getAllTopics().length}`);
+            }
+            
+            // Test task selection
+            const nextTask = taskSelector.getNextTask();
+            if (nextTask) {
+                console.log(`✓ Next task: ${nextTask.type} - ${nextTask.skillId || 'Mixed Quiz'}`);
+            }
+            
+            // Test question loading
+            if (courses.length > 0 && courses[0].getAllSkills().length > 0) {
+                const firstSkill = courses[0].getAllSkills()[0];
+                const questions = await courseManager.getSkillQuestions(firstSkill.id);
+                console.log(`✓ Loaded ${questions.length} questions for ${firstSkill.id}`);
+            }
+            
+            console.log('\n✓ All basic tests passed!');
+            console.log('The app should be functional. Visit http://localhost:8080 to use it.');
+            
+        } catch (error) {
+            console.error('✗ Test failed:', error);
+        }
+    </script>
+</body>
+</html>
