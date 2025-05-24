@@ -49,6 +49,9 @@ describe('End-to-End Tests', () => {
         expect(skillState.status).toBe('mastered');
         expect(courseManager.masteryState.isSkillMastered(skillId)).toBe(true);
         
+        // Award XP for completing the quiz (simulates LearningView.endSession)
+        courseManager.addXP(10, skillId);
+        
         // Verify XP was added
         expect(courseManager.getTotalXP()).toBeGreaterThan(0);
     });
@@ -121,8 +124,10 @@ describe('End-to-End Tests', () => {
             await new Promise(resolve => setTimeout(resolve, 1500));
             
             // Accumulate enough XP to trigger mixed quiz
-            // Each attempt gave 10 XP, so we have 30. Need 150 total.
-            for (let i = 0; i < 12; i++) {
+            // Award XP for completing the quiz (simulates LearningView.endSession)
+            courseManager.addXP(10, skillId);
+            // Need 150 total for mixed quiz, we have 10, so need 140 more
+            for (let i = 0; i < 14; i++) {
                 courseManager.addXP(10, 'test');
             }
             

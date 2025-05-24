@@ -245,6 +245,9 @@ export class MixedQuizView {
     }
 
     async finishQuiz() {
+        // Award XP for completing the mixed quiz
+        this.courseManager.addXP(20, 'mixed_quiz');
+        
         // Reset mixed quiz XP counter
         this.courseManager.resetMixedQuizXP();
         

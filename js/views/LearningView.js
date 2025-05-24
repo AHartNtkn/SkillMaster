@@ -285,9 +285,6 @@ export class LearningView {
         
         try {
             await this.courseManager.recordSkillAttempt(this.currentSkill.id, grade);
-            
-            // Add XP
-            this.courseManager.addXP(10, `${this.currentSkill.id}_q${this.currentQuestionIndex}`);
         } catch (error) {
             console.error('Error in rateAndContinue:', error);
             // Show error toast but continue session
@@ -334,6 +331,9 @@ export class LearningView {
     endSession() {
         const skillState = this.courseManager.masteryState.getSkillState(this.currentSkill.id);
         const isMastered = skillState.status === 'mastered';
+        
+        // Award XP for completing the AS quiz
+        this.courseManager.addXP(10, this.currentSkill.id);
         
         const content = `
             <div class="screen">
