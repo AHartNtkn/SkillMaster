@@ -1,6 +1,7 @@
 import { describe, test, expect, beforeEach, vi } from 'vitest';
 import { LearningView } from '../js/views/LearningView.js';
 import { MixedQuizView } from '../js/views/MixedQuizView.js';
+import { ProgressView } from '../js/views/ProgressView.js';
 import { CourseManager } from '../js/services/CourseManager.js';
 import { TaskSelector } from '../js/services/TaskSelector.js';
 
@@ -39,6 +40,15 @@ describe('View Render Methods', () => {
         expect(typeof html).toBe('string');
         expect(html).toContain('Loading Mixed Quiz...');
         expect(html).toContain('Preparing questions from multiple skills...');
+    });
+
+    test('ProgressView render should include timeline elements', () => {
+        const progressView = new ProgressView(courseManager);
+        const html = progressView.render();
+
+        expect(typeof html).toBe('string');
+        expect(html).toContain('timeline-container');
+        expect(html).toContain('timeline-scale');
     });
 });
 

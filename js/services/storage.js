@@ -126,6 +126,10 @@ export class StorageService {
                 format: 'XP-v1',
                 log: []
             },
+            'progress': {
+                format: 'Progress-v1',
+                log: []
+            },
             'prefs': {
                 format: 'Prefs-v1',
                 xp_since_mixed_quiz: 0,
@@ -157,6 +161,7 @@ export class StorageService {
             mastery: this.loadFromLocal('mastery'),
             attempt_window: this.loadFromLocal('attempt_window'),
             xp: this.loadFromLocal('xp'),
+            progress: this.loadFromLocal('progress'),
             prefs: this.loadFromLocal('prefs'),
             exportDate: new Date().toISOString()
         };
@@ -172,6 +177,7 @@ export class StorageService {
             if (data.mastery) this.saveToLocal('mastery', data.mastery);
             if (data.attempt_window) this.saveToLocal('attempt_window', data.attempt_window);
             if (data.xp) this.saveToLocal('xp', data.xp);
+            if (data.progress) this.saveToLocal('progress', data.progress);
             if (data.prefs) this.saveToLocal('prefs', data.prefs);
             return true;
         } catch (error) {
@@ -187,6 +193,7 @@ export class StorageService {
         localStorage.removeItem('mastery');
         localStorage.removeItem('attempt_window');
         localStorage.removeItem('xp');
+        localStorage.removeItem('progress');
         localStorage.removeItem('prefs');
         this.initializeSaveData();
     }

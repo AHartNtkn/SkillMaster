@@ -18,6 +18,7 @@ export class CourseManager {
         this.attemptWindow = null;
         this.prefs = null;
         this.xpLog = null;
+        this.progressLog = null;
     }
 
     /**
@@ -32,6 +33,7 @@ export class CourseManager {
         this.attemptWindow = new AttemptWindow(this.storage.loadFromLocal('attempt_window') || {});
         this.prefs = this.storage.loadFromLocal('prefs') || {};
         this.xpLog = this.storage.loadFromLocal('xp') || { format: 'XP-v1', log: [] };
+        this.progressLog = this.storage.loadFromLocal('progress') || { format: 'Progress-v1', log: [] };
         
         // Load courses
         await this.loadCourses();
@@ -282,7 +284,12 @@ export class CourseManager {
     async recordSkillAttempt(skillId, grade, isMixedQuiz = false) {
         // Update attempt window
         this.attemptWindow.addSkillAttempt(skillId, grade);
-        
+
+        if (!this.progressLog.log) {
+            this.progressLog.log = [];
+        }
+        this.progressLog.log.push({ ts: new Date().toISOString(), skillId, type: 'practice' });
+
         // Get current skill state
         const skillState = this.masteryState.getSkillState(skillId);
         
@@ -296,8 +303,12 @@ export class CourseManager {
         Object.assign(skillState, fsrsUpdate);
         
         // Check mastery criteria
+        const wasMastered = skillState.status === 'mastered';
         if (this.attemptWindow.checkMasteryCriteria(skillId)) {
-            skillState.status = 'mastered';
+            if (!wasMastered) {
+                skillState.status = 'mastered';
+                this.progressLog.log.push({ ts: new Date().toISOString(), skillId, type: 'mastered' });
+            }
         }
         
         // Apply implicit credit to prerequisites if grade is 4 or 5
@@ -396,6 +407,7 @@ export class CourseManager {
         this.storage.saveToLocal('mastery', this.masteryState.toJSON());
         this.storage.saveToLocal('attempt_window', this.attemptWindow.toJSON());
         this.storage.saveToLocal('xp', this.xpLog);
+        this.storage.saveToLocal('progress', this.progressLog);
         this.storage.saveToLocal('prefs', this.prefs);
     }
 
@@ -420,6 +432,7 @@ export class CourseManager {
             this.attemptWindow = new AttemptWindow(this.storage.loadFromLocal('attempt_window') || {});
             this.prefs = this.storage.loadFromLocal('prefs') || {};
             this.xpLog = this.storage.loadFromLocal('xp') || { format: 'XP-v1', log: [] };
+            this.progressLog = this.storage.loadFromLocal('progress') || { format: 'Progress-v1', log: [] };
         }
         return success;
     }
@@ -563,5 +576,6 @@ export class CourseManager {
         this.attemptWindow = new AttemptWindow();
         this.prefs = this.storage.loadFromLocal('prefs') || {};
         this.xpLog = { format: 'XP-v1', log: [] };
+        this.progressLog = { format: 'Progress-v1', log: [] };
     }
 }

@@ -33,9 +33,20 @@ export class ProgressView {
                         Overdue
                     </span>
                 </div>
-                
+
+                <div class="timeline-controls">
+                    <label for="timeline-scale">Time Scale:</label>
+                    <select id="timeline-scale">
+                        <option value="7">7 Days</option>
+                        <option value="30" selected>30 Days</option>
+                        <option value="90">90 Days</option>
+                        <option value="all">All</option>
+                    </select>
+                </div>
+                <div id="timeline-container" class="timeline-container"></div>
+
                 <div id="graph-container" class="graph-container"></div>
-                
+
                 <div class="progress-stats">
                     ${this.renderStats()}
                 </div>
@@ -85,6 +96,11 @@ export class ProgressView {
         // Wait for DOM to be ready
         setTimeout(() => {
             this.createGraph();
+            this.createTimeline();
+            const select = document.getElementById('timeline-scale');
+            if (select) {
+                select.addEventListener('change', () => this.createTimeline());
+            }
         }, 100);
     }
 
@@ -182,9 +198,88 @@ export class ProgressView {
                 .attr('y1', d => d.source.y)
                 .attr('x2', d => d.target.x)
                 .attr('y2', d => d.target.y);
-            
+
             node.attr('transform', d => `translate(${d.x},${d.y})`);
         });
+    }
+
+    createTimeline() {
+        const container = document.getElementById('timeline-container');
+        if (!container) return;
+
+        const width = container.clientWidth;
+        const height = 300;
+
+        d3.select(container).selectAll('*').remove();
+
+        const select = document.getElementById('timeline-scale');
+        const scaleValue = select ? select.value : '30';
+        const now = new Date();
+        let startDate;
+        if (scaleValue === 'all') {
+            const first = this.courseManager.progressLog.log[0];
+            startDate = first ? new Date(first.ts) : new Date(now);
+        } else {
+            startDate = new Date(now.getTime() - parseInt(scaleValue) * 24 * 60 * 60 * 1000);
+        }
+
+        const buckets = new Map();
+        for (const entry of this.courseManager.progressLog.log) {
+            const ts = new Date(entry.ts);
+            if (ts < startDate) continue;
+            const key = ts.toISOString().split('T')[0];
+            if (!buckets.has(key)) {
+                buckets.set(key, { date: new Date(key), practice: 0, mastered: 0 });
+            }
+            if (entry.type === 'practice') buckets.get(key).practice++;
+            if (entry.type === 'mastered') buckets.get(key).mastered++;
+        }
+        const data = Array.from(buckets.values()).sort((a, b) => a.date - b.date);
+        if (data.length === 0) {
+            d3.select(container).append('div').text('No progress yet');
+            return;
+        }
+
+        const x = d3.scaleTime()
+            .domain([startDate, now])
+            .range([40, width - 20]);
+        const y = d3.scaleLinear()
+            .domain([0, d3.max(data, d => Math.max(d.practice, d.mastered))])
+            .range([height - 30, 10]);
+
+        const svg = d3.select(container)
+            .append('svg')
+            .attr('width', width)
+            .attr('height', height);
+
+        svg.append('g')
+            .attr('transform', `translate(0,${height - 30})`)
+            .call(d3.axisBottom(x).ticks(5));
+
+        svg.append('g')
+            .attr('transform', 'translate(40,0)')
+            .call(d3.axisLeft(y).ticks(5));
+
+        const linePractice = d3.line()
+            .x(d => x(d.date))
+            .y(d => y(d.practice));
+        const lineMastered = d3.line()
+            .x(d => x(d.date))
+            .y(d => y(d.mastered));
+
+        svg.append('path')
+            .datum(data)
+            .attr('fill', 'none')
+            .attr('stroke', '#3b82f6')
+            .attr('stroke-width', 2)
+            .attr('d', linePractice);
+
+        svg.append('path')
+            .datum(data)
+            .attr('fill', 'none')
+            .attr('stroke', '#16a34a')
+            .attr('stroke-width', 2)
+            .attr('d', lineMastered);
     }
 
     buildGraphData() {
@@ -299,6 +394,15 @@ style.textContent = `
 
 .progress-stats {
     margin-top: 20px;
+}
+
+.timeline-controls {
+    margin-bottom: 10px;
+}
+
+.timeline-container {
+    width: 100%;
+    margin-bottom: 20px;
 }
 
 .text-success {

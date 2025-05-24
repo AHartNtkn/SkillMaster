@@ -104,6 +104,21 @@ describe('Integration Tests (without FSRS)', () => {
         expect(courseManager.prefs.xp_since_mixed_quiz).toBe(0); // Reset
     });
 
+    test('progress log records practice and mastery', async () => {
+        const skillId = 'EA:AS001';
+
+        await courseManager.recordSkillAttempt(skillId, 5);
+        await courseManager.recordSkillAttempt(skillId, 5);
+        await courseManager.recordSkillAttempt(skillId, 5);
+
+        const log = courseManager.progressLog.log.filter(e => e.skillId === skillId);
+        const practiceCount = log.filter(e => e.type === 'practice').length;
+        const mastered = log.some(e => e.type === 'mastered');
+
+        expect(practiceCount).toBe(3);
+        expect(mastered).toBe(true);
+    });
+
     test('question loading works', async () => {
         const questions = await courseManager.getSkillQuestions('EA:AS001');
         expect(questions).toBeDefined();
