@@ -289,25 +289,22 @@ export class TaskSelector {
      */
     getMixedQuizSkills() {
         const eligible = [];
-        const thirtyDaysAgo = new Date();
-        thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+        const now = new Date();
         
         for (const [skillId, state] of this.courseManager.masteryState.skills) {
-            // Must be mastered
-            if (state.status !== 'mastered') continue;
+            // Skip unseen skills
+            if (state.status === 'unseen') continue;
             
-            // Must have been attempted in last 30 days
-            const lastAttempt = this.getLastAttemptDate(skillId);
-            if (!lastAttempt || lastAttempt < thirtyDaysAgo) continue;
+            // Check if skill has a pending review (next_due <= now)
+            if (!state.next_due) continue;
+            
+            const nextDue = new Date(state.next_due);
+            if (nextDue > now) continue; // Not yet due
             
             // Calculate weight based on how overdue it is
-            let weight = 0;
-            if (state.next_due) {
-                const daysOverdue = this.courseManager.fsrs.getDaysOverdue(state.next_due);
-                weight = Math.max(0, daysOverdue);
-            }
+            const daysOverdue = this.courseManager.fsrs.getDaysOverdue(state.next_due);
+            const weight = Math.max(0.1, daysOverdue); // Minimum weight of 0.1 for skills due today
             
-            // Non-overdue skills have weight 0 but are still eligible
             eligible.push({ skillId, weight });
         }
         

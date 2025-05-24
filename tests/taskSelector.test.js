@@ -203,29 +203,31 @@ describe('TaskSelector', () => {
     });
 
     test('selects eligible skills for mixed quiz', () => {
-        // Set up mastered skills
+        // Set up skills with different due dates
         courseManager.masteryState.skills.set('TEST:AS001', {
-            status: 'mastered',
-            next_due: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000).toISOString()
+            status: 'in_progress',
+            next_due: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString() // Due yesterday
         });
 
         courseManager.masteryState.skills.set('TEST:AS002', {
             status: 'mastered',
-            next_due: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString() // Overdue
+            next_due: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString() // Overdue by 2 days
         });
 
-        // Add recent attempts
-        courseManager.xpLog.log.push(
-            { ts: new Date().toISOString(), source: 'TEST:AS001_q1', delta: 10 },
-            { ts: new Date().toISOString(), source: 'TEST:AS002_q1', delta: 10 }
-        );
+        courseManager.masteryState.skills.set('TEST:AS003', {
+            status: 'mastered',
+            next_due: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000).toISOString() // Not due yet
+        });
 
         const eligible = taskSelector.getMixedQuizSkills();
-        expect(eligible).toHaveLength(2);
+        expect(eligible).toHaveLength(2); // Only AS001 and AS002 are due
         
-        // AS002 should have higher weight because it's overdue
+        // AS002 should have higher weight because it's more overdue
+        const as1 = eligible.find(e => e.skillId === 'TEST:AS001');
         const as2 = eligible.find(e => e.skillId === 'TEST:AS002');
-        expect(as2.weight).toBeGreaterThan(0);
+        expect(as1).toBeDefined();
+        expect(as2).toBeDefined();
+        expect(as2.weight).toBeGreaterThan(as1.weight);
     });
 
     test('returns null when no tasks available', () => {

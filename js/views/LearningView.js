@@ -24,6 +24,35 @@ export class LearningView {
 
         // Load questions
         this.questions = await this.courseManager.getSkillQuestions(skillId);
+        
+        // Handle missing questions gracefully
+        if (!this.questions || this.questions.length === 0) {
+            const content = `
+                <div class="learning-header">
+                    <button class="btn btn-secondary" onclick="app.showHome()">
+                        ← Home
+                    </button>
+                    <div>
+                        <div class="skill-id">${skillId}</div>
+                        <div class="skill-title">Content Unavailable</div>
+                    </div>
+                    <div></div>
+                </div>
+                
+                <div class="learning-content">
+                    <div class="task-card">
+                        <h3>Questions Not Available</h3>
+                        <p>The questions for this skill could not be loaded. The skill remains schedulable to avoid breaking prerequisite chains.</p>
+                        <button class="btn btn-primary" onclick="app.showHome()">
+                            Return to Home
+                        </button>
+                    </div>
+                </div>
+            `;
+            document.getElementById('main-content').innerHTML = content;
+            return;
+        }
+        
         const skillState = this.courseManager.masteryState.getSkillState(skillId);
         this.currentQuestionIndex = skillState.next_q_index || 0;
         

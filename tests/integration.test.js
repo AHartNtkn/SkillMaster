@@ -177,7 +177,7 @@ describe('Integration Tests (without FSRS)', () => {
     });
 
     test('course validation detects issues', () => {
-        const course = courseManager.getCourse('elementary_arithmetic');
+        const course = courseManager.getCourse('EA');
         expect(course).toBeDefined();
         
         const validation = course.validate();

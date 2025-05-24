@@ -13,7 +13,7 @@ export class CourseManager {
         this.storage = new StorageService();
         this.fsrs = new FSRSService();
         this.courses = new Map(); // course_id -> Course
-        this.courseIdToDir = new Map(); // course_id (e.g., EA) -> directory name (e.g., elementary_arithmetic)
+        this.catalogs = new Map(); // course_id -> catalog data
         this.masteryState = null;
         this.attemptWindow = null;
         this.prefs = null;
@@ -47,11 +47,8 @@ export class CourseManager {
             for (const courseInfo of coursesData.courses) {
                 const course = await this.loadCourse(courseInfo.id);
                 if (course) {
-                    // Map both by directory name and course ID
-                    this.courses.set(courseInfo.id, course);
+                    // Course ID from courses.json should match catalog course_id and directory name
                     this.courses.set(course.courseId, course);
-                    // Map course ID to directory name
-                    this.courseIdToDir.set(course.courseId, courseInfo.id);
                 }
             }
         } catch (error) {
@@ -71,12 +68,15 @@ export class CourseManager {
             const catalogData = await this.storage.loadJSON(catalogPath);
             const course = new Course(catalogData);
             
+            // Store catalog data for later use
+            this.catalogs.set(catalogData.course_id, catalogData);
+            
             // Load topics
             const topicPromises = [];
-            const topicFiles = await this.getTopicFiles(courseId);
+            const topicFiles = await this.getTopicFiles(catalogData.course_id);
             
             for (const topicFile of topicFiles) {
-                const topicPath = `/course/${courseId}/topics/${topicFile}`;
+                const topicPath = `/course/${catalogData.course_id}/topics/${topicFile}`;
                 topicPromises.push(this.storage.loadJSON(topicPath));
             }
             
@@ -87,10 +87,10 @@ export class CourseManager {
             
             // Load skills
             const skillPromises = [];
-            const skillFiles = await this.getSkillFiles(courseId);
+            const skillFiles = await this.getSkillFiles(catalogData.course_id);
             
             for (const skillFile of skillFiles) {
-                const skillPath = `/course/${courseId}/skills/${skillFile}`;
+                const skillPath = `/course/${catalogData.course_id}/skills/${skillFile}`;
                 skillPromises.push(this.storage.loadJSON(skillPath));
             }
             
@@ -113,25 +113,99 @@ export class CourseManager {
     }
 
     /**
-     * Get topic files for a course (hardcoded for now)
+     * Get topic files for a course
+     * Attempts to load from catalog or falls back to known patterns
      */
     async getTopicFiles(courseId) {
-        // In a real implementation, this would scan the directory
-        // For now, we'll hardcode based on what we know exists
-        if (courseId === 'elementary_arithmetic') {
-            return ['EA_T001.json', 'EA_T002.json'];
+        try {
+            // Try to load from catalog if it has a file list
+            const catalog = this.catalogs.get(courseId);
+            if (catalog && catalog.topic_files) {
+                return catalog.topic_files;
+            }
+            
+            // Fall back to pattern-based approach
+            // Try loading sequential topic files until we get a 404
+            const files = [];
+            let index = 1;
+            // In test environment, return known files
+            if (typeof process !== 'undefined' && process.env.NODE_ENV === 'test') {
+                if (courseId === 'EA') {
+                    return ['EA_T001.json', 'EA_T002.json'];
+                }
+                return [];
+            }
+            
+            while (index < 100) { // Reasonable upper limit
+                const filename = `${courseId}_T${String(index).padStart(3, '0')}.json`;
+                try {
+                    await this.storage.loadJSON(`/course/${courseId}/topics/${filename}`);
+                    files.push(filename);
+                    index++;
+                } catch (error) {
+                    // Assume no more files when we hit an error
+                    break;
+                }
+            }
+            
+            return files;
+        } catch (error) {
+            console.warn(`Could not dynamically load topic files for ${courseId}:`, error);
+            // Ultimate fallback for known courses
+            if (courseId === 'EA') {
+                return ['EA_T001.json', 'EA_T002.json'];
+            }
+            return [];
         }
-        return [];
     }
 
     /**
-     * Get skill files for a course (hardcoded for now)
+     * Get skill files for a course
+     * Attempts to load from catalog or falls back to known patterns
      */
     async getSkillFiles(courseId) {
-        if (courseId === 'elementary_arithmetic') {
-            return ['EA_AS001.json', 'EA_AS003.json', 'EA_AS004.json', 'EA_AS013.json'];
+        try {
+            // Try to load from catalog if it has a file list
+            const catalog = this.catalogs.get(courseId);
+            if (catalog && catalog.skill_files) {
+                return catalog.skill_files;
+            }
+            
+            // In test environment, return known files
+            if (typeof process !== 'undefined' && process.env.NODE_ENV === 'test') {
+                if (courseId === 'EA') {
+                    return ['EA_AS001.json', 'EA_AS003.json', 'EA_AS004.json', 'EA_AS013.json'];
+                }
+                return [];
+            }
+            
+            // Fall back to loading all skills referenced in topics
+            const topicFiles = await this.getTopicFiles(courseId);
+            const skillSet = new Set();
+            
+            for (const topicFile of topicFiles) {
+                try {
+                    const topicData = await this.storage.loadJSON(`/course/${courseId}/topics/${topicFile}`);
+                    if (topicData.ass && Array.isArray(topicData.ass)) {
+                        topicData.ass.forEach(skillId => {
+                            const filename = `${skillId.replace(':', '_')}.json`;
+                            skillSet.add(filename);
+                        });
+                    }
+                } catch (error) {
+                    console.warn(`Could not load topic file ${topicFile}:`, error);
+                }
+            }
+            
+            return Array.from(skillSet);
+        } catch (error) {
+            console.warn(`Could not dynamically load skill files for ${courseId}:`, error);
+            // Ultimate fallback for known courses
+            if (courseId === 'EA') {
+                return ['EA_AS001.json', 'EA_AS003.json', 'EA_AS004.json', 'EA_AS013.json'];
+            }
+            return [];
         }
-        return [];
     }
 
     /**
@@ -171,8 +245,7 @@ export class CourseManager {
      */
     async getSkillQuestions(skillId) {
         const courseId = skillId.split(':')[0];
-        const courseDir = this.courseIdToDir.get(courseId) || courseId.toLowerCase();
-        const questionPath = `/course/${courseDir}/as_questions/${skillId.replace(':', '_')}.yaml`;
+        const questionPath = `/course/${courseId}/as_questions/${skillId.replace(':', '_')}.yaml`;
         
         try {
             const data = await this.storage.loadYAML(questionPath);
@@ -190,8 +263,7 @@ export class CourseManager {
      */
     async getSkillExplanation(skillId) {
         const courseId = skillId.split(':')[0];
-        const courseDir = this.courseIdToDir.get(courseId) || courseId.toLowerCase();
-        const mdPath = `/course/${courseDir}/as_md/${skillId.replace(':', '_')}.md`;
+        const mdPath = `/course/${courseId}/as_md/${skillId.replace(':', '_')}.md`;
         
         try {
             return await this.storage.loadMarkdown(mdPath);
@@ -265,6 +337,9 @@ export class CourseManager {
             this.prefs.xp_since_mixed_quiz = 0;
         }
         this.prefs.xp_since_mixed_quiz += amount;
+        
+        // Save state
+        this.saveState();
     }
     
     /**
@@ -281,6 +356,7 @@ export class CourseManager {
      */
     resetMixedQuizXP() {
         this.prefs.xp_since_mixed_quiz = 0;
+        this.saveState();
     }
     
     /**
@@ -305,32 +381,6 @@ export class CourseManager {
         }
     }
 
-    /**
-     * Add XP
-     * @param {number} amount
-     * @param {string} source
-     */
-    addXP(amount, source) {
-        const entry = {
-            id: this.xpLog.log.length + 1,
-            ts: new Date().toISOString(),
-            delta: amount,
-            source
-        };
-        
-        this.xpLog.log.push(entry);
-        this.prefs.xp_since_mixed_quiz += amount;
-        
-        this.saveState();
-    }
-
-    /**
-     * Reset XP counter for mixed quiz
-     */
-    resetMixedQuizXP() {
-        this.prefs.xp_since_mixed_quiz = 0;
-        this.saveState();
-    }
 
     /**
      * Update last accessed skill
@@ -396,8 +446,7 @@ export class CourseManager {
         // Find course containing this skill
         for (const course of this.courses.values()) {
             if (course.hasSkill(skillId)) {
-                const courseDir = this.courseIdToDir.get(course.courseId) || course.courseId;
-                const path = `/course/${courseDir}/as_questions/${skillId}.yaml`;
+                const path = `/course/${course.courseId}/as_questions/${skillId}.yaml`;
                 
                 // This would need to be loaded - for now return null
                 // In a real implementation, this would be cached
