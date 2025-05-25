@@ -516,9 +516,7 @@ Content Errors: If an AS is missing its Markdown or question file, the UI should
 
 Data Versioning: Every JSON and YAML file includes a format version string. The application should be prepared to run data migration scripts to update older file formats as the schema evolves.
 
-Implementation State:
-
-The application is parially implemented. The core interface, most datastructure, and most logic is implemented to some degree.
+Prime Directive:
 
 Your goal is to create a feature-complete implementation of what's described here. You are to import the FSRS implementation; don't implement it on your own.
 
