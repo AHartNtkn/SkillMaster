@@ -1,10 +1,10 @@
-import MarkdownIt from 'markdown-it';
+// import MarkdownIt from 'markdown-it';
 
 /**
  * LearningView
  * Handles the learning flow: exposition, questions, feedback, and ratings
  */
-const mdParser = new MarkdownIt();
+const mdParser = new window.markdownit();
 export class LearningView {
     constructor(courseManager) {
         this.courseManager = courseManager;

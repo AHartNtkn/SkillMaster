@@ -1,10 +1,10 @@
-import MarkdownIt from 'markdown-it';
+// import MarkdownIt from 'markdown-it';
 
 /**
  * MixedQuizView
  * Handles mixed quiz sessions with questions from multiple mastered skills
  */
-const mdParser = new MarkdownIt();
+const mdParser = new window.markdownit();
 export class MixedQuizView {
     constructor(courseManager, taskSelector) {
         this.courseManager = courseManager;
