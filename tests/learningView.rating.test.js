@@ -159,7 +159,7 @@ describe('LearningView Rating Flow', () => {
             expect(learningView.grades).toEqual([4]);
             expect(learningView.currentQuestionIndex).toBe(1);
             expect(mockCourseManager.recordSkillAttempt).toHaveBeenCalledWith('EA:AS001', 4);
-            // XP is now awarded per quiz completion, not per question
+            // XP is awarded per question via recordSkillAttempt
             expect(mockSkillState.next_q_index).toBe(1);
             expect(mockCourseManager.saveState).toHaveBeenCalled();
             expect(learningView.showQuestion).toHaveBeenCalled();

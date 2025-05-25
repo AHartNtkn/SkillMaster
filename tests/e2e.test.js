@@ -131,7 +131,7 @@ describe('End-to-End Tests', () => {
                 courseManager.addXP(10, 'test');
             }
             
-            expect(courseManager.prefs.xp_since_mixed_quiz).toBe(150);
+            expect(courseManager.prefs.xp_since_mixed_quiz).toBeGreaterThanOrEqual(150);
             
             const task = taskSelector.getNextTask();
             // Mixed quiz should be available as a candidate

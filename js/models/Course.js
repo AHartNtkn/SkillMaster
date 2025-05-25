@@ -217,6 +217,7 @@ export class AtomicSkill {
         this.title = data.title || data.name; // Support old format
         this.desc = data.desc || data.name; // Fallback to name if no desc
         this.prerequisites = this._normalizePrereqs(data);
+        this.xp = Math.max(1, data.xp || 1);
     }
 
     /**
