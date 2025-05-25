@@ -332,8 +332,6 @@ export class LearningView {
         const skillState = this.courseManager.masteryState.getSkillState(this.currentSkill.id);
         const isMastered = skillState.status === 'mastered';
         
-        // Award XP for completing the AS quiz
-        this.courseManager.addXP(10, this.currentSkill.id);
         
         const content = `
             <div class="screen">

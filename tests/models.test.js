@@ -22,6 +22,7 @@ describe('Course Models', () => {
             expect(skill.prerequisites).toHaveLength(1);
             expect(skill.prerequisites[0].id).toBe('TEST:AS000');
             expect(skill.prerequisites[0].weight).toBe(0.8);
+            expect(skill.xp).toBe(1);
         });
 
         test('handles old format with name field', () => {
@@ -38,6 +39,7 @@ describe('Course Models', () => {
             expect(skill.prerequisites).toHaveLength(1);
             expect(skill.prerequisites[0].id).toBe('TEST:AS000');
             expect(skill.prerequisites[0].weight).toBe(0.8);
+            expect(skill.xp).toBe(1);
         });
     });
 

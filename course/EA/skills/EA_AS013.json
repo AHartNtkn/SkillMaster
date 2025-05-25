@@ -3,6 +3,10 @@
   "title": "Understand and use the plus (+) and equals (=) signs",
   "desc": "Understand and use the plus (+) and equals (=) signs",
   "prereqs": [
-    { "id": "EA:AS001", "weight": 1.0 }
-  ]
+    {
+      "id": "EA:AS001",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
 }

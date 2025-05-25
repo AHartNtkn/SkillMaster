@@ -305,7 +305,11 @@ export class CourseManager {
             await this.applyImplicitCredit(skillId);
         }
         
-        // XP is awarded per quiz completion in the view layer, not per skill attempt
+        // Award XP for this question based on the skill's XP value
+        const skill = this.getSkill(skillId);
+        if (skill) {
+            this.addXP(skill.xp, skillId);
+        }
         
         // Save state
         this.saveState();

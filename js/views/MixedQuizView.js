@@ -245,13 +245,8 @@ export class MixedQuizView {
     }
 
     async finishQuiz() {
-        // Award XP for completing the mixed quiz
-        this.courseManager.addXP(20, 'mixed_quiz');
-        
-        // Reset mixed quiz XP counter
+        // Reset mixed quiz XP counter and save state
         this.courseManager.resetMixedQuizXP();
-        
-        // Save state
         this.courseManager.saveState();
         
         // Show results
