@@ -163,7 +163,7 @@ export class LearningView {
                     `).join('')}
                 </ul>
                 
-                <button class="btn btn-primary btn-full" 
+                <button id="submit-answer-btn" class="btn btn-primary btn-full"
                         onclick="app.learningView.submitAnswer()"
                         ${this.selectedAnswer === null ? 'disabled' : ''}>
                     Submit Answer
@@ -194,7 +194,7 @@ export class LearningView {
         });
         
         // Enable submit button
-        const submitBtn = document.querySelector('.btn-primary');
+        const submitBtn = document.getElementById('submit-answer-btn');
         if (submitBtn) {
             submitBtn.disabled = false;
         }
@@ -261,8 +261,8 @@ export class LearningView {
         }
 
         // Hide submit button
-        const submitBtn = document.querySelector('.btn-primary');
-        if (submitBtn && submitBtn.textContent === 'Submit Answer') {
+        const submitBtn = document.getElementById('submit-answer-btn');
+        if (submitBtn) {
             submitBtn.style.display = 'none';
         }
 

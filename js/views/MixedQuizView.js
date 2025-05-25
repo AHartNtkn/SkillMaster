@@ -108,7 +108,7 @@ export class MixedQuizView {
                     `).join('')}
                 </ul>
                 
-                <button class="btn btn-primary btn-full" 
+                <button id="submit-answer-btn" class="btn btn-primary btn-full"
                         onclick="app.mixedQuizView.submitAnswer()"
                         ${this.selectedAnswer === null ? 'disabled' : ''}>
                     Submit Answer
@@ -139,7 +139,7 @@ export class MixedQuizView {
         });
         
         // Enable submit button
-        const submitBtn = document.querySelector('.btn-primary');
+        const submitBtn = document.getElementById('submit-answer-btn');
         if (submitBtn) {
             submitBtn.disabled = false;
         }
@@ -206,8 +206,8 @@ export class MixedQuizView {
         }
 
         // Hide submit button
-        const submitBtn = document.querySelector('.btn-primary');
-        if (submitBtn && submitBtn.textContent === 'Submit Answer') {
+        const submitBtn = document.getElementById('submit-answer-btn');
+        if (submitBtn) {
             submitBtn.style.display = 'none';
         }
 
