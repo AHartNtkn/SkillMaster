@@ -316,7 +316,7 @@ describe('Learning Flow E2E', () => {
     test('should complete a question, rate it, and advance without FSRS errors', async () => {
         // 1. Initialize App and navigate to a skill
         await app.initialize();
-        const skillId = 'EA:AS001'; // Assuming this skill and its questions exist
+        const skillId = 'EA_AS001'; // Assuming this skill and its questions exist
         app.showView('learning');
         await app.views.learning.startSkill(skillId);
 

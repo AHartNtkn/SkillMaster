@@ -1,5 +1,5 @@
 format: ASQ-v1
-id: EA:AS004
+id: EA_AS004
 pool:
   - id: q1
     stem: "How many circles are there? ○ ○ ○"

@@ -1,5 +1,5 @@
 format: ASQ-v1
-id: EA:AS001
+id: EA_AS001
 pool:
   - id: q1
     stem: "Which numeral represents zero?"

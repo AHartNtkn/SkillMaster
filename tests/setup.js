@@ -29,6 +29,6 @@ global.fetch = async (path) => {
     }
 };
 
-// Provide markdown-it constructor for views that expect window.markdownit
+// Setup global markdown-it for tests
 global.window = global.window || {};
 global.window.markdownit = MarkdownIt;

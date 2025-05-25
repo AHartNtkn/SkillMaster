@@ -244,8 +244,8 @@ export class CourseManager {
      * @returns {Promise<Array>}
      */
     async getSkillQuestions(skillId) {
-        const courseId = skillId.split(':')[0];
-        const questionPath = `/course/${courseId}/as_questions/${skillId.replace(':', '_')}.yaml`;
+        const courseId = skillId.split('_')[0];
+        const questionPath = `/course/${courseId}/as_questions/${skillId}.yaml`;
         
         try {
             const data = await this.storage.loadYAML(questionPath);
@@ -262,8 +262,8 @@ export class CourseManager {
      * @returns {Promise<string>}
      */
     async getSkillExplanation(skillId) {
-        const courseId = skillId.split(':')[0];
-        const mdPath = `/course/${courseId}/as_md/${skillId.replace(':', '_')}.md`;
+        const courseId = skillId.split('_')[0];
+        const mdPath = `/course/${courseId}/as_md/${skillId}.md`;
         
         try {
             return await this.storage.loadMarkdown(mdPath);

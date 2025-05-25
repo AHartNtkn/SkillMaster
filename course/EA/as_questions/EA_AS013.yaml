@@ -1,5 +1,5 @@
 format: ASQ-v1
-id: EA:AS013
+id: EA_AS013
 pool:
   - id: q1
     stem: "What does the + symbol mean?"

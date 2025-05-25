@@ -50,7 +50,7 @@ describe('Integration Tests (without FSRS)', () => {
     });
 
     test('mastery state tracking works', () => {
-        const skillId = 'EA:AS001';
+        const skillId = 'EA_AS001';
         
         // Initial state should be unseen
         let state = courseManager.masteryState.getSkillState(skillId);
@@ -68,7 +68,7 @@ describe('Integration Tests (without FSRS)', () => {
     });
 
     test('attempt window tracks attempts correctly', () => {
-        const skillId = 'EA:AS001';
+        const skillId = 'EA_AS001';
         
         // Add attempts
         courseManager.attemptWindow.addSkillAttempt(skillId, 3);
@@ -105,7 +105,7 @@ describe('Integration Tests (without FSRS)', () => {
     });
 
     test('question loading works', async () => {
-        const questions = await courseManager.getSkillQuestions('EA:AS001');
+        const questions = await courseManager.getSkillQuestions('EA_AS001');
         expect(questions).toBeDefined();
         expect(questions.length).toBeGreaterThan(0);
         
@@ -117,7 +117,7 @@ describe('Integration Tests (without FSRS)', () => {
     });
 
     test('skill explanation loading works', async () => {
-        const explanation = await courseManager.getSkillExplanation('EA:AS001');
+        const explanation = await courseManager.getSkillExplanation('EA_AS001');
         expect(explanation).toBeDefined();
         expect(typeof explanation).toBe('string');
         expect(explanation.length).toBeGreaterThan(0);
@@ -128,7 +128,7 @@ describe('Integration Tests (without FSRS)', () => {
         // Make changes
         courseManager.addXP(50, 'test');
         courseManager.prefs.ui_theme = 'dark';
-        courseManager.masteryState.updateSkillState('EA:AS001', {
+        courseManager.masteryState.updateSkillState('EA_AS001', {
             status: 'in_progress'
         });
         courseManager.saveState();
@@ -140,40 +140,40 @@ describe('Integration Tests (without FSRS)', () => {
         // Verify persistence
         expect(newCourseManager.getTotalXP()).toBe(50);
         expect(newCourseManager.prefs.ui_theme).toBe('dark');
-        expect(newCourseManager.masteryState.getSkillState('EA:AS001').status).toBe('in_progress');
+        expect(newCourseManager.masteryState.getSkillState('EA_AS001').status).toBe('in_progress');
     });
 
     test('available new skills calculation', () => {
         // Initially, only skills with no prerequisites should be available
         let available = taskSelector.getAvailableNewSkills();
         
-        // EA:AS001 and EA:AS003 have no prerequisites
-        expect(available).toContain('EA:AS001');
-        expect(available).toContain('EA:AS003');
+        // EA_AS001 and EA_AS003 have no prerequisites
+        expect(available).toContain('EA_AS001');
+        expect(available).toContain('EA_AS003');
         
-        // EA:AS004 and EA:AS013 have prerequisites, so shouldn't be available
-        expect(available).not.toContain('EA:AS004');
-        expect(available).not.toContain('EA:AS013');
+        // EA_AS004 and EA_AS013 have prerequisites, so shouldn't be available
+        expect(available).not.toContain('EA_AS004');
+        expect(available).not.toContain('EA_AS013');
         
-        // Master EA:AS001
-        courseManager.masteryState.updateSkillState('EA:AS001', {
+        // Master EA_AS001
+        courseManager.masteryState.updateSkillState('EA_AS001', {
             status: 'mastered'
         });
         
         available = taskSelector.getAvailableNewSkills();
         
-        // EA:AS004 still not available (also needs EA:AS003)
-        expect(available).not.toContain('EA:AS004');
+        // EA_AS004 still not available (also needs EA_AS003)
+        expect(available).not.toContain('EA_AS004');
         
-        // Master EA:AS003
-        courseManager.masteryState.updateSkillState('EA:AS003', {
+        // Master EA_AS003
+        courseManager.masteryState.updateSkillState('EA_AS003', {
             status: 'mastered'
         });
         
         available = taskSelector.getAvailableNewSkills();
         
-        // Now EA:AS004 should be available (both prereqs mastered)
-        expect(available).toContain('EA:AS004');
+        // Now EA_AS004 should be available (both prereqs mastered)
+        expect(available).toContain('EA_AS004');
     });
 
     test('course validation detects issues', () => {

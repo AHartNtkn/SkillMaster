@@ -35,7 +35,7 @@ describe('MixedQuizView FSRS Update', () => {
     
     test('should update FSRS after each question, not average at the end', async () => {
         // Set up test quiz with multiple questions from the same skill
-        const testSkillId = 'EA:AS001';
+        const testSkillId = 'EA_AS001';
         mixedQuizView.quizQuestions = [
             {
                 skillId: testSkillId,
@@ -104,7 +104,7 @@ describe('MixedQuizView FSRS Update', () => {
         // Set up test quiz with questions from different skills
         mixedQuizView.quizQuestions = [
             {
-                skillId: 'EA:AS001',
+                skillId: 'EA_AS001',
                 question: {
                     stem: 'AS001 Question',
                     choices: ['A', 'B', 'C', 'D'],
@@ -114,7 +114,7 @@ describe('MixedQuizView FSRS Update', () => {
                 questionIndex: 0
             },
             {
-                skillId: 'EA:AS003',
+                skillId: 'EA_AS003',
                 question: {
                     stem: 'AS003 Question',
                     choices: ['A', 'B', 'C', 'D'],
@@ -129,13 +129,13 @@ describe('MixedQuizView FSRS Update', () => {
         mixedQuizView.currentQuestionIndex = 0;
         await mixedQuizView.rateAndContinue(4);
         
-        expect(mockRecordSkillAttempt).toHaveBeenCalledWith('EA:AS001', 4, true);
+        expect(mockRecordSkillAttempt).toHaveBeenCalledWith('EA_AS001', 4, true);
         
         // Answer second question with grade 5
         mixedQuizView.currentQuestionIndex = 1;
         await mixedQuizView.rateAndContinue(5);
         
-        expect(mockRecordSkillAttempt).toHaveBeenCalledWith('EA:AS003', 5, true);
+        expect(mockRecordSkillAttempt).toHaveBeenCalledWith('EA_AS003', 5, true);
         
         // Verify each skill was updated exactly once with its specific grade
         expect(mockRecordSkillAttempt).toHaveBeenCalledTimes(2);

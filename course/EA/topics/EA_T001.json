@@ -1,5 +1,5 @@
 {
-  "id": "EA:T001",
+  "id": "EA_T001",
   "name": "Number Sense & Counting",
-  "ass": ["EA:AS001", "EA:AS003", "EA:AS004"]
+  "ass": ["EA_AS001", "EA_AS003", "EA_AS004"]
 }
