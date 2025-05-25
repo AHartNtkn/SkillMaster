@@ -1,0 +1,12 @@
+{
+  "id": "EA:AS051",
+  "title": "Understand the commutative property of multiplication",
+  "desc": "Recognize that changing the order of factors does not change the product (e.g., 2x3 = 3x2).",
+  "prereqs": [
+    {
+      "id": "EA:AS050",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

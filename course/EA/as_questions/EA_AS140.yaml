@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS140
+pool:
+  - id: q1
+    stem: |
+      Visually show decimal quantities using area models or base-ten representations.
+    choices: ['OK']
+    correct: 0

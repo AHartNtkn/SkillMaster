@@ -1,0 +1,24 @@
+{
+  "id": "EA:AS059",
+  "title": "Perform division with single-digit divisors and dividends (whole number quotients, no remainders)",
+  "desc": "Calculate quotients for division problems where the answer is a whole number and there is no remainder.",
+  "prereqs": [
+    {
+      "id": "EA:AS055",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS056",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS057",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS058",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

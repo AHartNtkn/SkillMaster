@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS166
+pool:
+  - id: q1
+    stem: |
+      Approximate the weight/mass of an object using standard units without precise measurement.
+    choices: ['OK']
+    correct: 0

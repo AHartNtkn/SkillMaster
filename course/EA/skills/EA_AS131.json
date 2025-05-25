@@ -1,0 +1,16 @@
+{
+  "id": "EA:AS131",
+  "title": "Multiply a non-unit fraction by a whole number",
+  "desc": "Calculate the product of a whole number and a fraction with numerator >1 (e.g., 4 x 2/3).",
+  "prereqs": [
+    {
+      "id": "EA:AS130",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS064",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

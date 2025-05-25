@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS132
+pool:
+  - id: q1
+    stem: |
+      Interpret and solve story problems requiring multiplication of a fraction by a whole number.
+    choices: ['OK']
+    correct: 0

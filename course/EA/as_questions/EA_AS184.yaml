@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS184
+pool:
+  - id: q1
+    stem: |
+      Represent data visually using symbols or pictures where each symbol stands for one or more units.
+    choices: ['OK']
+    correct: 0

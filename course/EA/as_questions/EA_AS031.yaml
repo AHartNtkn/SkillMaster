@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS031
+pool:
+  - id: q1
+    stem: |
+      Model three-digit numbers using physical or visual representations of hundreds, tens, and ones.
+    choices: ['OK']
+    correct: 0

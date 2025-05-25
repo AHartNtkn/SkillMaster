@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS152
+pool:
+  - id: q1
+    stem: |
+      Determine the duration between two times when measured in full hours (e.g., 2:00 to 5:00 is 3 hours).
+    choices: ['OK']
+    correct: 0

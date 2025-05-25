@@ -1,0 +1,16 @@
+{
+  "id": "EA:AS173",
+  "title": "Find the area of a rectangle by multiplying side lengths (whole numbers)",
+  "desc": "Calculate area of a rectangle using the formula length \u00d7 width, with whole number dimensions.",
+  "prereqs": [
+    {
+      "id": "EA:AS172",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS050",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

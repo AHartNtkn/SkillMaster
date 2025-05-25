@@ -1,0 +1,12 @@
+{
+  "id": "EA:AS022",
+  "title": "Solve single-step subtraction word problems (within 20)",
+  "desc": "Interpret and solve story problems requiring subtraction of numbers within 20.",
+  "prereqs": [
+    {
+      "id": "EA:AS020",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

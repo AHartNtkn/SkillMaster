@@ -1,0 +1,20 @@
+{
+  "id": "EA:AS114",
+  "title": "Generate equivalent fractions by multiplying numerator and denominator by the same number",
+  "desc": "Create an equal fraction by scaling up (e.g., 1/2 = 2/4 = 3/6).",
+  "prereqs": [
+    {
+      "id": "EA:AS065",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS050",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS067",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

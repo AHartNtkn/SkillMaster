@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS168
+pool:
+  - id: q1
+    stem: |
+      Determine the temperature shown on a thermometer scale in degrees Celsius or Fahrenheit.
+    choices: ['OK']
+    correct: 0

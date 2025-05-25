@@ -1,5 +1,7 @@
 {
   "id": "EA:T002",
   "name": "Basic Addition",
-  "ass": ["EA:AS013"]
+  "ass": [
+    "EA:AS013"
+  ]
 }

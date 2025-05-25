@@ -1,0 +1,12 @@
+{
+  "id": "EA:AS007",
+  "title": "Count backwards from 10",
+  "desc": "Recite number sequence from 10 down to 0 or 1.",
+  "prereqs": [
+    {
+      "id": "EA:AS006",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

@@ -1,0 +1,24 @@
+{
+  "id": "EA:AS112",
+  "title": "Compare fractions with unlike denominators by finding a common denominator",
+  "desc": "Rewrite fractions with a common denominator to compare them.",
+  "prereqs": [
+    {
+      "id": "EA:AS109",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS108",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS111",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS114",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

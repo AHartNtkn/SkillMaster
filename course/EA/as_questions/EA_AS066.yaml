@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS066
+pool:
+  - id: q1
+    stem: |
+      Determine which of two unit fractions is larger or smaller using models or diagrams.
+    choices: ['OK']
+    correct: 0

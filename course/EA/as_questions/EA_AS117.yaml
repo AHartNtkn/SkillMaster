@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS117
+pool:
+  - id: q1
+    stem: |
+      Recognize fractions where the numerator is greater than or equal to the denominator.
+    choices: ['OK']
+    correct: 0

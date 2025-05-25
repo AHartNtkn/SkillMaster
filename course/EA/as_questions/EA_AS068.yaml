@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS068
+pool:
+  - id: q1
+    stem: |
+      Locate and plot simple fractions like 1/2, 1/4, 3/4 on a number line between 0 and 1.
+    choices: ['OK']
+    correct: 0

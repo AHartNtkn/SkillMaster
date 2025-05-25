@@ -1,0 +1,12 @@
+{
+  "id": "EA:AS169",
+  "title": "Understand perimeter as the distance around a shape",
+  "desc": "Grasp the concept that perimeter is the total length of the boundary of a 2D figure.",
+  "prereqs": [
+    {
+      "id": "EA:AS069",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

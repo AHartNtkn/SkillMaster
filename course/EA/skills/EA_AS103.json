@@ -1,0 +1,16 @@
+{
+  "id": "EA:AS103",
+  "title": "Interpret the meaning of a remainder in a division word problem",
+  "desc": "Understand what the leftover amount represents in the context of a story problem.",
+  "prereqs": [
+    {
+      "id": "EA:AS102",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS062",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

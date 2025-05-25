@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS181
+pool:
+  - id: q1
+    stem: |
+      Recognize the 2D shapes that form the flat surfaces (faces) of 3D objects.
+    choices: ['OK']
+    correct: 0

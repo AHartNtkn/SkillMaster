@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS009
+pool:
+  - id: q1
+    stem: |
+      Arrange numbers in correct order from smallest to largest, or vice-versa, up to 20.
+    choices: ['OK']
+    correct: 0

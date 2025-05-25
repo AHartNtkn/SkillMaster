@@ -1,0 +1,12 @@
+{
+  "id": "EA:AS182",
+  "title": "Collect data using surveys or observations",
+  "desc": "Gather information by asking questions or by watching and recording events.",
+  "prereqs": [
+    {
+      "id": "EA:AS004",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

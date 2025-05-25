@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS065
+pool:
+  - id: q1
+    stem: |
+      Identify the top number (numerator) as parts considered and bottom number (denominator) as total equal parts.
+    choices: ['OK']
+    correct: 0

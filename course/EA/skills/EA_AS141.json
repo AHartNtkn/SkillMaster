@@ -1,0 +1,16 @@
+{
+  "id": "EA:AS141",
+  "title": "Compare decimals to the tenths place",
+  "desc": "Determine if one decimal (e.g., 0.4) is <, >, or = to another decimal (e.g., 0.6) in tenths.",
+  "prereqs": [
+    {
+      "id": "EA:AS139",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS005",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

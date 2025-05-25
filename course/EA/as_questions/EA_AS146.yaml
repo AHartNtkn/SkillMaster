@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS146
+pool:
+  - id: q1
+    stem: |
+      Sum two decimals to hundredths where no carrying is required (e.g., $0.25 + $0.50).
+    choices: ['OK']
+    correct: 0

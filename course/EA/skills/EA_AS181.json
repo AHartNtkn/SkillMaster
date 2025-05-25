@@ -1,0 +1,16 @@
+{
+  "id": "EA:AS181",
+  "title": "Relate 2D shapes to faces of 3D shapes",
+  "desc": "Recognize the 2D shapes that form the flat surfaces (faces) of 3D objects.",
+  "prereqs": [
+    {
+      "id": "EA:AS174",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS179",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS177
+pool:
+  - id: q1
+    stem: |
+      Recognize basic geometric elements and types of angles by sight.
+    choices: ['OK']
+    correct: 0

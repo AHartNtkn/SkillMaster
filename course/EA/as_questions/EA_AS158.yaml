@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS158
+pool:
+  - id: q1
+    stem: |
+      Interpret and solve story problems requiring addition or subtraction of money values written in decimal form.
+    choices: ['OK']
+    correct: 0

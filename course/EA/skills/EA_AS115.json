@@ -1,0 +1,20 @@
+{
+  "id": "EA:AS115",
+  "title": "Generate equivalent fractions by dividing numerator and denominator by a common factor",
+  "desc": "Create an equal fraction by scaling down (e.g., 6/9 = 2/3).",
+  "prereqs": [
+    {
+      "id": "EA:AS065",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS059",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS092",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

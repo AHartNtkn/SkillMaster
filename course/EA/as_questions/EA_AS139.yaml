@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS139
+pool:
+  - id: q1
+    stem: |
+      Recognize the value of digits in the tenths and hundredths positions.
+    choices: ['OK']
+    correct: 0

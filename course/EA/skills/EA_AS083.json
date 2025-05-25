@@ -1,0 +1,16 @@
+{
+  "id": "EA:AS083",
+  "title": "Estimate differences of three-digit numbers by rounding",
+  "desc": "Approximate the difference of two 3-digit numbers by rounding each to the nearest 100 before subtracting.",
+  "prereqs": [
+    {
+      "id": "EA:AS078",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS044",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

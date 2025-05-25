@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS179
+pool:
+  - id: q1
+    stem: |
+      Recognize and name shapes like cube, sphere, cone, cylinder, rectangular prism, pyramid.
+    choices: ['OK']
+    correct: 0

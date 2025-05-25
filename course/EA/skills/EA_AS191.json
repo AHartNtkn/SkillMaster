@@ -1,0 +1,16 @@
+{
+  "id": "EA:AS191",
+  "title": "Identify steps for two-step word problems (add/sub)",
+  "desc": "Determine the sequence of two operations (addition and/or subtraction) needed to solve a story problem.",
+  "prereqs": [
+    {
+      "id": "EA:AS014",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS022",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

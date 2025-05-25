@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS076
+pool:
+  - id: q1
+    stem: |
+      Calculate the total value of a collection of pennies, nickels, and dimes.
+    choices: ['OK']
+    correct: 0

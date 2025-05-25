@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS026
+pool:
+  - id: q1
+    stem: |
+      Recognize the place value of each digit in a number from 10 to 99.
+    choices: ['OK']
+    correct: 0

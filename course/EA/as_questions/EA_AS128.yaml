@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS128
+pool:
+  - id: q1
+    stem: |
+      Interpret and solve story problems requiring addition or subtraction of like-denominator fractions.
+    choices: ['OK']
+    correct: 0

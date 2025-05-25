@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS149
+pool:
+  - id: q1
+    stem: |
+      Read and record time on analog/digital clocks when minute hand points to numbers on clock face.
+    choices: ['OK']
+    correct: 0

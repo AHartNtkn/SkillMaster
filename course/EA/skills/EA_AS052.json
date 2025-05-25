@@ -1,0 +1,12 @@
+{
+  "id": "EA:AS052",
+  "title": "Multiply by 0 and 1",
+  "desc": "Understand that multiplying any number by 0 results in 0, and by 1 results in the number itself.",
+  "prereqs": [
+    {
+      "id": "EA:AS050",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

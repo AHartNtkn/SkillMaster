@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS124
+pool:
+  - id: q1
+    stem: |
+      Sum two fractions with different denominators by first finding a common denominator (e.g., halves and fourths).
+    choices: ['OK']
+    correct: 0

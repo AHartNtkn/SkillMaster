@@ -1,0 +1,20 @@
+{
+  "id": "EA:AS153",
+  "title": "Calculate elapsed time in minutes (within the hour)",
+  "desc": "Determine the duration between two times, in minutes, when both times are within the same hour.",
+  "prereqs": [
+    {
+      "id": "EA:AS150",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS006",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS007",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

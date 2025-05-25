@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS100
+pool:
+  - id: q1
+    stem: |
+      Calculate product of two 2-digit numbers (e.g., 24 x 13).
+    choices: ['OK']
+    correct: 0

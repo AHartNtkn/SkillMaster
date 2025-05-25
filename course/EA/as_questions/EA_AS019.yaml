@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS019
+pool:
+  - id: q1
+    stem: |
+      Calculate the difference when subtracting a single-digit number from a number 10 or less.
+    choices: ['OK']
+    correct: 0

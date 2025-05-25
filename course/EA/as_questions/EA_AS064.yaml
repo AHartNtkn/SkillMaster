@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS064
+pool:
+  - id: q1
+    stem: |
+      Recognize and show fractions where the numerator is greater than 1, representing multiple parts of an equally divided whole.
+    choices: ['OK']
+    correct: 0

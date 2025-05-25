@@ -1,0 +1,20 @@
+{
+  "id": "EA:AS085",
+  "title": "Estimate products by rounding factors",
+  "desc": "Approximate the product of two numbers by rounding one or both factors before multiplying.",
+  "prereqs": [
+    {
+      "id": "EA:AS077",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS078",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS050",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

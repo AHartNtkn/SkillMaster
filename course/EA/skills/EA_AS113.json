@@ -1,0 +1,12 @@
+{
+  "id": "EA:AS113",
+  "title": "Order a set of simple fractions",
+  "desc": "Arrange three or more fractions (like/unlike denominators) from least to greatest or vice-versa.",
+  "prereqs": [
+    {
+      "id": "EA:AS112",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS081
+pool:
+  - id: q1
+    stem: |
+      Approximate the sum of two 3-digit numbers by rounding each to the nearest 100 before adding.
+    choices: ['OK']
+    correct: 0

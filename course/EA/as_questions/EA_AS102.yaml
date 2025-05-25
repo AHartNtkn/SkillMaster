@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS102
+pool:
+  - id: q1
+    stem: |
+      Divide a number by a single-digit number where the division is not exact, identifying the remainder.
+    choices: ['OK']
+    correct: 0

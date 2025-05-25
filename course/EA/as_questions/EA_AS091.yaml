@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS091
+pool:
+  - id: q1
+    stem: |
+      Recognize that any number added to 0 remains unchanged; identify 0 as additive identity.
+    choices: ['OK']
+    correct: 0

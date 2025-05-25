@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS043
+pool:
+  - id: q1
+    stem: |
+      Find the difference between two two-digit numbers where borrowing is required.
+    choices: ['OK']
+    correct: 0

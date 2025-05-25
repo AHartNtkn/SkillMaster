@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS182
+pool:
+  - id: q1
+    stem: |
+      Gather information by asking questions or by watching and recording events.
+    choices: ['OK']
+    correct: 0

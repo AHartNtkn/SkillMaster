@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS017
+pool:
+  - id: q1
+    stem: |
+      Determine the unknown number in an addition equation where the sum is 10 or less (e.g., 3 + ? = 7).
+    choices: ['OK']
+    correct: 0

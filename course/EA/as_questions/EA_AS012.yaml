@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS012
+pool:
+  - id: q1
+    stem: |
+      Calculate the sum of two numbers, each between 0 and 9, where the total is 20 or less.
+    choices: ['OK']
+    correct: 0

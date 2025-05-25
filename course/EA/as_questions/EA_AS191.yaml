@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS191
+pool:
+  - id: q1
+    stem: |
+      Determine the sequence of two operations (addition and/or subtraction) needed to solve a story problem.
+    choices: ['OK']
+    correct: 0

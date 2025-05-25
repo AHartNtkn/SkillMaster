@@ -1,0 +1,20 @@
+{
+  "id": "EA:AS168",
+  "title": "Read a thermometer (Celsius and Fahrenheit, basic increments)",
+  "desc": "Determine the temperature shown on a thermometer scale in degrees Celsius or Fahrenheit.",
+  "prereqs": [
+    {
+      "id": "EA:AS167",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS006",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS001",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

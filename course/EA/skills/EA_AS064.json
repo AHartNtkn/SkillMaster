@@ -1,0 +1,12 @@
+{
+  "id": "EA:AS064",
+  "title": "Identify and represent non-unit fractions (e.g., 2/3, 3/4) of a whole",
+  "desc": "Recognize and show fractions where the numerator is greater than 1, representing multiple parts of an equally divided whole.",
+  "prereqs": [
+    {
+      "id": "EA:AS063",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

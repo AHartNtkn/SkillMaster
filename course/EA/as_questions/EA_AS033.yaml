@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS033
+pool:
+  - id: q1
+    stem: |
+      Sum a two-digit number and a single-digit number where no carrying is required.
+    choices: ['OK']
+    correct: 0

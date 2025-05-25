@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS109
+pool:
+  - id: q1
+    stem: |
+      Determine which fraction is larger/smaller when denominators are same but numerators differ (e.g., 2/5 vs 3/5).
+    choices: ['OK']
+    correct: 0

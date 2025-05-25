@@ -1,0 +1,24 @@
+{
+  "id": "EA:AS170",
+  "title": "Find the perimeter of a polygon by adding side lengths",
+  "desc": "Calculate the perimeter of a shape with straight sides by summing the lengths of all its sides.",
+  "prereqs": [
+    {
+      "id": "EA:AS169",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS011",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS037",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS071",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

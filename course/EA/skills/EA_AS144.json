@@ -1,0 +1,20 @@
+{
+  "id": "EA:AS144",
+  "title": "Relate decimals to money (e.g., $0.50 is 50 hundredths)",
+  "desc": "Understand and represent monetary values using decimal notation.",
+  "prereqs": [
+    {
+      "id": "EA:AS075",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS138",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS136",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

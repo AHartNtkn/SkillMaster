@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS016
+pool:
+  - id: q1
+    stem: |
+      Understand that adding zero to any number results in that same number.
+    choices: ['OK']
+    correct: 0

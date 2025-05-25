@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS088
+pool:
+  - id: q1
+    stem: |
+      Recognize and use (axb)xc = ax(bxc) to simplify multiplication.
+    choices: ['OK']
+    correct: 0

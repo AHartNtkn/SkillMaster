@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS002
+pool:
+  - id: q1
+    stem: |
+      Correctly form the written symbols for numbers zero through nine.
+    choices: ['OK']
+    correct: 0

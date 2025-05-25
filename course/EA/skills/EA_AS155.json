@@ -1,0 +1,20 @@
+{
+  "id": "EA:AS155",
+  "title": "Convert between units of time (simple conversions)",
+  "desc": "Change from one unit of time to another (e.g., 120 minutes to 2 hours, 3 days to weeks).",
+  "prereqs": [
+    {
+      "id": "EA:AS154",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS050",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS059",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

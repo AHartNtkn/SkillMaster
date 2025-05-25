@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS103
+pool:
+  - id: q1
+    stem: |
+      Understand what the leftover amount represents in the context of a story problem.
+    choices: ['OK']
+    correct: 0

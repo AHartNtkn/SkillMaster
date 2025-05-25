@@ -1,0 +1,16 @@
+{
+  "id": "EA:AS106",
+  "title": "Divide a three-digit number by a one-digit number (long division steps, with/without remainder)",
+  "desc": "Use long division for 3-digit dividends and 1-digit divisors.",
+  "prereqs": [
+    {
+      "id": "EA:AS105",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS030",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

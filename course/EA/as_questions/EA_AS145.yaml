@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS145
+pool:
+  - id: q1
+    stem: |
+      Sum two decimals written to tenths where no carrying is required (e.g., 0.2 + 0.5).
+    choices: ['OK']
+    correct: 0

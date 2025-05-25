@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS105
+pool:
+  - id: q1
+    stem: |
+      Use the long division algorithm for 2-digit dividends and 1-digit divisors, resulting in a remainder.
+    choices: ['OK']
+    correct: 0

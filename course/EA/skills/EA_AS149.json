@@ -1,0 +1,16 @@
+{
+  "id": "EA:AS149",
+  "title": "Tell and write time to the nearest five minutes",
+  "desc": "Read and record time on analog/digital clocks when minute hand points to numbers on clock face.",
+  "prereqs": [
+    {
+      "id": "EA:AS074",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS006",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

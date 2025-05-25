@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS083
+pool:
+  - id: q1
+    stem: |
+      Approximate the difference of two 3-digit numbers by rounding each to the nearest 100 before subtracting.
+    choices: ['OK']
+    correct: 0

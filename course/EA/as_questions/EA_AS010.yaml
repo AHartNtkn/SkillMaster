@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS010
+pool:
+  - id: q1
+    stem: |
+      Grasp the concept that addition means putting together groups of items to find a total.
+    choices: ['OK']
+    correct: 0

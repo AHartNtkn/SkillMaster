@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS150
+pool:
+  - id: q1
+    stem: |
+      Read and record time on analog/digital clocks with precision to the exact minute.
+    choices: ['OK']
+    correct: 0

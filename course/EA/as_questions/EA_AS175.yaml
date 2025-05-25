@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS175
+pool:
+  - id: q1
+    stem: |
+      Identify and state key properties of 2D shapes, such as how many sides or corners they have.
+    choices: ['OK']
+    correct: 0

@@ -1,0 +1,16 @@
+{
+  "id": "EA:AS152",
+  "title": "Calculate elapsed time in hours",
+  "desc": "Determine the duration between two times when measured in full hours (e.g., 2:00 to 5:00 is 3 hours).",
+  "prereqs": [
+    {
+      "id": "EA:AS073",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS004",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

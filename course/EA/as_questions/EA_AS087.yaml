@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS087
+pool:
+  - id: q1
+    stem: |
+      Recognize and use (a+b)+c = a+(b+c) to simplify addition.
+    choices: ['OK']
+    correct: 0

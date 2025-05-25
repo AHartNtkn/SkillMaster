@@ -1,0 +1,20 @@
+{
+  "id": "EA:AS147",
+  "title": "Subtract decimals to the tenths place (no regrouping)",
+  "desc": "Subtract two decimals to tenths where no borrowing is required (e.g., 0.7 - 0.3).",
+  "prereqs": [
+    {
+      "id": "EA:AS137",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS019",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS139",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

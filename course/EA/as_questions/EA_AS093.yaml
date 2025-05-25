@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS093
+pool:
+  - id: q1
+    stem: |
+      List numbers obtained by multiplying a single-digit number by consecutive whole numbers (e.g., multiples of 3).
+    choices: ['OK']
+    correct: 0

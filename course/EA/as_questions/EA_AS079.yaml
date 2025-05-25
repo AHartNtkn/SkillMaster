@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS079
+pool:
+  - id: q1
+    stem: |
+      Determine the multiple of 1000 closest to a given whole number.
+    choices: ['OK']
+    correct: 0

@@ -1,0 +1,9 @@
+{
+  "id": "EA:T027",
+  "name": "Weight and Mass (Extended)",
+  "ass": [
+    "EA:AS164",
+    "EA:AS165",
+    "EA:AS166"
+  ]
+}

@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS192
+pool:
+  - id: q1
+    stem: |
+      Perform the necessary calculations to find the solution to two-step story problems involving + or -.
+    choices: ['OK']
+    correct: 0

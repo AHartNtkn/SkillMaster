@@ -1,0 +1,12 @@
+{
+  "id": "EA:AS012",
+  "title": "Add two single-digit numbers with sums up to 20",
+  "desc": "Calculate the sum of two numbers, each between 0 and 9, where the total is 20 or less.",
+  "prereqs": [
+    {
+      "id": "EA:AS011",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

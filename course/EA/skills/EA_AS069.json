@@ -1,0 +1,12 @@
+{
+  "id": "EA:AS069",
+  "title": "Compare lengths of objects directly (longer, shorter, taller)",
+  "desc": "Determine relative lengths by direct visual comparison.",
+  "prereqs": [
+    {
+      "id": "EA:AS005",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

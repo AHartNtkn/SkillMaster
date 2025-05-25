@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS142
+pool:
+  - id: q1
+    stem: |
+      Determine if one decimal (e.g., 0.45) is <, >, or = to another decimal (e.g., 0.42) in hundredths.
+    choices: ['OK']
+    correct: 0

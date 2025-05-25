@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS169
+pool:
+  - id: q1
+    stem: |
+      Grasp the concept that perimeter is the total length of the boundary of a 2D figure.
+    choices: ['OK']
+    correct: 0

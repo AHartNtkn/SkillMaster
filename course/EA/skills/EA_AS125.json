@@ -1,0 +1,20 @@
+{
+  "id": "EA:AS125",
+  "title": "Subtract fractions with unlike denominators (simple cases)",
+  "desc": "Subtract two fractions with different denominators by first finding a common denominator.",
+  "prereqs": [
+    {
+      "id": "EA:AS123",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS111",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS114",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

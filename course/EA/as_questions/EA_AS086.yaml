@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS086
+pool:
+  - id: q1
+    stem: |
+      Approximate a quotient by finding numbers close to the dividend/divisor that divide easily.
+    choices: ['OK']
+    correct: 0

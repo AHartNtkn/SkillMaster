@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS020
+pool:
+  - id: q1
+    stem: |
+      Calculate the difference when subtracting a single-digit number from a number 20 or less.
+    choices: ['OK']
+    correct: 0

@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS118
+pool:
+  - id: q1
+    stem: |
+      Recognize numbers composed of a whole number and a proper fraction.
+    choices: ['OK']
+    correct: 0

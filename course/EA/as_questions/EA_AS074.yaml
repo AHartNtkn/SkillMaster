@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS074
+pool:
+  - id: q1
+    stem: |
+      Read and record time when the minute hand is on the 6.
+    choices: ['OK']
+    correct: 0

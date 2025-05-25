@@ -1,0 +1,12 @@
+{
+  "id": "EA:AS014",
+  "title": "Solve single-step addition word problems (sums to 20)",
+  "desc": "Interpret and solve story problems requiring addition of numbers with sums up to 20.",
+  "prereqs": [
+    {
+      "id": "EA:AS012",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

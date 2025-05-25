@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS032
+pool:
+  - id: q1
+    stem: |
+      Determine if one three-digit number is less than, greater than, or equal to another.
+    choices: ['OK']
+    correct: 0

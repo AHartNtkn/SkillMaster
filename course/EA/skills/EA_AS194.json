@@ -1,0 +1,20 @@
+{
+  "id": "EA:AS194",
+  "title": "Solve two-step word problems (mult/div with others)",
+  "desc": "Perform calculations for two-step story problems involving x, \u00f7, +, or -.",
+  "prereqs": [
+    {
+      "id": "EA:AS193",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS101",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS107",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS172
+pool:
+  - id: q1
+    stem: |
+      Determine the area of a rectangular region by counting the number of same-sized squares that cover it.
+    choices: ['OK']
+    correct: 0

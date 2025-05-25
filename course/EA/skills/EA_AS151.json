@@ -1,0 +1,12 @@
+{
+  "id": "EA:AS151",
+  "title": "Understand and use AM and PM",
+  "desc": "Distinguish between times in the morning/afternoon/evening using AM (ante meridiem) and PM (post meridiem).",
+  "prereqs": [
+    {
+      "id": "EA:AS073",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS042
+pool:
+  - id: q1
+    stem: |
+      Find the difference between a two-digit number and a single-digit number where borrowing from tens to ones is required.
+    choices: ['OK']
+    correct: 0

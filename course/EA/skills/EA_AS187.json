@@ -1,0 +1,12 @@
+{
+  "id": "EA:AS187",
+  "title": "Read and interpret data from a picture graph",
+  "desc": "Understand and extract information presented in a picture graph, including using a key.",
+  "prereqs": [
+    {
+      "id": "EA:AS184",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

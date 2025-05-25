@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS173
+pool:
+  - id: q1
+    stem: |
+      Calculate area of a rectangle using the formula length × width, with whole number dimensions.
+    choices: ['OK']
+    correct: 0

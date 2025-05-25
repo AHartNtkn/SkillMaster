@@ -1,0 +1,16 @@
+{
+  "id": "EA:AS119",
+  "title": "Convert improper fractions to mixed numbers",
+  "desc": "Change an improper fraction into an equivalent whole number and proper fraction (e.g., 7/3 to 2 1/3).",
+  "prereqs": [
+    {
+      "id": "EA:AS117",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS059",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

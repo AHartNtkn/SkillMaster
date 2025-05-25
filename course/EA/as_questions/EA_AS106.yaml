@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS106
+pool:
+  - id: q1
+    stem: |
+      Use long division for 3-digit dividends and 1-digit divisors.
+    choices: ['OK']
+    correct: 0

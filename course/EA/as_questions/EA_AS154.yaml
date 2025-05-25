@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS154
+pool:
+  - id: q1
+    stem: |
+      Recognize and name standard units for measuring time and their general relationships.
+    choices: ['OK']
+    correct: 0

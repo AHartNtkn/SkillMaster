@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS024
+pool:
+  - id: q1
+    stem: |
+      Understand that subtracting zero from any number results in that same number.
+    choices: ['OK']
+    correct: 0

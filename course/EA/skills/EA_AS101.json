@@ -1,0 +1,16 @@
+{
+  "id": "EA:AS101",
+  "title": "Solve multi-step word problems involving multi-digit multiplication",
+  "desc": "Interpret and solve story problems requiring multiple multiplication steps with multi-digit numbers.",
+  "prereqs": [
+    {
+      "id": "EA:AS100",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS053",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

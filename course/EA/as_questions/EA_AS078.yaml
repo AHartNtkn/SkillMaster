@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS078
+pool:
+  - id: q1
+    stem: |
+      Determine the multiple of 100 closest to a given whole number.
+    choices: ['OK']
+    correct: 0

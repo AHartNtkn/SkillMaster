@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS188
+pool:
+  - id: q1
+    stem: |
+      Understand and extract information from a bar graph, including comparing bar lengths and reading scales.
+    choices: ['OK']
+    correct: 0

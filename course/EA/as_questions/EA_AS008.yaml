@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS008
+pool:
+  - id: q1
+    stem: |
+      Understand and use terms describing position in a sequence up to fifth.
+    choices: ['OK']
+    correct: 0

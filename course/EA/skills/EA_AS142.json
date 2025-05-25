@@ -1,0 +1,12 @@
+{
+  "id": "EA:AS142",
+  "title": "Compare decimals to the hundredths place",
+  "desc": "Determine if one decimal (e.g., 0.45) is <, >, or = to another decimal (e.g., 0.42) in hundredths.",
+  "prereqs": [
+    {
+      "id": "EA:AS141",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

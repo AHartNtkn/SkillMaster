@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS137
+pool:
+  - id: q1
+    stem: |
+      Convert fractions with denominator 10 to their decimal equivalents and vice-versa.
+    choices: ['OK']
+    correct: 0

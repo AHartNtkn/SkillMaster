@@ -1,0 +1,12 @@
+{
+  "id": "EA:AS017",
+  "title": "Find a missing addend in sums up to 10",
+  "desc": "Determine the unknown number in an addition equation where the sum is 10 or less (e.g., 3 + ? = 7).",
+  "prereqs": [
+    {
+      "id": "EA:AS011",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

@@ -1,0 +1,16 @@
+{
+  "id": "EA:AS143",
+  "title": "Order a set of decimals (tenths and hundredths)",
+  "desc": "Arrange three or more decimals from least to greatest or vice-versa.",
+  "prereqs": [
+    {
+      "id": "EA:AS142",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS009",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

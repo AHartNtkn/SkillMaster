@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS155
+pool:
+  - id: q1
+    stem: |
+      Change from one unit of time to another (e.g., 120 minutes to 2 hours, 3 days to weeks).
+    choices: ['OK']
+    correct: 0

@@ -1,0 +1,12 @@
+{
+  "id": "EA:AS037",
+  "title": "Add three or more two-digit numbers",
+  "desc": "Sum a list of three or more two-digit numbers, potentially involving regrouping.",
+  "prereqs": [
+    {
+      "id": "EA:AS036",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

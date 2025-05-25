@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS114
+pool:
+  - id: q1
+    stem: |
+      Create an equal fraction by scaling up (e.g., 1/2 = 2/4 = 3/6).
+    choices: ['OK']
+    correct: 0

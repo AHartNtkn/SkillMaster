@@ -1,0 +1,12 @@
+{
+  "id": "EA:AS095",
+  "title": "Identify common factors of two whole numbers",
+  "desc": "List factors shared by two different whole numbers.",
+  "prereqs": [
+    {
+      "id": "EA:AS092",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

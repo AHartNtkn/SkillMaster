@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS069
+pool:
+  - id: q1
+    stem: |
+      Determine relative lengths by direct visual comparison.
+    choices: ['OK']
+    correct: 0

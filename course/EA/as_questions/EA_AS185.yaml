@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS185
+pool:
+  - id: q1
+    stem: |
+      Represent data using rectangular bars of lengths proportional to the values they represent, possibly with a scale.
+    choices: ['OK']
+    correct: 0

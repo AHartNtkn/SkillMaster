@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS121
+pool:
+  - id: q1
+    stem: |
+      Locate and plot improper fractions and mixed numbers on a number line beyond 1.
+    choices: ['OK']
+    correct: 0

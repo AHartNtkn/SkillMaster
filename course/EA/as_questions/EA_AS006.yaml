@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS006
+pool:
+  - id: q1
+    stem: |
+      Recite number sequence from 1 to 20.
+    choices: ['OK']
+    correct: 0

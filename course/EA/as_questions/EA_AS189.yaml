@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS189
+pool:
+  - id: q1
+    stem: |
+      Understand and extract information from a line plot, including finding most frequent values or range.
+    choices: ['OK']
+    correct: 0

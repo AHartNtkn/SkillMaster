@@ -1,0 +1,16 @@
+{
+  "id": "EA:AS092",
+  "title": "Identify factors of a whole number",
+  "desc": "List all whole numbers that can be multiplied to get a given number (e.g., factors of 12).",
+  "prereqs": [
+    {
+      "id": "EA:AS059",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS050",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

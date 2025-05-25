@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS116
+pool:
+  - id: q1
+    stem: |
+      Reduce a fraction by dividing numerator and denominator by their greatest common factor.
+    choices: ['OK']
+    correct: 0

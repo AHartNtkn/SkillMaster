@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS071
+pool:
+  - id: q1
+    stem: |
+      Approximate and then accurately measure length using centimeters or inches.
+    choices: ['OK']
+    correct: 0

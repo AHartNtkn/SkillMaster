@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS082
+pool:
+  - id: q1
+    stem: |
+      Approximate the difference of two 2-digit numbers by rounding each to the nearest 10 before subtracting.
+    choices: ['OK']
+    correct: 0

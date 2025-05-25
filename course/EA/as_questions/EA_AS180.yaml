@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS180
+pool:
+  - id: q1
+    stem: |
+      Identify and state key properties of 3D shapes, such as flat surfaces, straight edges, and points.
+    choices: ['OK']
+    correct: 0

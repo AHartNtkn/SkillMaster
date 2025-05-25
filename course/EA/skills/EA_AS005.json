@@ -1,0 +1,12 @@
+{
+  "id": "EA:AS005",
+  "title": "Compare quantities (more/less/equal) up to 10",
+  "desc": "Determine if one group of up to 10 objects has more, less, or an equal number of items as another group.",
+  "prereqs": [
+    {
+      "id": "EA:AS004",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

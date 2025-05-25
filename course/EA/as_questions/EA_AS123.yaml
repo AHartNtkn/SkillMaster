@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS123
+pool:
+  - id: q1
+    stem: |
+      Find the difference between two fractions that share the same denominator.
+    choices: ['OK']
+    correct: 0

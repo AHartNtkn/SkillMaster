@@ -1,0 +1,16 @@
+{
+  "id": "EA:AS116",
+  "title": "Simplify fractions to their lowest terms",
+  "desc": "Reduce a fraction by dividing numerator and denominator by their greatest common factor.",
+  "prereqs": [
+    {
+      "id": "EA:AS115",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS095",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

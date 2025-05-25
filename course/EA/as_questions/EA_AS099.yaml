@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS099
+pool:
+  - id: q1
+    stem: |
+      Calculate product of a 3-digit and 1-digit number, involving carrying (e.g., 124 x 3).
+    choices: ['OK']
+    correct: 0

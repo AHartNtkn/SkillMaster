@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS160
+pool:
+  - id: q1
+    stem: |
+      Determine which of two containers can hold more or less liquid by visual inspection or direct comparison.
+    choices: ['OK']
+    correct: 0

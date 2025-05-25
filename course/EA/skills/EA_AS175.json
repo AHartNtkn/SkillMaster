@@ -1,0 +1,16 @@
+{
+  "id": "EA:AS175",
+  "title": "Describe attributes of 2D shapes (number of sides, number of vertices/corners)",
+  "desc": "Identify and state key properties of 2D shapes, such as how many sides or corners they have.",
+  "prereqs": [
+    {
+      "id": "EA:AS174",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS004",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

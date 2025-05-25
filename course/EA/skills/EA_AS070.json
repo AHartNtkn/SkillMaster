@@ -1,0 +1,12 @@
+{
+  "id": "EA:AS070",
+  "title": "Measure length using non-standard units (e.g., paperclips, blocks)",
+  "desc": "Use everyday objects to quantify the length of another object.",
+  "prereqs": [
+    {
+      "id": "EA:AS004",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS059
+pool:
+  - id: q1
+    stem: |
+      Calculate quotients for division problems where the answer is a whole number and there is no remainder.
+    choices: ['OK']
+    correct: 0

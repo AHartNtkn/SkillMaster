@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS130
+pool:
+  - id: q1
+    stem: |
+      Calculate the product of a whole number and a fraction with numerator 1 (e.g., 5 x 1/3).
+    choices: ['OK']
+    correct: 0

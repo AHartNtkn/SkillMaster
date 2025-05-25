@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS089
+pool:
+  - id: q1
+    stem: |
+      Recognize and use ax(b+c) = (axb)+(axc).
+    choices: ['OK']
+    correct: 0

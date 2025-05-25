@@ -1,0 +1,20 @@
+{
+  "id": "EA:AS050",
+  "title": "Memorize/recall multiplication facts up to 10x10",
+  "desc": "Fluently recall products of two single-digit numbers from 0x0 to 10x10.",
+  "prereqs": [
+    {
+      "id": "EA:AS047",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS048",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS049",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

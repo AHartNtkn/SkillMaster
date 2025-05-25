@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS022
+pool:
+  - id: q1
+    stem: |
+      Interpret and solve story problems requiring subtraction of numbers within 20.
+    choices: ['OK']
+    correct: 0

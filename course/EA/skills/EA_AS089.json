@@ -1,0 +1,16 @@
+{
+  "id": "EA:AS089",
+  "title": "Identify and apply the distributive property of multiplication over addition",
+  "desc": "Recognize and use ax(b+c) = (axb)+(axc).",
+  "prereqs": [
+    {
+      "id": "EA:AS050",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS011",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

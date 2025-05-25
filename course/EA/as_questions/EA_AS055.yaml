@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS055
+pool:
+  - id: q1
+    stem: |
+      Grasp the concept of dividing a quantity into a known number of equal groups.
+    choices: ['OK']
+    correct: 0

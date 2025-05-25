@@ -1,0 +1,16 @@
+{
+  "id": "EA:AS087",
+  "title": "Identify and apply the associative property of addition",
+  "desc": "Recognize and use (a+b)+c = a+(b+c) to simplify addition.",
+  "prereqs": [
+    {
+      "id": "EA:AS011",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS015",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

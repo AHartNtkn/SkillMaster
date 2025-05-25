@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS045
+pool:
+  - id: q1
+    stem: |
+      Perform subtraction when borrowing is required from a place value column containing a zero (e.g., 200 - 37).
+    choices: ['OK']
+    correct: 0

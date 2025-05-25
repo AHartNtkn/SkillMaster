@@ -1,0 +1,16 @@
+{
+  "id": "EA:AS035",
+  "title": "Add a two-digit number and a one-digit number with regrouping (carrying)",
+  "desc": "Sum a two-digit number and a single-digit number where carrying from ones to tens is required.",
+  "prereqs": [
+    {
+      "id": "EA:AS012",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS029",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

@@ -1,0 +1,14 @@
+{
+  "id": "EA:T010",
+  "name": "Basic Measurement",
+  "ass": [
+    "EA:AS069",
+    "EA:AS070",
+    "EA:AS071",
+    "EA:AS072",
+    "EA:AS073",
+    "EA:AS074",
+    "EA:AS075",
+    "EA:AS076"
+  ]
+}

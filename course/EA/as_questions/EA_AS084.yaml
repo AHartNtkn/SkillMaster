@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS084
+pool:
+  - id: q1
+    stem: |
+      Compare an estimated sum/difference to a calculated one to verify if the calculation is plausible.
+    choices: ['OK']
+    correct: 0

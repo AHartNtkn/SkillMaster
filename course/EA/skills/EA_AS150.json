@@ -1,0 +1,12 @@
+{
+  "id": "EA:AS150",
+  "title": "Tell and write time to the nearest minute",
+  "desc": "Read and record time on analog/digital clocks with precision to the exact minute.",
+  "prereqs": [
+    {
+      "id": "EA:AS149",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

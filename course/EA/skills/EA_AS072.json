@@ -1,0 +1,12 @@
+{
+  "id": "EA:AS072",
+  "title": "Compare weights of objects directly (heavier, lighter)",
+  "desc": "Determine relative weights by direct comparison, e.g., holding them or using a simple balance.",
+  "prereqs": [
+    {
+      "id": "EA:AS005",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

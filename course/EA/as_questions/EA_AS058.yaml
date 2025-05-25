@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS058
+pool:
+  - id: q1
+    stem: |
+      Understand that division can 'undo' multiplication and use multiplication facts to solve division problems.
+    choices: ['OK']
+    correct: 0

@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS049
+pool:
+  - id: q1
+    stem: |
+      Recognize and correctly interpret the symbol for multiplication.
+    choices: ['OK']
+    correct: 0

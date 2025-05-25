@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS141
+pool:
+  - id: q1
+    stem: |
+      Determine if one decimal (e.g., 0.4) is <, >, or = to another decimal (e.g., 0.6) in tenths.
+    choices: ['OK']
+    correct: 0

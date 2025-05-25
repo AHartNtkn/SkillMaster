@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS053
+pool:
+  - id: q1
+    stem: |
+      Interpret and solve story problems requiring a single multiplication operation.
+    choices: ['OK']
+    correct: 0

@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS148
+pool:
+  - id: q1
+    stem: |
+      Subtract two decimals to hundredths where no borrowing is required (e.g., $0.75 - $0.20).
+    choices: ['OK']
+    correct: 0

@@ -1,0 +1,16 @@
+{
+  "id": "EA:AS038",
+  "title": "Add three-digit numbers with and without regrouping",
+  "desc": "Sum two or more three-digit numbers, correctly applying regrouping rules.",
+  "prereqs": [
+    {
+      "id": "EA:AS036",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS030",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

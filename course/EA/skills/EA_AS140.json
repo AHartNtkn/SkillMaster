@@ -1,0 +1,20 @@
+{
+  "id": "EA:AS140",
+  "title": "Represent decimals using models (e.g., base-ten blocks, grids)",
+  "desc": "Visually show decimal quantities using area models or base-ten representations.",
+  "prereqs": [
+    {
+      "id": "EA:AS027",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS137",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS138",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

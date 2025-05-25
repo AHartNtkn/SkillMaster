@@ -1,0 +1,20 @@
+{
+  "id": "EA:AS123",
+  "title": "Subtract fractions with like denominators",
+  "desc": "Find the difference between two fractions that share the same denominator.",
+  "prereqs": [
+    {
+      "id": "EA:AS064",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS019",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS065",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS133
+pool:
+  - id: q1
+    stem: |
+      Recognize that one tenth is 1 part out of 10 equal parts of a whole (1/10).
+    choices: ['OK']
+    correct: 0

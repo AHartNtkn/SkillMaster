@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS164
+pool:
+  - id: q1
+    stem: |
+      Use everyday objects (e.g., blocks) to compare or quantify the weight of other objects.
+    choices: ['OK']
+    correct: 0

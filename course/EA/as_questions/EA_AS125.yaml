@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS125
+pool:
+  - id: q1
+    stem: |
+      Subtract two fractions with different denominators by first finding a common denominator.
+    choices: ['OK']
+    correct: 0

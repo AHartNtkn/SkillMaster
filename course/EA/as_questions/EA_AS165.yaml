@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS165
+pool:
+  - id: q1
+    stem: |
+      Recognize common units used for measuring weight or mass.
+    choices: ['OK']
+    correct: 0

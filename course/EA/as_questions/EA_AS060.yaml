@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS060
+pool:
+  - id: q1
+    stem: |
+      Recognize that dividing any number by 1 results in the number itself.
+    choices: ['OK']
+    correct: 0

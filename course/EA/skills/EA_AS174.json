@@ -1,0 +1,12 @@
+{
+  "id": "EA:AS174",
+  "title": "Identify common 2D shapes",
+  "desc": "Recognize and name shapes like circle, square, rectangle, triangle, hexagon, pentagon, rhombus, trapezoid.",
+  "prereqs": [
+    {
+      "id": "EA:AS001",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

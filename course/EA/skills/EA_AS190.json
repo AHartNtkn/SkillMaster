@@ -1,0 +1,28 @@
+{
+  "id": "EA:AS190",
+  "title": "Solve simple problems using information presented in graphs",
+  "desc": "Answer questions (e.g., 'how many more', 'total') based on data shown in picture graphs, bar graphs, or line plots.",
+  "prereqs": [
+    {
+      "id": "EA:AS187",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS188",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS189",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS014",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS022",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

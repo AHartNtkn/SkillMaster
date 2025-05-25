@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS176
+pool:
+  - id: q1
+    stem: |
+      Group 2D shapes according to shared properties like number of sides or presence of right angles.
+    choices: ['OK']
+    correct: 0

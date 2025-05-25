@@ -1,0 +1,12 @@
+{
+  "id": "EA:AS061",
+  "title": "Understand that division by zero is undefined",
+  "desc": "Grasp the concept that a number cannot be divided by zero.",
+  "prereqs": [
+    {
+      "id": "EA:AS059",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

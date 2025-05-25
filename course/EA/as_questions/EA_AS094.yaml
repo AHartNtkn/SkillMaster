@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS094
+pool:
+  - id: q1
+    stem: |
+      Check if a whole number can be evenly divided by a single-digit number.
+    choices: ['OK']
+    correct: 0

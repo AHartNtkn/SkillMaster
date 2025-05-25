@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS072
+pool:
+  - id: q1
+    stem: |
+      Determine relative weights by direct comparison, e.g., holding them or using a simple balance.
+    choices: ['OK']
+    correct: 0

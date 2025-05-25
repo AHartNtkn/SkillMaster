@@ -1,0 +1,12 @@
+{
+  "id": "EA:AS160",
+  "title": "Compare capacities directly (holds more, holds less)",
+  "desc": "Determine which of two containers can hold more or less liquid by visual inspection or direct comparison.",
+  "prereqs": [
+    {
+      "id": "EA:AS005",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

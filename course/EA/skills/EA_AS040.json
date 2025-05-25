@@ -1,0 +1,16 @@
+{
+  "id": "EA:AS040",
+  "title": "Subtract a one-digit number from a two-digit number without regrouping",
+  "desc": "Find the difference between a two-digit number and a single-digit number where no borrowing is required.",
+  "prereqs": [
+    {
+      "id": "EA:AS020",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS029",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

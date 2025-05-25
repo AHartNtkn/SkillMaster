@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS183
+pool:
+  - id: q1
+    stem: |
+      Use tally marks as a simple method to count and record frequencies of data points.
+    choices: ['OK']
+    correct: 0

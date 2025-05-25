@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS005
+pool:
+  - id: q1
+    stem: |
+      Determine if one group of up to 10 objects has more, less, or an equal number of items as another group.
+    choices: ['OK']
+    correct: 0

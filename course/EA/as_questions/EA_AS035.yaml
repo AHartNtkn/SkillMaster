@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS035
+pool:
+  - id: q1
+    stem: |
+      Sum a two-digit number and a single-digit number where carrying from ones to tens is required.
+    choices: ['OK']
+    correct: 0

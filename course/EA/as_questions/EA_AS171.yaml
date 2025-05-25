@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS171
+pool:
+  - id: q1
+    stem: |
+      Grasp the concept that area quantifies the 2D space a flat shape occupies.
+    choices: ['OK']
+    correct: 0

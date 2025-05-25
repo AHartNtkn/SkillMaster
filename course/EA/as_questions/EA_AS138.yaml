@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS138
+pool:
+  - id: q1
+    stem: |
+      Convert fractions with denominator 100 to their decimal equivalents and vice-versa.
+    choices: ['OK']
+    correct: 0

@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS107
+pool:
+  - id: q1
+    stem: |
+      Interpret and solve story problems requiring division where remainders must be considered.
+    choices: ['OK']
+    correct: 0

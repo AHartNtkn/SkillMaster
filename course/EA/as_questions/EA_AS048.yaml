@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS048
+pool:
+  - id: q1
+    stem: |
+      Model multiplication problems by arranging objects in rows and columns or as sets of equal size.
+    choices: ['OK']
+    correct: 0

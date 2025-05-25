@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS061
+pool:
+  - id: q1
+    stem: |
+      Grasp the concept that a number cannot be divided by zero.
+    choices: ['OK']
+    correct: 0

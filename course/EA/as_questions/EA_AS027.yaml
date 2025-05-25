@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS027
+pool:
+  - id: q1
+    stem: |
+      Model two-digit numbers using physical or visual representations of tens and ones.
+    choices: ['OK']
+    correct: 0

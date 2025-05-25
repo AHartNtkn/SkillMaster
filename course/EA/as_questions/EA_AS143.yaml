@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS143
+pool:
+  - id: q1
+    stem: |
+      Arrange three or more decimals from least to greatest or vice-versa.
+    choices: ['OK']
+    correct: 0

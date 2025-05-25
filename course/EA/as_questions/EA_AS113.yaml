@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS113
+pool:
+  - id: q1
+    stem: |
+      Arrange three or more fractions (like/unlike denominators) from least to greatest or vice-versa.
+    choices: ['OK']
+    correct: 0

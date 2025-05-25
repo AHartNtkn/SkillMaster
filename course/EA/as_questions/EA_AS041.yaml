@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS041
+pool:
+  - id: q1
+    stem: |
+      Find the difference between two two-digit numbers where no borrowing is required in any place value column.
+    choices: ['OK']
+    correct: 0

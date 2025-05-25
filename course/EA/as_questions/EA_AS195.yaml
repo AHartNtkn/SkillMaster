@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS195
+pool:
+  - id: q1
+    stem: |
+      Analyze a word problem to select the appropriate arithmetic operation(s) to find the solution.
+    choices: ['OK']
+    correct: 0

@@ -1,0 +1,12 @@
+{
+  "id": "EA:AS015",
+  "title": "Understand the commutative property of addition",
+  "desc": "Recognize that changing the order of addends does not change the sum (e.g., 2+3 = 3+2).",
+  "prereqs": [
+    {
+      "id": "EA:AS011",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

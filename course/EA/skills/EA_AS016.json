@@ -1,0 +1,12 @@
+{
+  "id": "EA:AS016",
+  "title": "Add zero to a number",
+  "desc": "Understand that adding zero to any number results in that same number.",
+  "prereqs": [
+    {
+      "id": "EA:AS011",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

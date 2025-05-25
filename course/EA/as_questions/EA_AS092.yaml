@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS092
+pool:
+  - id: q1
+    stem: |
+      List all whole numbers that can be multiplied to get a given number (e.g., factors of 12).
+    choices: ['OK']
+    correct: 0

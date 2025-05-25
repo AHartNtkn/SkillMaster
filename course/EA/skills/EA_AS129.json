@@ -1,0 +1,20 @@
+{
+  "id": "EA:AS129",
+  "title": "Understand multiplication of a fraction by a whole number as repeated addition",
+  "desc": "Grasp 3 x 1/4 as 1/4 + 1/4 + 1/4.",
+  "prereqs": [
+    {
+      "id": "EA:AS047",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS063",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS122",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

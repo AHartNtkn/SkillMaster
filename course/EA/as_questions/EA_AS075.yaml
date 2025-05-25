@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS075
+pool:
+  - id: q1
+    stem: |
+      Recognize US coins and state their respective cent values.
+    choices: ['OK']
+    correct: 0

@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS122
+pool:
+  - id: q1
+    stem: |
+      Sum two or more fractions that share the same denominator.
+    choices: ['OK']
+    correct: 0

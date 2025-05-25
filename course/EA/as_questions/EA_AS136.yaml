@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS136
+pool:
+  - id: q1
+    stem: |
+      Correctly say and write numbers like 0.07 or 2.35.
+    choices: ['OK']
+    correct: 0

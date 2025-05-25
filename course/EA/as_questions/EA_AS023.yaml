@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS023
+pool:
+  - id: q1
+    stem: |
+      Understand that subtraction can 'undo' addition and use addition facts to solve subtraction problems.
+    choices: ['OK']
+    correct: 0

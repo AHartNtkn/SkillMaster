@@ -1,0 +1,20 @@
+{
+  "id": "EA:AS193",
+  "title": "Identify steps for two-step word problems (mult/div with others)",
+  "desc": "Determine sequence of two operations (mult/div with add/sub) needed to solve a story problem.",
+  "prereqs": [
+    {
+      "id": "EA:AS053",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS062",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS192",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

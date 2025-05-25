@@ -1,0 +1,16 @@
+{
+  "id": "EA:AS130",
+  "title": "Multiply a unit fraction by a whole number",
+  "desc": "Calculate the product of a whole number and a fraction with numerator 1 (e.g., 5 x 1/3).",
+  "prereqs": [
+    {
+      "id": "EA:AS129",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS050",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS051
+pool:
+  - id: q1
+    stem: |
+      Recognize that changing the order of factors does not change the product (e.g., 2x3 = 3x2).
+    choices: ['OK']
+    correct: 0

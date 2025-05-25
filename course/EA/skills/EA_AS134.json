@@ -1,0 +1,16 @@
+{
+  "id": "EA:AS134",
+  "title": "Understand hundredths as fractions with a denominator of 100",
+  "desc": "Recognize that one hundredth is 1 part out of 100 equal parts of a whole (1/100).",
+  "prereqs": [
+    {
+      "id": "EA:AS133",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS030",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

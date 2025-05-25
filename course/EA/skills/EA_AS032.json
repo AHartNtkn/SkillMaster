@@ -1,0 +1,12 @@
+{
+  "id": "EA:AS032",
+  "title": "Compare three-digit numbers using <, >, =",
+  "desc": "Determine if one three-digit number is less than, greater than, or equal to another.",
+  "prereqs": [
+    {
+      "id": "EA:AS030",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

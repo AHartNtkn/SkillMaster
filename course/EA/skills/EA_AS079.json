@@ -1,0 +1,12 @@
+{
+  "id": "EA:AS079",
+  "title": "Round whole numbers to the nearest 1000",
+  "desc": "Determine the multiple of 1000 closest to a given whole number.",
+  "prereqs": [
+    {
+      "id": "EA:AS030",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

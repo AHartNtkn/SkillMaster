@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS134
+pool:
+  - id: q1
+    stem: |
+      Recognize that one hundredth is 1 part out of 100 equal parts of a whole (1/100).
+    choices: ['OK']
+    correct: 0

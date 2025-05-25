@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS044
+pool:
+  - id: q1
+    stem: |
+      Find the difference between two three-digit numbers, correctly applying regrouping rules.
+    choices: ['OK']
+    correct: 0

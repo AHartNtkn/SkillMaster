@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS029
+pool:
+  - id: q1
+    stem: |
+      Grasp the meaning of each digit's position in a two-digit number.
+    choices: ['OK']
+    correct: 0

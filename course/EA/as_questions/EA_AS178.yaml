@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS178
+pool:
+  - id: q1
+    stem: |
+      Distinguish between lines that never meet (parallel) and lines that meet at a right angle (perpendicular).
+    choices: ['OK']
+    correct: 0

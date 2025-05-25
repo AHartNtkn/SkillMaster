@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS161
+pool:
+  - id: q1
+    stem: |
+      Use everyday objects to quantify how much a container can hold.
+    choices: ['OK']
+    correct: 0

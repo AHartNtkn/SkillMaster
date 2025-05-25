@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA:AS018
+pool:
+  - id: q1
+    stem: |
+      Grasp the concept that subtraction means removing items from a group or comparing two groups.
+    choices: ['OK']
+    correct: 0

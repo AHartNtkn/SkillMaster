@@ -1,0 +1,16 @@
+{
+  "id": "EA:AS042",
+  "title": "Subtract a one-digit number from a two-digit number with regrouping (borrowing)",
+  "desc": "Find the difference between a two-digit number and a single-digit number where borrowing from tens to ones is required.",
+  "prereqs": [
+    {
+      "id": "EA:AS020",
+      "weight": 1.0
+    },
+    {
+      "id": "EA:AS029",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}
