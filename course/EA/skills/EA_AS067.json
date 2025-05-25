@@ -1,0 +1,12 @@
+{
+  "id": "EA_AS067",
+  "title": "Recognize simple equivalent fractions (e.g., 1/2 = 2/4) using models",
+  "desc": "Identify fractions that represent the same amount using visual representations.",
+  "prereqs": [
+    {
+      "id": "EA_AS065",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

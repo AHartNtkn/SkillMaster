@@ -1,0 +1,20 @@
+{
+  "id": "EA_AS148",
+  "title": "Subtract decimals to the hundredths place (no regrouping, often related to money)",
+  "desc": "Subtract two decimals to hundredths where no borrowing is required (e.g., $0.75 - $0.20).",
+  "prereqs": [
+    {
+      "id": "EA_AS138",
+      "weight": 1.0
+    },
+    {
+      "id": "EA_AS040",
+      "weight": 1.0
+    },
+    {
+      "id": "EA_AS139",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

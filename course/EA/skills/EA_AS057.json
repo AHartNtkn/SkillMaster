@@ -1,0 +1,12 @@
+{
+  "id": "EA_AS057",
+  "title": "Understand and use the division (\u00f7) sign",
+  "desc": "Recognize and correctly interpret the symbol for division.",
+  "prereqs": [
+    {
+      "id": "EA_AS001",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

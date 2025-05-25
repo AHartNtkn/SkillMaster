@@ -1,0 +1,20 @@
+{
+  "id": "EA_AS145",
+  "title": "Add decimals to the tenths place (no regrouping)",
+  "desc": "Sum two decimals written to tenths where no carrying is required (e.g., 0.2 + 0.5).",
+  "prereqs": [
+    {
+      "id": "EA_AS137",
+      "weight": 1.0
+    },
+    {
+      "id": "EA_AS011",
+      "weight": 1.0
+    },
+    {
+      "id": "EA_AS139",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

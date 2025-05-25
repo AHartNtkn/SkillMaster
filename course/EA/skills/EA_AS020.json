@@ -1,0 +1,12 @@
+{
+  "id": "EA_AS020",
+  "title": "Subtract single-digit numbers from numbers up to 20",
+  "desc": "Calculate the difference when subtracting a single-digit number from a number 20 or less.",
+  "prereqs": [
+    {
+      "id": "EA_AS019",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

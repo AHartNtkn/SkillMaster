@@ -1,0 +1,16 @@
+{
+  "id": "EA_AS081",
+  "title": "Estimate sums of three-digit numbers by rounding",
+  "desc": "Approximate the sum of two 3-digit numbers by rounding each to the nearest 100 before adding.",
+  "prereqs": [
+    {
+      "id": "EA_AS078",
+      "weight": 1.0
+    },
+    {
+      "id": "EA_AS038",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

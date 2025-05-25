@@ -1,0 +1,16 @@
+{
+  "id": "EA_AS161",
+  "title": "Measure capacity using non-standard units (e.g., cups, scoops)",
+  "desc": "Use everyday objects to quantify how much a container can hold.",
+  "prereqs": [
+    {
+      "id": "EA_AS004",
+      "weight": 1.0
+    },
+    {
+      "id": "EA_AS160",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

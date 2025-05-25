@@ -1,0 +1,12 @@
+{
+  "id": "EA_AS009",
+  "title": "Sequence numbers up to 20",
+  "desc": "Arrange numbers in correct order from smallest to largest, or vice-versa, up to 20.",
+  "prereqs": [
+    {
+      "id": "EA_AS006",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

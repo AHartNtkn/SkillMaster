@@ -360,10 +360,9 @@ The application's data is organized in a clear, file-based structure, designed t
 
 8.1. Directory Layout
 app_root/
-  courses.json                 # Registry of all installed courses
   course/
+    catalog.json                 # Registry of all installed courses
     <course_id>/               # Directory name matches course_id from catalog.json (e.g., "EA")
-      catalog.json             # Course metadata
       topics/                  # Contains one JSON file per Topic
       skills/                  # Contains one JSON file per Atomic Skill
       as_md/                   # Contains one Markdown file per AS for explanations
@@ -523,49 +522,4 @@ Your goal is to create a feature-complete implementation of what's described her
 As you implement features, make sure to add thorough tests, especially end-to-end tests, of all the functionality.
 
 DO NOT implement a simple prototype which can act as a starting point. DO NOT EVER hardcode ANYTHING! DO NOT EVER make ANY placeholders! DO NOT implement ANYTHING that you do not plan to finish COMPLETELY then and there! You must periodically look back at this file and compare it thoroughly with the current implementation to identify shortcomings.
-
-# Implementation Audit Log
-
-## Audit - 2024-07-27
-
-This audit compares the current state of the implementation (as of the review date) against the specifications in this document.
-
-### 1. Feature Gaps / Incomplete Implementations
-
-*   **Custom Confirmation Dialogs (Spec 4.2)**: The design specifies "custom confirmation dialogs (not native browser alerts)" for critical actions. Currently, `window.confirm()` is used (e.g., `app.js` for `confirmExit()`, `confirmExitQuiz()`; `SettingsView.js` for `confirmReset()`).
-    *   **Action**: Implement custom modal dialogs for these confirmations.
-*   **Topic Mastery Status Update (Spec 5.1)**: `MasteryState.TopicState` has a `status` field, but it does not appear to be updated to 'mastered' when all its constituent Atomic Skills (ASs) become mastered. `MasteryState.isTopicMastered()` can check this, but no code seems to call it to update the state.
-    *   **Action**: Implement logic (likely in `CourseManager` or when an AS is mastered) to check and update the status of relevant topics in `mastery.json`.
-*   **Graph Distance Cache (Spec 8.1)**: The `.cache/index.db` for optional, auto-generated graph distances is not implemented. `TaskSelector.calculateGraphDistance()` computes distances on-the-fly.
-    *   **Action**: Implement caching for graph distances if performance becomes an issue.
-*   **Data Migration Scripts (Spec 9)**: The design mentions that the "application should be prepared to run data migration scripts." No such framework or scripts are implemented.
-    *   **Action**: Develop a strategy and mechanism for data schema migrations if future changes to data formats are anticipated.
-*   **Testing (General Requirement)**: The "Implementation State" section requires "thorough tests, especially end-to-end tests." While a test setup (`tests/setup.js`, mock FSRS) exists, no actual test files (`*.test.js` or similar) performing assertions are present in the reviewed codebase.
-    *   **Action**: Prioritize and implement comprehensive unit, integration, and end-to-end tests.
-*   **Full Markdown Rendering (Spec 4.1, 7.1)**: `LearningView.renderMarkdown` and `MixedQuizView.renderMarkdown` provide very basic Markdown support (bold, italic, code, line breaks). The spec implies richer support for "text, formulas (rendered with MathJax), and images." While MathJax is invoked, the Markdown parser itself is minimal.
-    *   **Action**: Integrate a more feature-complete Markdown parsing library (e.g., Marked, Markdown-it) to support images, tables, and other standard Markdown features.
-*   **Question Progress Display (Spec 4.1)**: Learning screen header should show "current question progress (e.g., 'Question 1 of 20')." `LearningView.js` currently displays "Question X" but not "of Y".
-    *   **Action**: Modify `LearningView.showQuestion()` to display total questions for the current AS (e.g., "Question ${questionNumber} of ${this.questions.length}").
-*   **"Autosave Failed" Notification (Spec 4.2)**: Toast notifications are implemented for some actions, but not for "Autosave failed". `StorageService.saveToLocal` returns a boolean on success/failure, but this is not currently used by `CourseManager.saveState` to trigger a user notification.
-    *   **Action**: Implement a toast notification if `saveState()` fails.
-
-### 2. Discrepancies with Design Document
-
-NONE FOUND
-
-### 3. Hardcoding / Placeholders / Arbitrary Values
-
-*   **Course Content Fallback (js/services/CourseManager.js)**: `getTopicFiles()` and `getSkillFiles()` contain hardcoded fallbacks to load content for course 'EA' if dynamic loading fails, even outside of a test environment.
-    *   **Action**: Remove these hardcoded fallbacks for production code. Course content loading should be purely dynamic or based on configurations.
-*   **Application Version (js/views/SettingsView.js)**: The application version is hardcoded as "v1.0.0" in `render()`.
-    *   **Action**: Make the version dynamic, e.g., loaded from a configuration file or a build variable.
-
-### 4. Minor Points & Clarifications
-
-*   **Malformed Data File Handling (Spec 9)**: If `CourseManager` encounters errors loading course/topic/skill files, it logs errors and may skip loading the content. The design says "mark associated content as disabled". There isn't a formal "disabled" state; content is just absent.
-    *   **Action**: This might be an acceptable implementation, but consider if a more formal "disabled content with error message" is needed in the UI.
-*   **D3 Force Layout Parameters (js/views/ProgressView.js)**: Values like `distance(80)`, `strength(-300)`, `radius(30)` are set for the D3 graph. These are typical tuning parameters.
-    *   **Action**: No action needed unless these are meant to be configurable per the design.
-
-This audit provides a snapshot. Continuous review and testing will be necessary as development progresses.
 

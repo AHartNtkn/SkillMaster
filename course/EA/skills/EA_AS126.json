@@ -1,0 +1,20 @@
+{
+  "id": "EA_AS126",
+  "title": "Add mixed numbers with like denominators (no regrouping)",
+  "desc": "Sum two mixed numbers where fraction parts have same denominator and sum of fractions is less than 1.",
+  "prereqs": [
+    {
+      "id": "EA_AS118",
+      "weight": 1.0
+    },
+    {
+      "id": "EA_AS122",
+      "weight": 1.0
+    },
+    {
+      "id": "EA_AS011",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

@@ -1,0 +1,16 @@
+{
+  "id": "EA_AS071",
+  "title": "Estimate and measure length using standard units (e.g., cm, inches)",
+  "desc": "Approximate and then accurately measure length using centimeters or inches.",
+  "prereqs": [
+    {
+      "id": "EA_AS070",
+      "weight": 1.0
+    },
+    {
+      "id": "EA_AS006",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

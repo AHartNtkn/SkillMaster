@@ -1,0 +1,24 @@
+{
+  "id": "EA_AS128",
+  "title": "Solve word problems involving addition/subtraction of fractions with like denominators",
+  "desc": "Interpret and solve story problems requiring addition or subtraction of like-denominator fractions.",
+  "prereqs": [
+    {
+      "id": "EA_AS122",
+      "weight": 1.0
+    },
+    {
+      "id": "EA_AS123",
+      "weight": 1.0
+    },
+    {
+      "id": "EA_AS014",
+      "weight": 1.0
+    },
+    {
+      "id": "EA_AS022",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

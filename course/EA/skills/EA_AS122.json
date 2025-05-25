@@ -1,0 +1,20 @@
+{
+  "id": "EA_AS122",
+  "title": "Add fractions with like denominators",
+  "desc": "Sum two or more fractions that share the same denominator.",
+  "prereqs": [
+    {
+      "id": "EA_AS064",
+      "weight": 1.0
+    },
+    {
+      "id": "EA_AS011",
+      "weight": 1.0
+    },
+    {
+      "id": "EA_AS065",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

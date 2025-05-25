@@ -1,0 +1,16 @@
+{
+  "id": "EA_AS166",
+  "title": "Estimate weights/masses",
+  "desc": "Approximate the weight/mass of an object using standard units without precise measurement.",
+  "prereqs": [
+    {
+      "id": "EA_AS165",
+      "weight": 1.0
+    },
+    {
+      "id": "EA_AS005",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

@@ -1,0 +1,12 @@
+{
+  "id": "EA_AS154",
+  "title": "Know units of time (seconds, minutes, hours, days, weeks, months, years)",
+  "desc": "Recognize and name standard units for measuring time and their general relationships.",
+  "prereqs": [
+    {
+      "id": "EA_AS150",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

@@ -1,0 +1,12 @@
+{
+  "id": "EA_AS165",
+  "title": "Identify standard units of weight/mass (e.g., gram, pound - recognition)",
+  "desc": "Recognize common units used for measuring weight or mass.",
+  "prereqs": [
+    {
+      "id": "EA_AS164",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

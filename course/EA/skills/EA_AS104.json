@@ -1,0 +1,24 @@
+{
+  "id": "EA_AS104",
+  "title": "Divide a two-digit number by a one-digit number (long division steps, no remainder)",
+  "desc": "Use the long division algorithm for 2-digit dividends and 1-digit divisors, resulting in no remainder.",
+  "prereqs": [
+    {
+      "id": "EA_AS059",
+      "weight": 1.0
+    },
+    {
+      "id": "EA_AS029",
+      "weight": 1.0
+    },
+    {
+      "id": "EA_AS050",
+      "weight": 1.0
+    },
+    {
+      "id": "EA_AS040",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

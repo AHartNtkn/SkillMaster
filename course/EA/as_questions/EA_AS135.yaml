@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA_AS135
+pool:
+  - id: q1
+    stem: Example question for EA_AS135
+    choices: ['A', 'B', 'C', 'D']
+    correct: 0
+    solution: Placeholder solution

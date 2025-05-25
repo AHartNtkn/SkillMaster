@@ -1,0 +1,12 @@
+{
+  "id": "EA_AS029",
+  "title": "Understand that the two digits of a two-digit number represent amounts of tens and ones",
+  "desc": "Grasp the meaning of each digit's position in a two-digit number.",
+  "prereqs": [
+    {
+      "id": "EA_AS026",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

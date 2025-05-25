@@ -1,0 +1,12 @@
+{
+  "id": "EA_AS041",
+  "title": "Subtract two two-digit numbers without regrouping",
+  "desc": "Find the difference between two two-digit numbers where no borrowing is required in any place value column.",
+  "prereqs": [
+    {
+      "id": "EA_AS040",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

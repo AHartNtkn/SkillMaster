@@ -1,0 +1,16 @@
+{
+  "id": "EA_AS102",
+  "title": "Perform division with single-digit divisors resulting in a remainder",
+  "desc": "Divide a number by a single-digit number where the division is not exact, identifying the remainder.",
+  "prereqs": [
+    {
+      "id": "EA_AS059",
+      "weight": 1.0
+    },
+    {
+      "id": "EA_AS019",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

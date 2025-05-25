@@ -1,7 +1,7 @@
 {
   "id": "EA_AS004",
   "title": "Count objects up to 10",
-  "desc": "Count objects up to 10",
+  "desc": "Accurately determine the quantity of items in a set containing up to 10 objects.",
   "prereqs": [
     {
       "id": "EA_AS001",

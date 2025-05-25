@@ -1,0 +1,12 @@
+{
+  "id": "EA_AS039",
+  "title": "Solve multi-step addition word problems involving multi-digit numbers",
+  "desc": "Interpret and solve story problems requiring multiple addition operations with multi-digit numbers.",
+  "prereqs": [
+    {
+      "id": "EA_AS038",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

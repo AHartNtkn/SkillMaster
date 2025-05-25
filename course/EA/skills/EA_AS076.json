@@ -1,0 +1,20 @@
+{
+  "id": "EA_AS076",
+  "title": "Count combinations of pennies, nickels, and dimes",
+  "desc": "Calculate the total value of a collection of pennies, nickels, and dimes.",
+  "prereqs": [
+    {
+      "id": "EA_AS011",
+      "weight": 1.0
+    },
+    {
+      "id": "EA_AS026",
+      "weight": 1.0
+    },
+    {
+      "id": "EA_AS075",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

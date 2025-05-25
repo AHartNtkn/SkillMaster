@@ -1,0 +1,12 @@
+{
+  "id": "EA_AS093",
+  "title": "Identify multiples of a single-digit number",
+  "desc": "List numbers obtained by multiplying a single-digit number by consecutive whole numbers (e.g., multiples of 3).",
+  "prereqs": [
+    {
+      "id": "EA_AS050",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

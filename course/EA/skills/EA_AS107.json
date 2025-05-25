@@ -1,0 +1,16 @@
+{
+  "id": "EA_AS107",
+  "title": "Solve multi-step word problems involving division with remainders",
+  "desc": "Interpret and solve story problems requiring division where remainders must be considered.",
+  "prereqs": [
+    {
+      "id": "EA_AS103",
+      "weight": 1.0
+    },
+    {
+      "id": "EA_AS105",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

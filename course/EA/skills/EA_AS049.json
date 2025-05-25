@@ -1,0 +1,12 @@
+{
+  "id": "EA_AS049",
+  "title": "Understand and use the multiplication (x) sign",
+  "desc": "Recognize and correctly interpret the symbol for multiplication.",
+  "prereqs": [
+    {
+      "id": "EA_AS001",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

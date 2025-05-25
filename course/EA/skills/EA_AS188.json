@@ -1,0 +1,12 @@
+{
+  "id": "EA_AS188",
+  "title": "Read and interpret data from a bar graph",
+  "desc": "Understand and extract information from a bar graph, including comparing bar lengths and reading scales.",
+  "prereqs": [
+    {
+      "id": "EA_AS185",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

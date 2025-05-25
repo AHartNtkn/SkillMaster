@@ -1,0 +1,8 @@
+format: ASQ-v1
+id: EA_AS163
+pool:
+  - id: q1
+    stem: Example question for EA_AS163
+    choices: ['A', 'B', 'C', 'D']
+    correct: 0
+    solution: Placeholder solution
