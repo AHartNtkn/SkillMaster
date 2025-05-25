@@ -381,7 +381,7 @@ To simplify path resolution and reduce complexity, all file paths should corresp
 
 - **Directory Structure**: The course directory name should match the course_id from catalog.json
 - **Topic Files**: Named as `{course_id}_T{number}.json` (e.g., `EA_T001.json` for course "EA")
-- **Skill Files**: Named as `{skill_id_with_underscores}.json` (e.g., `EA_AS001.json` for skill "EA:AS001")
+- **Skill Files**: Named as `{skill_id_with_underscores}.json` (e.g., `EA_AS001.json` for skill "EA_AS001")
 - **Markdown Files**: Named as `{skill_id_with_underscores}.md` (e.g., `EA_AS001.md`)
 - **Question Files**: Named as `{skill_id_with_underscores}.yaml` (e.g., `EA_AS001.yaml`)
 

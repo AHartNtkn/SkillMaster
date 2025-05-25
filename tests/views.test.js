@@ -49,14 +49,14 @@ describe('View Render Methods', () => {
         const course = courseManager.getCourse('EA');
         const topic = course.getAllTopics()[0];
 
-        const state = courseManager.masteryState.getSkillState('EA:AS004');
+        const state = courseManager.masteryState.getSkillState('EA_AS004');
         state.status = 'in_progress';
         state.next_due = new Date(Date.now() + 86400000).toISOString();
 
         const html = libraryView.renderTopicDetails(course, topic);
 
         expect(typeof html).toBe('string');
-        expect(html).toContain('EA:AS004 -');
+        expect(html).toContain('EA_AS004 -');
         expect(html).toContain('Prereqs');
         expect(html).toContain('Next review in');
     });
@@ -135,7 +135,7 @@ describe('Markdown Rendering', () => {
     test('showExposition triggers MathJax typesetting', async () => {
         const courseManager = { getSkillExplanation: vi.fn(async () => '# H\n') };
         const view = new LearningView(courseManager);
-        view.currentSkill = { id: 'EA:AS001', title: 'Test' };
+        view.currentSkill = { id: 'EA_AS001', title: 'Test' };
 
         global.document = { getElementById: vi.fn(() => ({ innerHTML: '' })) };
         global.window.MathJax = { typesetPromise: vi.fn() };

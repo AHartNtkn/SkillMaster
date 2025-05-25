@@ -1,22 +1,22 @@
 /**
- * Debug script to check why EA:AS003 is not available as a new task
+ * Debug script to check why EA_AS003 is not available as a new task
  */
 import { CourseManager } from './js/services/CourseManager.js';
 import { TaskSelector } from './js/services/TaskSelector.js';
 
 async function debugEA003() {
-    console.log('=== Debugging EA:AS003 availability ===\n');
+    console.log('=== Debugging EA_AS003 availability ===\n');
     
     const courseManager = new CourseManager();
     await courseManager.initialize();
     
     const taskSelector = new TaskSelector(courseManager);
     
-    // 1. Check if EA:AS003 exists
-    const skill = courseManager.getSkill('EA:AS003');
-    console.log('1. EA:AS003 skill object:', skill);
+    // 1. Check if EA_AS003 exists
+    const skill = courseManager.getSkill('EA_AS003');
+    console.log('1. EA_AS003 skill object:', skill);
     if (!skill) {
-        console.log('ERROR: EA:AS003 skill not found!');
+        console.log('ERROR: EA_AS003 skill not found!');
         return;
     }
     
@@ -25,8 +25,8 @@ async function debugEA003() {
     console.log('   Description:', skill.desc);
     
     // 2. Check the skill's current state
-    const state = courseManager.masteryState.getSkillState('EA:AS003');
-    console.log('\n2. EA:AS003 current state:', state);
+    const state = courseManager.masteryState.getSkillState('EA_AS003');
+    console.log('\n2. EA_AS003 current state:', state);
     
     // 3. Check prerequisites status
     console.log('\n3. Prerequisites check:');
@@ -44,7 +44,7 @@ async function debugEA003() {
     console.log('\n4. All available new skills:');
     const availableNew = taskSelector.getAvailableNewSkills();
     console.log('   Available new skills:', availableNew);
-    console.log('   EA:AS003 included?', availableNew.includes('EA:AS003'));
+    console.log('   EA_AS003 included?', availableNew.includes('EA_AS003'));
     
     // 5. Check all candidates
     console.log('\n5. All task candidates:');

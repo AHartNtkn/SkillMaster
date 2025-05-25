@@ -1,10 +1,10 @@
 {
-  "id": "EA:AS013",
+  "id": "EA_AS013",
   "title": "Understand and use the plus (+) and equals (=) signs",
   "desc": "Understand and use the plus (+) and equals (=) signs",
   "prereqs": [
     {
-      "id": "EA:AS001",
+      "id": "EA_AS001",
       "weight": 1.0
     }
   ],

@@ -61,7 +61,7 @@ describe('LearningView Rating Flow', () => {
         
         // Mock current skill and questions
         learningView.currentSkill = {
-            id: 'EA:AS001',
+            id: 'EA_AS001',
             title: 'Test Skill'
         };
         
@@ -158,7 +158,7 @@ describe('LearningView Rating Flow', () => {
             
             expect(learningView.grades).toEqual([4]);
             expect(learningView.currentQuestionIndex).toBe(1);
-            expect(mockCourseManager.recordSkillAttempt).toHaveBeenCalledWith('EA:AS001', 4);
+            expect(mockCourseManager.recordSkillAttempt).toHaveBeenCalledWith('EA_AS001', 4);
             // XP is awarded per question via recordSkillAttempt
             expect(mockSkillState.next_q_index).toBe(1);
             expect(mockCourseManager.saveState).toHaveBeenCalled();

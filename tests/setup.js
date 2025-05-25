@@ -3,6 +3,7 @@ import { readFileSync } from 'fs';
 import { join } from 'path';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
+import MarkdownIt from 'markdown-it';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -27,3 +28,7 @@ global.fetch = async (path) => {
         };
     }
 };
+
+// Setup global markdown-it for tests
+global.window = global.window || {};
+global.window.markdownit = MarkdownIt;
