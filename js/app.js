@@ -124,10 +124,14 @@ class SkillMasterApp {
         
         // Show/hide tab bar for learning views
         const tabBar = document.getElementById('tab-bar');
+        const mainContent = document.getElementById('main-content');
         if (viewName === 'learning' || viewName === 'mixedQuiz') {
             tabBar.style.display = 'none';
+            // Reset main content margin when tab bar is hidden (desktop layout)
+            mainContent.style.marginLeft = '0';
         } else {
             tabBar.style.display = '';
+            mainContent.style.marginLeft = '';
         }
     }
 
