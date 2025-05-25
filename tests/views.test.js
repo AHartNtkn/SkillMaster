@@ -2,6 +2,7 @@ import { describe, test, expect, beforeEach, vi } from 'vitest';
 import { LearningView } from '../js/views/LearningView.js';
 import { MixedQuizView } from '../js/views/MixedQuizView.js';
 import { LibraryView } from '../js/views/LibraryView.js';
+import { HomeView } from '../js/views/HomeView.js';
 import { CourseManager } from '../js/services/CourseManager.js';
 import { TaskSelector } from '../js/services/TaskSelector.js';
 
@@ -59,6 +60,27 @@ describe('View Render Methods', () => {
         expect(html).toContain('EA_AS004 -');
         expect(html).toContain('Prereqs');
         expect(html).toContain('Next review in');
+    });
+
+    test('HomeView render displays multiple tasks', () => {
+        const mockCourseManager = {
+            getTotalXP: vi.fn(() => 0),
+            prefs: { xp_since_mixed_quiz: 0 },
+            masteryState: { getOverdueSkills: vi.fn(() => []) },
+            getSkill: vi.fn(id => ({ id, title: id, desc: 'desc' }))
+        };
+        const mockTaskSelector = {
+            getTopTasks: vi.fn(() => [
+                { type: 'new', skillId: 'AS1', priority: 5 },
+                { type: 'new', skillId: 'AS2', priority: 4 }
+            ])
+        };
+
+        const homeView = new HomeView(mockCourseManager, mockTaskSelector);
+        const html = homeView.render();
+
+        expect(html).toContain('Next Task');
+        expect((html.match(/task-card/g) || []).length).toBe(2);
     });
 });
 

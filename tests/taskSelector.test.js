@@ -236,4 +236,20 @@ describe('TaskSelector', () => {
         expect(task.type).toBe('new');
         expect(task.skillId).toBe('TEST:AS001'); // First skill with no prereqs
     });
+
+    test('getTopTasks returns tasks sorted by priority', () => {
+        courseManager.masteryState.skills.set('TEST:AS001', {
+            status: 'in_progress',
+            next_due: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString()
+        });
+        courseManager.masteryState.skills.set('TEST:AS002', {
+            status: 'in_progress',
+            next_due: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString()
+        });
+
+        const tasks = taskSelector.getTopTasks(2);
+        expect(tasks).toHaveLength(2);
+        expect(tasks[0].skillId).toBe('TEST:AS002');
+        expect(tasks[1].skillId).toBe('TEST:AS001');
+    });
 });

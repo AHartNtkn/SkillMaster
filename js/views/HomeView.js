@@ -14,7 +14,9 @@ export class HomeView {
         const xpProgress = (xpSinceMixed / 150) * 100;
         
         const overdueSkills = this.courseManager.masteryState.getOverdueSkills();
-        const nextTask = this.taskSelector.getNextTask();
+        const tasks = this.taskSelector.getTopTasks(6);
+        const nextTask = tasks.shift();
+        const additionalTasks = tasks;
         
         return `
             <div class="screen">
@@ -42,13 +44,21 @@ export class HomeView {
                 
                 <div class="next-task">
                     <h3>Next Task</h3>
-                    ${this.renderNextTask(nextTask)}
+                    ${this.renderTask(nextTask)}
                 </div>
+                ${additionalTasks.length > 0 ? `
+                <div class="additional-tasks">
+                    <h3>Other Options</h3>
+                    <div class="task-list">
+                        ${additionalTasks.map(t => this.renderTask(t)).join('')}
+                    </div>
+                </div>
+                ` : ''}
             </div>
         `;
     }
 
-    renderNextTask(task) {
+    renderTask(task) {
         if (!task) {
             return `
                 <div class="task-card">
