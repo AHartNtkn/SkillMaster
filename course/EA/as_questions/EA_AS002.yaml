@@ -2,7 +2,142 @@ format: ASQ-v1
 id: EA_AS002
 pool:
   - id: q1
-    stem: Example question for EA_AS002
-    choices: ['A', 'B', 'C', 'D']
+    stem: |-
+      Choose the correctly written sequence of digits 0 through 9.
+    choices: ["0 1 2 3 4 5 6 7 8 9", "0 1 3 2 4 5 6 7 8 9", "0 1 2 3 4 5 6 8 7 9", "0 1 2 3 4 5 6 7 9 8"]
     correct: 0
-    solution: Placeholder solution
+    solution: |-
+      The digits must run in order from 0 to 9 with none missing. Only choice 1 shows the full sequence correctly.
+  - id: q2
+    stem: |-
+      Select the option that correctly lists all digits from zero to nine.
+    choices: ["0 1 3 2 4 5 6 7 8 9", "0 1 2 3 4 5 6 7 8 9", "0 1 2 3 4 5 7 8 9", "0 1 2 3 4 5 6 7 9"]
+    correct: 1
+    solution: |-
+      The entire sequence in ascending order is 0 1 2 3 4 5 6 7 8 9.
+  - id: q3
+    stem: |-
+      Which line shows the digits 0–9 written in order?
+    choices: ["0 1 2 3 4 5 6 7 8 9", "0 1 2 3 4 6 5 7 8 9", "0 2 3 4 5 6 7 8 9 1", "1 2 3 4 5 6 7 8 9 0"]
+    correct: 0
+    solution: |-
+      Option 1 lists every digit from 0 up to 9 without any swaps.
+  - id: q4
+    stem: |-
+      Choose the correctly written list of numerals from 0 to 9.
+    choices: ["0 1 2 3 4 5 6 7 8 9", "0 1 2 3 4 5 6 7 8", "0 1 2 3 4 5 6 7 9 8", "0 1 2 3 4 5 7 8 9 6"]
+    correct: 0
+    solution: |-
+      Only the first choice contains all ten digits in order.
+  - id: q5
+    stem: |-
+      Which option correctly writes the digits from zero through nine?
+    choices: ["0 1 2 3 4 5 6 7 9 8", "0 1 2 3 4 5 6 7 8 9", "0 1 2 3 4 5 6 8 7 9", "0 1 2 3 4 5 6 7 8"]
+    correct: 1
+    solution: |-
+      The digits must appear once each in ascending order: 0 1 2 3 4 5 6 7 8 9.
+  - id: q6
+    stem: |-
+      Select the line that shows 0–9 in the correct order.
+    choices: ["1 2 3 4 5 6 7 8 9 0", "0 1 2 3 4 5 6 7 8 9", "0 1 2 3 4 5 6 7 8", "0 1 2 3 4 5 6 7 9"]
+    correct: 1
+    solution: |-
+      Only choice 2 lists the digits starting with 0 and ending with 9.
+  - id: q7
+    stem: |-
+      Which sequence shows every digit from 0 to 9 exactly once in order?
+    choices: ["0 1 2 3 4 5 6 7 8 9", "0 1 2 3 4 6 5 7 8 9", "0 1 2 3 4 5 6 7 9 8", "0 1 2 3 5 4 6 7 8 9"]
+    correct: 0
+    solution: |-
+      The correct writing is 0 1 2 3 4 5 6 7 8 9.
+  - id: q8
+    stem: |-
+      Choose the option that writes digits 0–9 without skipping or mixing them.
+    choices: ["0 1 2 3 4 5 6 7 8 9", "0 1 2 3 4 5 6 7 8", "0 2 3 4 5 6 7 8 9", "1 2 3 4 5 6 7 8 9"]
+    correct: 0
+    solution: |-
+      The first choice is the complete ordered list from 0 to 9.
+  - id: q9
+    stem: |-
+      Select the properly written run of digits from zero through nine.
+    choices: ["0 1 2 3 4 5 6 7 8 9", "0 1 2 3 4 5 6 7 8 8", "0 1 2 3 4 5 6 7 7 8", "0 1 2 3 4 5 6 8 7 9"]
+    correct: 0
+    solution: |-
+      Option 1 is the only sequence with all digits in the right order and without repeats.
+  - id: q10
+    stem: |-
+      Which list shows the digits 0 through 9 in correct order?
+    choices: ["0 1 2 3 4 5 6 7 8 9", "0 1 2 3 4 5 6 7 9 8", "9 8 7 6 5 4 3 2 1 0", "0 1 2 3 4 5 6 7 8"]
+    correct: 0
+    solution: |-
+      The digits should ascend from 0 to 9. Only the first option does so.
+  - id: q11
+    stem: |-
+      Choose the line that correctly writes the numerals from 0 up to 9.
+    choices: ["0 1 2 3 4 5 6 7 8 9", "0 1 2 4 5 6 7 8 9", "0 1 2 3 4 6 7 8 9", "0 1 2 3 4 5 6 7 8"]
+    correct: 0
+    solution: |-
+      The digits must be 0 1 2 3 4 5 6 7 8 9 with no omissions.
+  - id: q12
+    stem: |-
+      Select the correct writing of digits zero through nine.
+    choices: ["0 1 2 3 4 5 6 7 8 9", "0 2 3 4 5 6 7 8 9 1", "0 1 2 3 4 5 6 7 9", "1 2 3 4 5 6 7 8 9 0"]
+    correct: 0
+    solution: |-
+      The ordered list is 0 1 2 3 4 5 6 7 8 9.
+  - id: q13
+    stem: |-
+      Which row contains all ten digits in ascending order?
+    choices: ["0 1 2 3 4 5 6 7 8 9", "0 1 2 3 5 4 6 7 8 9", "0 1 2 3 4 5 6 7 8", "0 1 2 3 4 5 6 7 9 8"]
+    correct: 0
+    solution: |-
+      Only the first option lists every digit once from 0 to 9.
+  - id: q14
+    stem: |-
+      Choose the correctly ordered list of digits from 0 to 9.
+    choices: ["0 1 2 3 4 5 6 7 8 9", "0 1 2 3 4 5 6 7 8 8", "0 1 2 3 4 5 6 6 7 8", "0 1 2 3 4 5 6 7 9 8"]
+    correct: 0
+    solution: |-
+      The first choice is the proper sequence without repeats or swaps.
+  - id: q15
+    stem: |-
+      Which option shows digits 0–9 written one after another in order?
+    choices: ["0 1 2 3 4 5 6 7 8 9", "0 1 2 3 4 5 6 7 8", "0 1 2 3 4 5 6 8 7 9", "0 1 2 3 4 5 6 7 9 8"]
+    correct: 0
+    solution: |-
+      The only full and correctly ordered line is 0 1 2 3 4 5 6 7 8 9.
+  - id: q16
+    stem: |-
+      Select the line that writes every numeral from 0 through 9 in order.
+    choices: ["1 2 3 4 5 6 7 8 9 0", "0 1 2 3 4 5 6 7 8 9", "0 1 2 3 4 5 6 7 8", "0 1 2 3 5 4 6 7 8 9"]
+    correct: 1
+    solution: |-
+      Option 2 begins with 0 and ends with 9, including all digits once.
+  - id: q17
+    stem: |-
+      Which sequence correctly shows the digits from zero to nine?
+    choices: ["0 1 2 3 4 5 6 7 8 9", "0 1 2 3 4 5 6 7 9", "0 1 2 3 4 6 5 7 8 9", "1 2 3 4 5 6 7 8 9 0"]
+    correct: 0
+    solution: |-
+      The first line includes every digit in the right order.
+  - id: q18
+    stem: |-
+      Choose the option that correctly writes digits 0 to 9 in order.
+    choices: ["0 1 2 3 4 5 6 7 8 9", "0 2 3 4 5 6 7 8 9 1", "0 1 2 3 4 5 6 8 7 9", "0 1 2 3 4 5 6 7 8"]
+    correct: 0
+    solution: |-
+      The digits should appear as 0 1 2 3 4 5 6 7 8 9.
+  - id: q19
+    stem: |-
+      Select the correctly written line of digits 0–9.
+    choices: ["1 2 3 4 5 6 7 8 9 0", "0 1 2 3 4 5 6 7 8 9", "0 1 2 3 5 4 6 7 8 9", "0 1 2 3 4 5 6 7 8"]
+    correct: 1
+    solution: |-
+      The only option beginning with 0 and ending with 9 is the second one.
+  - id: q20
+    stem: |-
+      Which list shows digits zero through nine in the proper order?
+    choices: ["0 1 2 3 4 5 6 7 8 9", "0 1 2 3 4 5 7 8 9", "0 1 2 3 4 5 6 8 7 9", "0 1 2 4 3 5 6 7 8 9"]
+    correct: 0
+    solution: |-
+      Option 1 presents each digit from 0 to 9 without any mistakes.
