@@ -1,0 +1,11 @@
+{
+  "id": "EA_AS058",
+  "title": "Relate division to multiplication as inverse operations",
+  "desc": "Understand that division can 'undo' multiplication and use multiplication facts to solve division problems.",
+  "prerequisites": [
+    {
+      "skill_id": "EA_AS050",
+      "weight": 1.0
+    }
+  ]
+}

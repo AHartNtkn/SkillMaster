@@ -1,0 +1,15 @@
+{
+  "id": "EA_AS073",
+  "title": "Tell and write time to the hour using analog and digital clocks",
+  "desc": "Read and record time when the minute hand is on the 12.",
+  "prerequisites": [
+    {
+      "skill_id": "EA_AS001",
+      "weight": 1.0
+    },
+    {
+      "skill_id": "EA_AS006",
+      "weight": 1.0
+    }
+  ]
+}

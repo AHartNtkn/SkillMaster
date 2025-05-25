@@ -1,0 +1,15 @@
+{
+  "id": "EA_AS082",
+  "title": "Estimate differences of two-digit numbers by rounding",
+  "desc": "Approximate the difference of two 2-digit numbers by rounding each to the nearest 10 before subtracting.",
+  "prerequisites": [
+    {
+      "skill_id": "EA_AS077",
+      "weight": 1.0
+    },
+    {
+      "skill_id": "EA_AS043",
+      "weight": 1.0
+    }
+  ]
+}

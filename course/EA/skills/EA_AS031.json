@@ -1,0 +1,11 @@
+{
+  "id": "EA_AS031",
+  "title": "Represent three-digit numbers using base-ten blocks (or drawings)",
+  "desc": "Model three-digit numbers using physical or visual representations of hundreds, tens, and ones.",
+  "prerequisites": [
+    {
+      "skill_id": "EA_AS030",
+      "weight": 1.0
+    }
+  ]
+}

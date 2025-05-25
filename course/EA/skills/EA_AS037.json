@@ -1,0 +1,11 @@
+{
+  "id": "EA_AS037",
+  "title": "Add three or more two-digit numbers",
+  "desc": "Sum a list of three or more two-digit numbers, potentially involving regrouping.",
+  "prerequisites": [
+    {
+      "skill_id": "EA_AS036",
+      "weight": 1.0
+    }
+  ]
+}

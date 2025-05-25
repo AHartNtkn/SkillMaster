@@ -1,0 +1,11 @@
+{
+  "id": "EA_AS018",
+  "title": "Understand subtraction as taking away or finding the difference",
+  "desc": "Grasp the concept that subtraction means removing items from a group or comparing two groups.",
+  "prerequisites": [
+    {
+      "skill_id": "EA_AS004",
+      "weight": 1.0
+    }
+  ]
+}

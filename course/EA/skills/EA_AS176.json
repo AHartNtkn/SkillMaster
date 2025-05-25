@@ -1,0 +1,11 @@
+{
+  "id": "EA_AS176",
+  "title": "Sort 2D shapes based on attributes",
+  "desc": "Group 2D shapes according to shared properties like number of sides or presence of right angles.",
+  "prerequisites": [
+    {
+      "skill_id": "EA_AS175",
+      "weight": 1.0
+    }
+  ]
+}

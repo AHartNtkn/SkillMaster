@@ -1,0 +1,11 @@
+{
+  "id": "EA_AS090",
+  "title": "Understand the identity property of multiplication (a x 1 = a)",
+  "desc": "Recognize that any number multiplied by 1 remains unchanged; identify 1 as multiplicative identity.",
+  "prerequisites": [
+    {
+      "skill_id": "EA_AS052",
+      "weight": 1.0
+    }
+  ]
+}

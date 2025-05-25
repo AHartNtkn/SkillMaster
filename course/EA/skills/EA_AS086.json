@@ -1,0 +1,15 @@
+{
+  "id": "EA_AS086",
+  "title": "Estimate quotients by using compatible numbers",
+  "desc": "Approximate a quotient by finding numbers close to the dividend/divisor that divide easily.",
+  "prerequisites": [
+    {
+      "skill_id": "EA_AS059",
+      "weight": 1.0
+    },
+    {
+      "skill_id": "EA_AS050",
+      "weight": 1.0
+    }
+  ]
+}

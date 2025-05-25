@@ -1,0 +1,19 @@
+{
+  "id": "EA_AS098",
+  "title": "Multiply a two-digit number by a one-digit number (with regrouping)",
+  "desc": "Calculate product of a 2-digit and 1-digit number, involving carrying (e.g., 24 x 3).",
+  "prerequisites": [
+    {
+      "skill_id": "EA_AS050",
+      "weight": 1.0
+    },
+    {
+      "skill_id": "EA_AS035",
+      "weight": 1.0
+    },
+    {
+      "skill_id": "EA_AS029",
+      "weight": 1.0
+    }
+  ]
+}

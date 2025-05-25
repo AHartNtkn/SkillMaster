@@ -1,0 +1,15 @@
+{
+  "id": "EA_AS088",
+  "title": "Identify and apply the associative property of multiplication",
+  "desc": "Recognize and use (axb)xc = ax(bxc) to simplify multiplication.",
+  "prerequisites": [
+    {
+      "skill_id": "EA_AS050",
+      "weight": 1.0
+    },
+    {
+      "skill_id": "EA_AS051",
+      "weight": 1.0
+    }
+  ]
+}

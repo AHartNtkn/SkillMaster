@@ -1,0 +1,15 @@
+{
+  "id": "EA_AS033",
+  "title": "Add a two-digit number and a one-digit number without regrouping",
+  "desc": "Sum a two-digit number and a single-digit number where no carrying is required.",
+  "prerequisites": [
+    {
+      "skill_id": "EA_AS012",
+      "weight": 1.0
+    },
+    {
+      "skill_id": "EA_AS029",
+      "weight": 1.0
+    }
+  ]
+}

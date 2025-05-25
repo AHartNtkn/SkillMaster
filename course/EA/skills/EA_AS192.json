@@ -1,0 +1,19 @@
+{
+  "id": "EA_AS192",
+  "title": "Solve two-step word problems (add/sub)",
+  "desc": "Perform the necessary calculations to find the solution to two-step story problems involving + or -.",
+  "prerequisites": [
+    {
+      "skill_id": "EA_AS191",
+      "weight": 1.0
+    },
+    {
+      "skill_id": "EA_AS039",
+      "weight": 1.0
+    },
+    {
+      "skill_id": "EA_AS046",
+      "weight": 1.0
+    }
+  ]
+}

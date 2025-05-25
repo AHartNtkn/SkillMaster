@@ -1,0 +1,11 @@
+{
+  "id": "EA_AS096",
+  "title": "Identify common multiples of two whole numbers",
+  "desc": "List multiples shared by two different whole numbers.",
+  "prerequisites": [
+    {
+      "skill_id": "EA_AS093",
+      "weight": 1.0
+    }
+  ]
+}

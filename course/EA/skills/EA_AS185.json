@@ -1,0 +1,15 @@
+{
+  "id": "EA_AS185",
+  "title": "Create a simple bar graph from data (with scaled intervals)",
+  "desc": "Represent data using rectangular bars of lengths proportional to the values they represent, possibly with a scale.",
+  "prerequisites": [
+    {
+      "skill_id": "EA_AS183",
+      "weight": 1.0
+    },
+    {
+      "skill_id": "EA_AS006",
+      "weight": 1.0
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "EA_AS183",
+  "title": "Organize data using tally marks",
+  "desc": "Use tally marks as a simple method to count and record frequencies of data points.",
+  "prerequisites": [
+    {
+      "skill_id": "EA_AS182",
+      "weight": 1.0
+    },
+    {
+      "skill_id": "EA_AS004",
+      "weight": 1.0
+    }
+  ]
+}

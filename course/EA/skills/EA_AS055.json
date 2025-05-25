@@ -1,0 +1,11 @@
+{
+  "id": "EA_AS055",
+  "title": "Understand division as equal sharing (partitive)",
+  "desc": "Grasp the concept of dividing a quantity into a known number of equal groups.",
+  "prerequisites": [
+    {
+      "skill_id": "EA_AS004",
+      "weight": 1.0
+    }
+  ]
+}

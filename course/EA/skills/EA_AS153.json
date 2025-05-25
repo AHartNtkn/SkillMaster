@@ -1,0 +1,19 @@
+{
+  "id": "EA_AS153",
+  "title": "Calculate elapsed time in minutes (within the hour)",
+  "desc": "Determine the duration between two times, in minutes, when both times are within the same hour.",
+  "prerequisites": [
+    {
+      "skill_id": "EA_AS150",
+      "weight": 1.0
+    },
+    {
+      "skill_id": "EA_AS006",
+      "weight": 1.0
+    },
+    {
+      "skill_id": "EA_AS007",
+      "weight": 1.0
+    }
+  ]
+}

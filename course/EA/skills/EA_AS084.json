@@ -1,0 +1,23 @@
+{
+  "id": "EA_AS084",
+  "title": "Use estimation to check reasonableness of answers (add/sub)",
+  "desc": "Compare an estimated sum/difference to a calculated one to verify if the calculation is plausible.",
+  "prerequisites": [
+    {
+      "skill_id": "EA_AS080",
+      "weight": 1.0
+    },
+    {
+      "skill_id": "EA_AS082",
+      "weight": 1.0
+    },
+    {
+      "skill_id": "EA_AS036",
+      "weight": 1.0
+    },
+    {
+      "skill_id": "EA_AS043",
+      "weight": 1.0
+    }
+  ]
+}

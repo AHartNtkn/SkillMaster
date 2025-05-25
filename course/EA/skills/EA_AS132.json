@@ -1,0 +1,15 @@
+{
+  "id": "EA_AS132",
+  "title": "Solve word problems involving multiplication of a fraction by a whole number",
+  "desc": "Interpret and solve story problems requiring multiplication of a fraction by a whole number.",
+  "prerequisites": [
+    {
+      "skill_id": "EA_AS131",
+      "weight": 1.0
+    },
+    {
+      "skill_id": "EA_AS053",
+      "weight": 1.0
+    }
+  ]
+}

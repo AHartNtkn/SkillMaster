@@ -1,0 +1,19 @@
+{
+  "id": "EA_AS193",
+  "title": "Identify steps for two-step word problems (mult/div with others)",
+  "desc": "Determine sequence of two operations (mult/div with add/sub) needed to solve a story problem.",
+  "prerequisites": [
+    {
+      "skill_id": "EA_AS053",
+      "weight": 1.0
+    },
+    {
+      "skill_id": "EA_AS062",
+      "weight": 1.0
+    },
+    {
+      "skill_id": "EA_AS192",
+      "weight": 1.0
+    }
+  ]
+}

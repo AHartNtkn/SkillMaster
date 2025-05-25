@@ -1,0 +1,15 @@
+{
+  "id": "EA_AS105",
+  "title": "Divide a two-digit number by a one-digit number (long division steps, with remainder)",
+  "desc": "Use the long division algorithm for 2-digit dividends and 1-digit divisors, resulting in a remainder.",
+  "prerequisites": [
+    {
+      "skill_id": "EA_AS104",
+      "weight": 1.0
+    },
+    {
+      "skill_id": "EA_AS102",
+      "weight": 1.0
+    }
+  ]
+}

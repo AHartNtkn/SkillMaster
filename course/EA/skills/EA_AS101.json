@@ -1,0 +1,15 @@
+{
+  "id": "EA_AS101",
+  "title": "Solve multi-step word problems involving multi-digit multiplication",
+  "desc": "Interpret and solve story problems requiring multiple multiplication steps with multi-digit numbers.",
+  "prerequisites": [
+    {
+      "skill_id": "EA_AS100",
+      "weight": 1.0
+    },
+    {
+      "skill_id": "EA_AS053",
+      "weight": 1.0
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "id": "EA_AS046",
+  "title": "Solve multi-step subtraction word problems involving multi-digit numbers",
+  "desc": "Interpret and solve story problems requiring multiple subtraction operations with multi-digit numbers.",
+  "prerequisites": [
+    {
+      "skill_id": "EA_AS044",
+      "weight": 1.0
+    }
+  ]
+}

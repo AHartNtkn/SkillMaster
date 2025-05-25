@@ -1,0 +1,11 @@
+{
+  "id": "EA_AS062",
+  "title": "Solve single-step division word problems (no remainders)",
+  "desc": "Interpret and solve story problems requiring a single division operation resulting in a whole number.",
+  "prerequisites": [
+    {
+      "skill_id": "EA_AS059",
+      "weight": 1.0
+    }
+  ]
+}

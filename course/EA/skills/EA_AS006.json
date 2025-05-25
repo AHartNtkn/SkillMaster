@@ -1,0 +1,11 @@
+{
+  "id": "EA_AS006",
+  "title": "Count forwards to 20",
+  "desc": "Recite number sequence from 1 to 20.",
+  "prerequisites": [
+    {
+      "skill_id": "EA_AS004",
+      "weight": 1.0
+    }
+  ]
+}

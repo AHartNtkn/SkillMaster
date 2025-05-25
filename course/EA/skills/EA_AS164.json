@@ -1,0 +1,15 @@
+{
+  "id": "EA_AS164",
+  "title": "Measure weight/mass using non-standard units",
+  "desc": "Use everyday objects (e.g., blocks) to compare or quantify the weight of other objects.",
+  "prerequisites": [
+    {
+      "skill_id": "EA_AS072",
+      "weight": 1.0
+    },
+    {
+      "skill_id": "EA_AS004",
+      "weight": 1.0
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "id": "EA_AS171",
+  "title": "Understand area as the measure of surface covered by a shape",
+  "desc": "Grasp the concept that area quantifies the 2D space a flat shape occupies.",
+  "prerequisites": [
+    {
+      "skill_id": "EA_AS004",
+      "weight": 1.0
+    }
+  ]
+}

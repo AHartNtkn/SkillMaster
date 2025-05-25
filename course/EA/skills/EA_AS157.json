@@ -1,0 +1,19 @@
+{
+  "id": "EA_AS157",
+  "title": "Make change from $1.00",
+  "desc": "Determine the correct amount of coins to return as change from one dollar for a purchase less than $1.00.",
+  "prerequisites": [
+    {
+      "skill_id": "EA_AS156",
+      "weight": 1.0
+    },
+    {
+      "skill_id": "EA_AS019",
+      "weight": 1.0
+    },
+    {
+      "skill_id": "EA_AS043",
+      "weight": 1.0
+    }
+  ]
+}

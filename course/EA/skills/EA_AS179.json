@@ -1,0 +1,11 @@
+{
+  "id": "EA_AS179",
+  "title": "Identify common 3D shapes",
+  "desc": "Recognize and name shapes like cube, sphere, cone, cylinder, rectangular prism, pyramid.",
+  "prerequisites": [
+    {
+      "skill_id": "EA_AS001",
+      "weight": 1.0
+    }
+  ]
+}

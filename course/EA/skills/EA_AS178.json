@@ -1,0 +1,11 @@
+{
+  "id": "EA_AS178",
+  "title": "Identify parallel and perpendicular lines (basic recognition)",
+  "desc": "Distinguish between lines that never meet (parallel) and lines that meet at a right angle (perpendicular).",
+  "prerequisites": [
+    {
+      "skill_id": "EA_AS177",
+      "weight": 1.0
+    }
+  ]
+}

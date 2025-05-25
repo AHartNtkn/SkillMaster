@@ -1,0 +1,15 @@
+{
+  "id": "EA_AS136",
+  "title": "Read and write decimals to the hundredths place",
+  "desc": "Correctly say and write numbers like 0.07 or 2.35.",
+  "prerequisites": [
+    {
+      "skill_id": "EA_AS135",
+      "weight": 1.0
+    },
+    {
+      "skill_id": "EA_AS134",
+      "weight": 1.0
+    }
+  ]
+}

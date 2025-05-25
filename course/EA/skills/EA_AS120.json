@@ -1,0 +1,19 @@
+{
+  "id": "EA_AS120",
+  "title": "Convert mixed numbers to improper fractions",
+  "desc": "Change a mixed number into an equivalent fraction where numerator is larger than denominator (e.g., 2 1/3 to 7/3).",
+  "prerequisites": [
+    {
+      "skill_id": "EA_AS118",
+      "weight": 1.0
+    },
+    {
+      "skill_id": "EA_AS050",
+      "weight": 1.0
+    },
+    {
+      "skill_id": "EA_AS011",
+      "weight": 1.0
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "id": "EA_AS186",
+  "title": "Create a line plot to represent measurement data",
+  "desc": "Display data frequencies along a number line using X's or dots over corresponding values.",
+  "prerequisites": [
+    {
+      "skill_id": "EA_AS071",
+      "weight": 1.0
+    },
+    {
+      "skill_id": "EA_AS183",
+      "weight": 1.0
+    },
+    {
+      "skill_id": "EA_AS009",
+      "weight": 1.0
+    }
+  ]
+}

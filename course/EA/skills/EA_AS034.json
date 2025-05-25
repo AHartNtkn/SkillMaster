@@ -1,0 +1,11 @@
+{
+  "id": "EA_AS034",
+  "title": "Add two two-digit numbers without regrouping",
+  "desc": "Sum two two-digit numbers where no carrying is required in any place value column.",
+  "prerequisites": [
+    {
+      "skill_id": "EA_AS033",
+      "weight": 1.0
+    }
+  ]
+}

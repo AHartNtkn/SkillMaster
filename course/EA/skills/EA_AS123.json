@@ -1,0 +1,19 @@
+{
+  "id": "EA_AS123",
+  "title": "Subtract fractions with like denominators",
+  "desc": "Find the difference between two fractions that share the same denominator.",
+  "prerequisites": [
+    {
+      "skill_id": "EA_AS064",
+      "weight": 1.0
+    },
+    {
+      "skill_id": "EA_AS019",
+      "weight": 1.0
+    },
+    {
+      "skill_id": "EA_AS065",
+      "weight": 1.0
+    }
+  ]
+}

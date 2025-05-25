@@ -1,0 +1,15 @@
+{
+  "id": "EA_AS065",
+  "title": "Understand the meaning of numerator and denominator",
+  "desc": "Identify the top number (numerator) as parts considered and bottom number (denominator) as total equal parts.",
+  "prerequisites": [
+    {
+      "skill_id": "EA_AS063",
+      "weight": 1.0
+    },
+    {
+      "skill_id": "EA_AS064",
+      "weight": 1.0
+    }
+  ]
+}

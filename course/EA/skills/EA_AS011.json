@@ -1,0 +1,15 @@
+{
+  "id": "EA_AS011",
+  "title": "Add two single-digit numbers with sums up to 10",
+  "desc": "Calculate the sum of two numbers, each between 0 and 9, where the total is 10 or less.",
+  "prerequisites": [
+    {
+      "skill_id": "EA_AS010",
+      "weight": 1.0
+    },
+    {
+      "skill_id": "EA_AS013",
+      "weight": 1.0
+    }
+  ]
+}

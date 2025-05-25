@@ -1,0 +1,15 @@
+{
+  "id": "EA_AS163",
+  "title": "Estimate liquid volumes",
+  "desc": "Approximate the amount a container holds using standard units without precise measurement.",
+  "prerequisites": [
+    {
+      "skill_id": "EA_AS162",
+      "weight": 1.0
+    },
+    {
+      "skill_id": "EA_AS005",
+      "weight": 1.0
+    }
+  ]
+}

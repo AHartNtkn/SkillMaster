@@ -1,0 +1,15 @@
+{
+  "id": "EA_AS043",
+  "title": "Subtract two two-digit numbers with regrouping (borrowing)",
+  "desc": "Find the difference between two two-digit numbers where borrowing is required.",
+  "prerequisites": [
+    {
+      "skill_id": "EA_AS042",
+      "weight": 1.0
+    },
+    {
+      "skill_id": "EA_AS041",
+      "weight": 1.0
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "id": "EA_AS195",
+  "title": "Choose the correct operation(s) for a word problem",
+  "desc": "Analyze a word problem to select the appropriate arithmetic operation(s) to find the solution.",
+  "prerequisites": [
+    {
+      "skill_id": "EA_AS192",
+      "weight": 1.0
+    },
+    {
+      "skill_id": "EA_AS194",
+      "weight": 1.0
+    }
+  ]
+}

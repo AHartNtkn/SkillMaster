@@ -1,0 +1,19 @@
+{
+  "id": "EA_AS121",
+  "title": "Represent improper fractions and mixed numbers on a number line",
+  "desc": "Locate and plot improper fractions and mixed numbers on a number line beyond 1.",
+  "prerequisites": [
+    {
+      "skill_id": "EA_AS068",
+      "weight": 1.0
+    },
+    {
+      "skill_id": "EA_AS117",
+      "weight": 1.0
+    },
+    {
+      "skill_id": "EA_AS118",
+      "weight": 1.0
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+{
+  "id": "EA_AS194",
+  "title": "Solve two-step word problems (mult/div with others)",
+  "desc": "Perform calculations for two-step story problems involving x, \u00f7, +, or -.",
+  "prerequisites": [
+    {
+      "skill_id": "EA_AS193",
+      "weight": 1.0
+    },
+    {
+      "skill_id": "EA_AS101",
+      "weight": 1.0
+    },
+    {
+      "skill_id": "EA_AS107",
+      "weight": 1.0
+    }
+  ]
+}

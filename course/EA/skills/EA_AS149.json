@@ -1,0 +1,15 @@
+{
+  "id": "EA_AS149",
+  "title": "Tell and write time to the nearest five minutes",
+  "desc": "Read and record time on analog/digital clocks when minute hand points to numbers on clock face.",
+  "prerequisites": [
+    {
+      "skill_id": "EA_AS074",
+      "weight": 1.0
+    },
+    {
+      "skill_id": "EA_AS006",
+      "weight": 1.0
+    }
+  ]
+}

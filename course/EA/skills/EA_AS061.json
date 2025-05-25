@@ -1,0 +1,11 @@
+{
+  "id": "EA_AS061",
+  "title": "Understand that division by zero is undefined",
+  "desc": "Grasp the concept that a number cannot be divided by zero.",
+  "prerequisites": [
+    {
+      "skill_id": "EA_AS059",
+      "weight": 1.0
+    }
+  ]
+}

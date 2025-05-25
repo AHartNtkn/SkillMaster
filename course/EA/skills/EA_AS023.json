@@ -1,0 +1,15 @@
+{
+  "id": "EA_AS023",
+  "title": "Relate subtraction to addition as inverse operations (within 20)",
+  "desc": "Understand that subtraction can 'undo' addition and use addition facts to solve subtraction problems.",
+  "prerequisites": [
+    {
+      "skill_id": "EA_AS011",
+      "weight": 1.0
+    },
+    {
+      "skill_id": "EA_AS019",
+      "weight": 1.0
+    }
+  ]
+}

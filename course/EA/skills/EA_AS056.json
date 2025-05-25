@@ -1,0 +1,11 @@
+{
+  "id": "EA_AS056",
+  "title": "Understand division as repeated subtraction (measurement/quotitive)",
+  "desc": "Grasp the concept of finding how many times a smaller number fits into a larger number by subtracting.",
+  "prerequisites": [
+    {
+      "skill_id": "EA_AS019",
+      "weight": 1.0
+    }
+  ]
+}

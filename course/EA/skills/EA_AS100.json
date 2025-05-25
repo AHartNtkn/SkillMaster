@@ -1,0 +1,15 @@
+{
+  "id": "EA_AS100",
+  "title": "Multiply two two-digit numbers",
+  "desc": "Calculate product of two 2-digit numbers (e.g., 24 x 13).",
+  "prerequisites": [
+    {
+      "skill_id": "EA_AS098",
+      "weight": 1.0
+    },
+    {
+      "skill_id": "EA_AS036",
+      "weight": 1.0
+    }
+  ]
+}

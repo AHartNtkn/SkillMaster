@@ -1,0 +1,19 @@
+{
+  "id": "EA_AS139",
+  "title": "Identify the place value of digits in decimals to the hundredths place",
+  "desc": "Recognize the value of digits in the tenths and hundredths positions.",
+  "prerequisites": [
+    {
+      "skill_id": "EA_AS029",
+      "weight": 1.0
+    },
+    {
+      "skill_id": "EA_AS137",
+      "weight": 1.0
+    },
+    {
+      "skill_id": "EA_AS138",
+      "weight": 1.0
+    }
+  ]
+}
