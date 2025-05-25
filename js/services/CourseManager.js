@@ -42,12 +42,12 @@ export class CourseManager {
      */
     async loadCourses() {
         try {
-            const coursesData = await this.storage.loadJSON('/courses.json');
+            const coursesData = await this.storage.loadJSON('/course/catalog.json');
             
             for (const courseInfo of coursesData.courses) {
-                const course = await this.loadCourse(courseInfo.id);
+                const course = await this.loadCourse(courseInfo.id, courseInfo);
                 if (course) {
-                    // Course ID from courses.json should match catalog course_id and directory name
+                    // Course ID from catalog.json should match course_id and directory name
                     this.courses.set(course.courseId, course);
                 }
             }
@@ -59,13 +59,17 @@ export class CourseManager {
     /**
      * Load a single course
      * @param {string} courseId
+     * @param {Object} courseInfo - Course info from main catalog
      * @returns {Promise<Course|null>}
      */
-    async loadCourse(courseId) {
+    async loadCourse(courseId, courseInfo) {
         try {
-            // Load catalog
-            const catalogPath = `/course/${courseId}/catalog.json`;
-            const catalogData = await this.storage.loadJSON(catalogPath);
+            // Create catalog data from main catalog course info
+            const catalogData = {
+                format: "Catalog-v1",
+                course_id: courseId,
+                title: courseInfo.name
+            };
             const course = new Course(catalogData);
             
             // Store catalog data for later use
