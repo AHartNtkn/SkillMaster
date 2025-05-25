@@ -108,3 +108,39 @@ describe('View Start Methods', () => {
         expect(mixedQuizView.showNoQuestionsAvailable).toHaveBeenCalled();
     });
 });
+
+describe('Markdown Rendering', () => {
+    test('LearningView.renderMarkdown parses lists, headings and math', () => {
+        const view = new LearningView();
+        const md = '# Title\n- item1\n- item2\n\nInline $x$';
+        const html = view.renderMarkdown(md);
+        expect(html).toContain('<h1>Title</h1>');
+        expect(html).toContain('<ul>');
+        expect(html).toContain('<li>item1</li>');
+        expect(html).toContain('<li>item2</li>');
+        expect(html).toContain('$x$');
+    });
+
+    test('MixedQuizView.renderMarkdown parses lists, headings and math', () => {
+        const view = new MixedQuizView();
+        const md = '## Heading\n1. one\n2. two\n\nEquation $y$';
+        const html = view.renderMarkdown(md);
+        expect(html).toContain('<h2>Heading</h2>');
+        expect(html).toContain('<ol>');
+        expect(html).toContain('<li>one</li>');
+        expect(html).toContain('<li>two</li>');
+        expect(html).toContain('$y$');
+    });
+
+    test('showExposition triggers MathJax typesetting', async () => {
+        const courseManager = { getSkillExplanation: vi.fn(async () => '# H\n') };
+        const view = new LearningView(courseManager);
+        view.currentSkill = { id: 'EA:AS001', title: 'Test' };
+
+        global.document = { getElementById: vi.fn(() => ({ innerHTML: '' })) };
+        global.window.MathJax = { typesetPromise: vi.fn() };
+
+        await view.showExposition();
+        expect(window.MathJax.typesetPromise).toHaveBeenCalled();
+    });
+});

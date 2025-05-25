@@ -1,7 +1,10 @@
+// import MarkdownIt from 'markdown-it';
+
 /**
  * LearningView
  * Handles the learning flow: exposition, questions, feedback, and ratings
  */
+const mdParser = new window.markdownit();
 export class LearningView {
     constructor(courseManager) {
         this.courseManager = courseManager;
@@ -375,11 +378,6 @@ export class LearningView {
     }
 
     renderMarkdown(text) {
-        // Basic markdown rendering (in production, use a proper markdown parser)
-        return text
-            .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-            .replace(/\*(.+?)\*/g, '<em>$1</em>')
-            .replace(/`(.+?)`/g, '<code>$1</code>')
-            .replace(/\n/g, '<br>');
+        return mdParser.render(text || '');
     }
 }

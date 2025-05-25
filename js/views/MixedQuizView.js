@@ -1,7 +1,10 @@
+// import MarkdownIt from 'markdown-it';
+
 /**
  * MixedQuizView
  * Handles mixed quiz sessions with questions from multiple mastered skills
  */
+const mdParser = new window.markdownit();
 export class MixedQuizView {
     constructor(courseManager, taskSelector) {
         this.courseManager = courseManager;
@@ -296,11 +299,6 @@ export class MixedQuizView {
     }
 
     renderMarkdown(text) {
-        // Basic markdown rendering
-        return text
-            .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
-            .replace(/\*(.+?)\*/g, '<em>$1</em>')
-            .replace(/`(.+?)`/g, '<code>$1</code>')
-            .replace(/\n/g, '<br>');
+        return mdParser.render(text || '');
     }
 }
