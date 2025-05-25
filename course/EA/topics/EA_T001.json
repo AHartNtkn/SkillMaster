@@ -1,5 +1,15 @@
 {
   "id": "EA_T001",
   "name": "Number Sense & Counting",
-  "ass": ["EA_AS001", "EA_AS003", "EA_AS004"]
+  "ass": [
+    "EA_AS001",
+    "EA_AS002",
+    "EA_AS003",
+    "EA_AS004",
+    "EA_AS005",
+    "EA_AS006",
+    "EA_AS007",
+    "EA_AS008",
+    "EA_AS009"
+  ]
 }

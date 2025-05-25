@@ -1,0 +1,16 @@
+{
+  "id": "EA_AS077",
+  "title": "Round whole numbers to the nearest 10",
+  "desc": "Determine the multiple of 10 closest to a given whole number.",
+  "prereqs": [
+    {
+      "id": "EA_AS026",
+      "weight": 1.0
+    },
+    {
+      "id": "EA_AS029",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

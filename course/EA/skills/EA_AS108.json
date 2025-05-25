@@ -1,0 +1,12 @@
+{
+  "id": "EA_AS108",
+  "title": "Compare fractions with like numerators",
+  "desc": "Determine which fraction is larger/smaller when numerators are same but denominators differ (e.g., 2/5 vs 2/3).",
+  "prereqs": [
+    {
+      "id": "EA_AS065",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

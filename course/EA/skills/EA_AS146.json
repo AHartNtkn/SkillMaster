@@ -1,0 +1,20 @@
+{
+  "id": "EA_AS146",
+  "title": "Add decimals to the hundredths place (no regrouping, often related to money)",
+  "desc": "Sum two decimals to hundredths where no carrying is required (e.g., $0.25 + $0.50).",
+  "prereqs": [
+    {
+      "id": "EA_AS138",
+      "weight": 1.0
+    },
+    {
+      "id": "EA_AS033",
+      "weight": 1.0
+    },
+    {
+      "id": "EA_AS139",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

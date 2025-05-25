@@ -1,0 +1,12 @@
+{
+  "id": "EA_AS167",
+  "title": "Understand temperature as a measure of hotness or coldness",
+  "desc": "Grasp the basic concept of what temperature indicates.",
+  "prereqs": [
+    {
+      "id": "EA_AS005",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

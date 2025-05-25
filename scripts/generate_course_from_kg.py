@@ -31,12 +31,12 @@ def main(kg_path, course_dir):
     (course_path / 'as_questions').mkdir(parents=True, exist_ok=True)
 
     # catalog
-    if catalog:
-        write_json(course_path / 'catalog.json', {
-            'format': catalog.get('format', 'Catalog-v1'),
-            'course_id': catalog.get('course_id'),
-            'title': catalog.get('title')
-        })
+    # if catalog:
+    #     write_json(course_path / 'catalog.json', {
+    #         'format': catalog.get('format', 'Catalog-v1'),
+    #         'course_id': catalog.get('course_id'),
+    #         'title': catalog.get('title')
+    #     })
 
     # topics
     for t in topics:

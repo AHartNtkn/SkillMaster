@@ -1,0 +1,12 @@
+{
+  "id": "EA_AS060",
+  "title": "Understand division by 1",
+  "desc": "Recognize that dividing any number by 1 results in the number itself.",
+  "prereqs": [
+    {
+      "id": "EA_AS059",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

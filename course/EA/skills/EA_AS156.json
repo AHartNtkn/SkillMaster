@@ -1,0 +1,16 @@
+{
+  "id": "EA_AS156",
+  "title": "Count collections of coins including quarters",
+  "desc": "Calculate the total value of a collection of pennies, nickels, dimes, and quarters.",
+  "prereqs": [
+    {
+      "id": "EA_AS076",
+      "weight": 1.0
+    },
+    {
+      "id": "EA_AS075",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

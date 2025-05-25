@@ -1,0 +1,16 @@
+{
+  "id": "EA_AS138",
+  "title": "Relate hundredths to decimal notation (e.g., 27/100 = 0.27)",
+  "desc": "Convert fractions with denominator 100 to their decimal equivalents and vice-versa.",
+  "prereqs": [
+    {
+      "id": "EA_AS134",
+      "weight": 1.0
+    },
+    {
+      "id": "EA_AS136",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

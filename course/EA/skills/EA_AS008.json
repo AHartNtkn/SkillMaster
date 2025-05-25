@@ -1,0 +1,12 @@
+{
+  "id": "EA_AS008",
+  "title": "Identify ordinal numbers (e.g., first, second, third) up to 5th",
+  "desc": "Understand and use terms describing position in a sequence up to fifth.",
+  "prereqs": [
+    {
+      "id": "EA_AS006",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

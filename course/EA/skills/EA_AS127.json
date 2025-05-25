@@ -1,0 +1,20 @@
+{
+  "id": "EA_AS127",
+  "title": "Subtract mixed numbers with like denominators (no regrouping)",
+  "desc": "Subtract mixed numbers where fraction parts have same denominator and minuend fraction is larger.",
+  "prereqs": [
+    {
+      "id": "EA_AS118",
+      "weight": 1.0
+    },
+    {
+      "id": "EA_AS123",
+      "weight": 1.0
+    },
+    {
+      "id": "EA_AS019",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

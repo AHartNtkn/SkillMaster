@@ -1,0 +1,12 @@
+{
+  "id": "EA_AS024",
+  "title": "Subtract zero from a number",
+  "desc": "Understand that subtracting zero from any number results in that same number.",
+  "prereqs": [
+    {
+      "id": "EA_AS019",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

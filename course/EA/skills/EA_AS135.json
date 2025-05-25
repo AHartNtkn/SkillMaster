@@ -1,0 +1,16 @@
+{
+  "id": "EA_AS135",
+  "title": "Read and write decimals to the tenths place",
+  "desc": "Correctly say and write numbers like 0.7 or 2.3.",
+  "prereqs": [
+    {
+      "id": "EA_AS001",
+      "weight": 1.0
+    },
+    {
+      "id": "EA_AS133",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

@@ -1,0 +1,16 @@
+{
+  "id": "EA_AS133",
+  "title": "Understand tenths as fractions with a denominator of 10",
+  "desc": "Recognize that one tenth is 1 part out of 10 equal parts of a whole (1/10).",
+  "prereqs": [
+    {
+      "id": "EA_AS063",
+      "weight": 1.0
+    },
+    {
+      "id": "EA_AS029",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

@@ -1,0 +1,16 @@
+{
+  "id": "EA_AS044",
+  "title": "Subtract three-digit numbers with and without regrouping",
+  "desc": "Find the difference between two three-digit numbers, correctly applying regrouping rules.",
+  "prereqs": [
+    {
+      "id": "EA_AS043",
+      "weight": 1.0
+    },
+    {
+      "id": "EA_AS030",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

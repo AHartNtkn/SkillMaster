@@ -1,0 +1,16 @@
+{
+  "id": "EA_AS137",
+  "title": "Relate tenths to decimal notation (e.g., 3/10 = 0.3)",
+  "desc": "Convert fractions with denominator 10 to their decimal equivalents and vice-versa.",
+  "prereqs": [
+    {
+      "id": "EA_AS133",
+      "weight": 1.0
+    },
+    {
+      "id": "EA_AS135",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

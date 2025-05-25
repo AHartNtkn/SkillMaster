@@ -1,0 +1,12 @@
+{
+  "id": "EA_AS189",
+  "title": "Read and interpret data from a line plot",
+  "desc": "Understand and extract information from a line plot, including finding most frequent values or range.",
+  "prereqs": [
+    {
+      "id": "EA_AS186",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

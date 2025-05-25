@@ -1,0 +1,16 @@
+{
+  "id": "EA_AS068",
+  "title": "Represent fractions on a number line (simple cases)",
+  "desc": "Locate and plot simple fractions like 1/2, 1/4, 3/4 on a number line between 0 and 1.",
+  "prereqs": [
+    {
+      "id": "EA_AS009",
+      "weight": 1.0
+    },
+    {
+      "id": "EA_AS063",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

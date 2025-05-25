@@ -1,0 +1,12 @@
+{
+  "id": "EA_AS045",
+  "title": "Subtract across zeros",
+  "desc": "Perform subtraction when borrowing is required from a place value column containing a zero (e.g., 200 - 37).",
+  "prereqs": [
+    {
+      "id": "EA_AS044",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

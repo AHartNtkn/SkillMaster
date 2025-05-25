@@ -1,0 +1,16 @@
+{
+  "id": "EA_AS163",
+  "title": "Estimate liquid volumes",
+  "desc": "Approximate the amount a container holds using standard units without precise measurement.",
+  "prereqs": [
+    {
+      "id": "EA_AS162",
+      "weight": 1.0
+    },
+    {
+      "id": "EA_AS005",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

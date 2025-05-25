@@ -1,0 +1,16 @@
+{
+  "id": "EA_AS117",
+  "title": "Identify improper fractions",
+  "desc": "Recognize fractions where the numerator is greater than or equal to the denominator.",
+  "prereqs": [
+    {
+      "id": "EA_AS064",
+      "weight": 1.0
+    },
+    {
+      "id": "EA_AS065",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

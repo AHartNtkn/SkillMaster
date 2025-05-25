@@ -1,0 +1,16 @@
+{
+  "id": "EA_AS094",
+  "title": "Determine if a whole number is a multiple of another single-digit number",
+  "desc": "Check if a whole number can be evenly divided by a single-digit number.",
+  "prereqs": [
+    {
+      "id": "EA_AS093",
+      "weight": 1.0
+    },
+    {
+      "id": "EA_AS059",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

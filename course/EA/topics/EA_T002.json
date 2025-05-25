@@ -1,5 +1,14 @@
 {
   "id": "EA_T002",
   "name": "Basic Addition",
-  "ass": ["EA_AS013"]
+  "ass": [
+    "EA_AS010",
+    "EA_AS011",
+    "EA_AS012",
+    "EA_AS013",
+    "EA_AS014",
+    "EA_AS015",
+    "EA_AS016",
+    "EA_AS017"
+  ]
 }

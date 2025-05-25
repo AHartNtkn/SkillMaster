@@ -1,0 +1,12 @@
+{
+  "id": "EA_AS025",
+  "title": "Subtract a number from itself",
+  "desc": "Understand that subtracting a number from itself results in zero.",
+  "prereqs": [
+    {
+      "id": "EA_AS019",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

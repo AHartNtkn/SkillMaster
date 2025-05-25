@@ -1,0 +1,12 @@
+{
+  "id": "EA_AS047",
+  "title": "Understand multiplication as repeated addition",
+  "desc": "Grasp the concept that multiplying is a shortcut for adding the same number multiple times.",
+  "prereqs": [
+    {
+      "id": "EA_AS011",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

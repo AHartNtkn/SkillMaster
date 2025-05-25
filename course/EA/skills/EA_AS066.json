@@ -1,0 +1,12 @@
+{
+  "id": "EA_AS066",
+  "title": "Compare unit fractions with visual aids",
+  "desc": "Determine which of two unit fractions is larger or smaller using models or diagrams.",
+  "prereqs": [
+    {
+      "id": "EA_AS065",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

@@ -1,0 +1,12 @@
+{
+  "id": "EA_AS097",
+  "title": "Understand prime and composite numbers (basic introduction)",
+  "desc": "Distinguish numbers with exactly two factors (prime) from those with more (composite).",
+  "prereqs": [
+    {
+      "id": "EA_AS092",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

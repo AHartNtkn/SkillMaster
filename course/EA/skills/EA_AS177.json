@@ -1,0 +1,12 @@
+{
+  "id": "EA_AS177",
+  "title": "Identify lines, line segments, rays, and angles (right, acute, obtuse - basic recognition)",
+  "desc": "Recognize basic geometric elements and types of angles by sight.",
+  "prereqs": [
+    {
+      "id": "EA_AS174",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

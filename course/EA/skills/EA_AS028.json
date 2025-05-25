@@ -1,0 +1,12 @@
+{
+  "id": "EA_AS028",
+  "title": "Compare two-digit numbers using <, >, =",
+  "desc": "Determine if one two-digit number is less than, greater than, or equal to another.",
+  "prereqs": [
+    {
+      "id": "EA_AS029",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}

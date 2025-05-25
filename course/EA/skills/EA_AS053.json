@@ -1,0 +1,12 @@
+{
+  "id": "EA_AS053",
+  "title": "Solve single-step multiplication word problems",
+  "desc": "Interpret and solve story problems requiring a single multiplication operation.",
+  "prereqs": [
+    {
+      "id": "EA_AS050",
+      "weight": 1.0
+    }
+  ],
+  "xp": 1
+}
