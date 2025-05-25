@@ -2,7 +2,162 @@ format: ASQ-v1
 id: EA_AS001
 pool:
   - id: q1
-    stem: Example question for EA_AS001
-    choices: ['A', 'B', 'C', 'D']
+    stem: |-
+      Select the numeral missing from this lineup:
+      0 1 2 3 4 5 6 7 9
+    choices: ["8", "0", "6", "9"]
     correct: 0
-    solution: Placeholder solution
+    solution: |-
+      Scan the digits 0–9. Only 8 is absent from the list.
+  - id: q2
+    stem: |-
+      Select the numeral missing from this lineup:
+      1 2 3 4 5 6 7 8 9
+    choices: ["0", "1", "2", "3"]
+    correct: 0
+    solution: |-
+      Every digit except 0 appears, so the missing numeral is 0.
+  - id: q3
+    stem: |-
+      Select the numeral missing from this lineup:
+      0 1 2 4 5 6 7 8 9
+    choices: ["9", "3", "0", "8"]
+    correct: 1
+    solution: |-
+      Compare against the full set 0–9. Digit 3 does not appear.
+  - id: q4
+    stem: |-
+      Select the numeral missing from this lineup:
+      0 1 3 4 5 6 7 8 9
+    choices: ["5", "6", "2", "8"]
+    correct: 2
+    solution: |-
+      The lineup lacks the digit 2.
+  - id: q5
+    stem: |-
+      Select the numeral missing from this lineup:
+      0 1 2 3 4 5 7 8 9
+    choices: ["9", "7", "8", "6"]
+    correct: 3
+    solution: |-
+      Digit 6 is the only one not shown.
+  - id: q6
+    stem: |-
+      Select the numeral missing from this lineup:
+      0 1 2 3 4 5 6 8 9
+    choices: ["7", "5", "6", "9"]
+    correct: 0
+    solution: |-
+      Checking 0–9 reveals that 7 is missing.
+  - id: q7
+    stem: |-
+      Select the numeral missing from this lineup:
+      0 1 2 3 4 5 6 7 8
+    choices: ["8", "9", "6", "7"]
+    correct: 1
+    solution: |-
+      The full set ends with 9, which is absent here.
+  - id: q8
+    stem: |-
+      Select the numeral missing from this lineup:
+      0 1 2 3 5 6 7 8 9
+    choices: ["7", "4", "5", "3"]
+    correct: 1
+    solution: |-
+      Only the digit 4 is missing.
+  - id: q9
+    stem: |-
+      Select the numeral missing from this lineup:
+      0 2 3 4 5 6 7 8 9
+    choices: ["3", "1", "0", "2"]
+    correct: 1
+    solution: |-
+      Digit 1 does not appear in the list.
+  - id: q10
+    stem: |-
+      Select the numeral missing from this lineup:
+      9 8 7 6 5 4 3 2 1
+    choices: ["2", "0", "9", "8"]
+    correct: 1
+    solution: |-
+      All digits except 0 are present.
+  - id: q11
+    stem: |-
+      Select the numeral missing from this lineup:
+      9 8 7 6 5 4 3 1 0
+    choices: ["2", "3", "1", "0"]
+    correct: 0
+    solution: |-
+      Digit 2 is the only one missing.
+  - id: q12
+    stem: |-
+      Select the numeral missing from this lineup:
+      3 0 2 6 7 9 8 5 4
+    choices: ["1", "2", "3", "4"]
+    correct: 0
+    solution: |-
+      The lineup lacks the numeral 1.
+  - id: q13
+    stem: |-
+      Select the numeral missing from this lineup:
+      4 6 2 1 3 7 9 5 8
+    choices: ["1", "0", "2", "3"]
+    correct: 1
+    solution: |-
+      Comparing to 0–9 shows only 0 is absent.
+  - id: q14
+    stem: |-
+      Select the numeral missing from this lineup:
+      9 0 1 2 3 4 5 6 7
+    choices: ["8", "7", "6", "5"]
+    correct: 0
+    solution: |-
+      The sequence stops at 7, so 8 is missing.
+  - id: q15
+    stem: |-
+      Select the numeral missing from this lineup:
+      8 7 6 5 4 3 2 1 0
+    choices: ["9", "8", "0", "1"]
+    correct: 0
+    solution: |-
+      The digits descend from 8 to 0; 9 never appears.
+  - id: q16
+    stem: |-
+      Select the numeral missing from this lineup:
+      0 1 2 3 4 6 7 9 8
+    choices: ["5", "6", "7", "8"]
+    correct: 0
+    solution: |-
+      The digit 5 is absent from the list.
+  - id: q17
+    stem: |-
+      Select the numeral missing from this lineup:
+      0 1 2 5 6 7 8 9 3
+    choices: ["4", "5", "6", "2"]
+    correct: 0
+    solution: |-
+      The digits jump from 3 to 5; 4 is missing.
+  - id: q18
+    stem: |-
+      Select the numeral missing from this lineup:
+      6 7 8 9 0 1 3 4 5
+    choices: ["2", "3", "5", "6"]
+    correct: 0
+    solution: |-
+      The full set needs a 2, which is not shown.
+  - id: q19
+    stem: |-
+      Select the numeral missing from this lineup:
+      2 3 4 5 6 8 9 0 1
+    choices: ["7", "8", "6", "1"]
+    correct: 0
+    solution: |-
+      Scanning 0–9 reveals that only 7 is absent.
+  - id: q20
+    stem: |-
+      Select the numeral missing from this lineup:
+      3 4 5 6 7 8 9 0 2
+    choices: ["1", "2", "3", "0"]
+    correct: 0
+    solution: |-
+      Digit 1 never appears, so it is the missing numeral.
