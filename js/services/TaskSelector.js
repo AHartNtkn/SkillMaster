@@ -13,23 +13,29 @@ export class TaskSelector {
      * @returns {Object|null} Next task {type: 'review'|'new'|'mixed_quiz', skillId?: string}
      */
     getNextTask() {
+        const tasks = this.getTopTasks(1);
+        return tasks.length > 0 ? tasks[0] : null;
+    }
+
+    /**
+     * Get the top N tasks ordered by priority
+     * @param {number} max - Maximum number of tasks to return
+     * @returns {Array} Array of tasks sorted by priority
+     */
+    getTopTasks(max = 1) {
         const candidates = this.getCandidates();
-        
+
         if (candidates.length === 0) {
-            return null;
+            return [];
         }
 
         // Sort by priority (highest first)
         candidates.sort((a, b) => b.priority - a.priority);
-        
+
         // Apply non-interference rule
         const validCandidates = this.applyNonInterference(candidates);
-        
-        if (validCandidates.length === 0) {
-            return null;
-        }
 
-        return validCandidates[0];
+        return validCandidates.slice(0, max);
     }
 
     /**
