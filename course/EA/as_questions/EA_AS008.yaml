@@ -2,7 +2,164 @@ format: ASQ-v1
 id: EA_AS008
 pool:
   - id: q1
-    stem: Example question for EA_AS008
-    choices: ['A', 'B', 'C', 'D']
+    stem: |-
+      Select the ordinal word missing from this lineup:
+      first second third fourth
+    choices: ["fifth", "third", "second", "first"]
     correct: 0
-    solution: Placeholder solution
+    solution: |-
+      The list shows first, second, third, and fourth.
+      Fifth is the only ordinal not present.
+  - id: q2
+    stem: |-
+      Select the ordinal word missing from this lineup:
+      second third fourth fifth
+    choices: ["first", "second", "third", "fourth"]
+    correct: 0
+    solution: |-
+      The sequence starts at second, so first is missing.
+  - id: q3
+    stem: |-
+      Select the ordinal word missing from this lineup:
+      first third fourth fifth
+    choices: ["second", "third", "fourth", "fifth"]
+    correct: 0
+    solution: |-
+      Only second is absent from the four words shown.
+  - id: q4
+    stem: |-
+      Select the ordinal word missing from this lineup:
+      first second fourth fifth
+    choices: ["third", "second", "fifth", "first"]
+    correct: 0
+    solution: |-
+      The lineup skips from second to fourth; third is missing.
+  - id: q5
+    stem: |-
+      Select the ordinal word missing from this lineup:
+      first second third fifth
+    choices: ["fourth", "second", "third", "first"]
+    correct: 0
+    solution: |-
+      First, second, third, and fifth appear, leaving fourth out.
+  - id: q6
+    stem: |-
+      Select the ordinal word missing from this lineup:
+      second fourth first fifth
+    choices: ["third", "second", "first", "fourth"]
+    correct: 0
+    solution: |-
+      The lineup lists first, second, fourth, and fifth.
+      Third is the missing ordinal word.
+  - id: q7
+    stem: |-
+      Select the ordinal word missing from this lineup:
+      fifth fourth third second
+    choices: ["first", "second", "third", "fourth"]
+    correct: 0
+    solution: |-
+      The list runs backward from second through fifth, so first is missing.
+  - id: q8
+    stem: |-
+      Select the ordinal word missing from this lineup:
+      third fourth fifth first
+    choices: ["second", "third", "fourth", "fifth"]
+    correct: 0
+    solution: |-
+      All ordinals except second are listed.
+  - id: q9
+    stem: |-
+      Select the ordinal word missing from this lineup:
+      fourth fifth first second
+    choices: ["third", "fifth", "first", "second"]
+    correct: 0
+    solution: |-
+      Third is the only ordinal not shown.
+  - id: q10
+    stem: |-
+      Select the ordinal word missing from this lineup:
+      fifth first second third
+    choices: ["fourth", "fifth", "second", "first"]
+    correct: 0
+    solution: |-
+      The lineup omits fourth.
+  - id: q11
+    stem: |-
+      Select the ordinal word missing from this lineup:
+      second fourth fifth first
+    choices: ["third", "second", "first", "fourth"]
+    correct: 0
+    solution: |-
+      The lineup lacks third.
+  - id: q12
+    stem: |-
+      Select the ordinal word missing from this lineup:
+      first fourth fifth second
+    choices: ["third", "first", "second", "fifth"]
+    correct: 0
+    solution: |-
+      Third is not included in the four words.
+  - id: q13
+    stem: |-
+      Select the ordinal word missing from this lineup:
+      first third fifth second
+    choices: ["fourth", "third", "fifth", "first"]
+    correct: 0
+    solution: |-
+      Fourth is the only ordinal not present.
+  - id: q14
+    stem: |-
+      Select the ordinal word missing from this lineup:
+      second third fifth fourth
+    choices: ["first", "second", "third", "fifth"]
+    correct: 0
+    solution: |-
+      All ordinals except first are shown.
+  - id: q15
+    stem: |-
+      Select the ordinal word missing from this lineup:
+      first second fourth third
+    choices: ["fifth", "fourth", "second", "third"]
+    correct: 0
+    solution: |-
+      Fifth does not appear in the list.
+  - id: q16
+    stem: |-
+      Select the ordinal word missing from this lineup:
+      first fifth fourth third
+    choices: ["second", "third", "fourth", "fifth"]
+    correct: 0
+    solution: |-
+      Second is missing from the four words given.
+  - id: q17
+    stem: |-
+      Select the ordinal word missing from this lineup:
+      third second first fourth
+    choices: ["fifth", "fourth", "third", "second"]
+    correct: 0
+    solution: |-
+      Fifth is absent from the lineup.
+  - id: q18
+    stem: |-
+      Select the ordinal word missing from this lineup:
+      fourth third second first
+    choices: ["fifth", "fourth", "third", "second"]
+    correct: 0
+    solution: |-
+      Only fifth does not appear.
+  - id: q19
+    stem: |-
+      Select the ordinal word missing from this lineup:
+      fifth second third fourth
+    choices: ["first", "second", "third", "fourth"]
+    correct: 0
+    solution: |-
+      The line shows second through fifth; first is missing.
+  - id: q20
+    stem: |-
+      Select the ordinal word missing from this lineup:
+      second first third fifth
+    choices: ["fourth", "third", "first", "second"]
+    correct: 0
+    solution: |-
+      Fourth is not listed among the ordinals provided.
